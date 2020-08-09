@@ -6,7 +6,7 @@
         <i class="i-vuestic"></i>
       </a>
       <span style="color: #333; font-size: 12px">
-        <sup @contextmenu="Dashboard($event)">{{'Build 14.7.020'}}</sup>
+        <sup @contextmenu="Dashboard($event)">{{'Build 9.8.020'}}</sup>
       </span>
     </div>
 

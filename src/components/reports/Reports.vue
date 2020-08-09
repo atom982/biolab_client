@@ -331,7 +331,7 @@ export default {
       },
       config: {
         mode: "range",
-        minDate: new Date("2019-02-09"),
+        minDate: new Date("2020.08.09"),
         maxDate: new Date(),
         altFormat: "F j, Y",
         dateFormat: "d.m.Y",

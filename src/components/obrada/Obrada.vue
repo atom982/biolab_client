@@ -1,14 +1,17 @@
 <template>
   <div class="collapse-page">
     <div v-if="show" class="flex md12">
-
       <!-- Prikaz nalaza -->
 
       <div v-show="!main && pdf">
         <div class="btn-container">
-          <button v-show="verificiran" class="btn btn-secondary btn-sm" @click.prevent="Nazad()">
+          <button
+            v-show="verificiran"
+            class="btn btn-secondary btn-sm"
+            @click.prevent="Nazad()"
+          >
             <span class="fa fa-step-backward"></span>
-            {{ ' NAZAD'}}
+            {{ " NAZAD" }}
           </button>
           <button
             v-show="!verificiran"
@@ -16,7 +19,7 @@
             @click.prevent="Nazad()"
           >
             <span class="fa fa-step-backward"></span>
-            {{ ' NAZAD'}}
+            {{ " NAZAD" }}
           </button>
           <button
             v-show="email_button && verificiran"
@@ -25,9 +28,12 @@
             @click.prevent="MailDialog()"
           >
             <span class="glyphicon glyphicon-send"></span>
-            {{ ' Pošalji'}}
+            {{ " Pošalji" }}
           </button>
-          <div v-show="email_button && verificiran" class="form-group with-icon-left pull-right">
+          <div
+            v-show="email_button && verificiran"
+            class="form-group with-icon-left pull-right"
+          >
             <div class="input-group">
               <input
                 size="40"
@@ -38,7 +44,9 @@
                 required
               />
               <i class="fa fa-envelope-o icon-left input-icon"></i>
-              <label class="control-label" for="input-icon-left">{{'Email adresa'}}</label>
+              <label class="control-label" for="input-icon-left">
+                {{ "Email adresa" }}
+              </label>
               <i class="bar"></i>
             </div>
           </div>
@@ -76,7 +84,7 @@
             :sample="uzorak"
             :retest="save_retest"
           >
-            <span :id="uzorak.sid" slot="header">{{uzorak.sid}}</span>
+            <span :id="uzorak.sid" slot="header">{{ uzorak.sid }}</span>
             <div slot="body">
               <div style="line-height: 10px;">&nbsp;</div>
 
@@ -109,19 +117,37 @@
                   <table class="table table-striped first-td-padding">
                     <thead>
                       <tr align="middle">
-                        <td v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN'"></td>
-                        <td>{{'ANALIZA'}}</td>
-                        <td>{{'REZULTAT'}}</td>
-                        <td>{{'JEDINICA'}}</td>
-                        <td>{{'REFERENCE'}}</td>
-                        <td v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN'"></td>
                         <td
-                          v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN' && MicrobiologyScenario != 'MAIBPoR'"
-                        >{{'PONOVI'}}</td>
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN'
+                          "
+                        ></td>
+                        <td>{{ "ANALIZA" }}</td>
+                        <td>{{ "REZULTAT" }}</td>
+                        <td>{{ "JEDINICA" }}</td>
+                        <td>{{ "REFERENCE" }}</td>
+                        <td
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN'
+                          "
+                        ></td>
+                        <td
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN' &&
+                            MicrobiologyScenario != 'MAIBPoR'
+                          "
+                        >
+                          {{ "PONOVI" }}
+                        </td>
                         <td
                           v-if="MicrobiologyScenario === 'MAIBPoR'"
                           style="text-transform: none;"
-                        >{{'Bakterije'}}</td>
+                        >
+                          {{ "Bakterije" }}
+                        </td>
                         <td></td>
                       </tr>
                     </thead>
@@ -135,34 +161,53 @@
                         v-show="index < 1"
                         :key="test.labassay_id"
                         v-bind:class="{
-                          'table-danger': (test.rezultat_m.length && test.rezultat_m[0].pozitivan), 
-                          'table-success': (test.rezultat_m.length && test.rezultat_m[0].negativan),
-                          'table-warning': false
+                          'table-danger':
+                            test.rezultat_m.length &&
+                            test.rezultat_m[0].pozitivan,
+                          'table-success':
+                            test.rezultat_m.length &&
+                            test.rezultat_m[0].negativan,
+                          'table-warning': false,
                         }"
                       >
-                        <td v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN'">
+                        <td
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN'
+                          "
+                        >
                           <button
                             style="padding: 0.4px; padding-left: 2px;"
                             v-if="uzorak.status === 'ZAPRIMLJEN'"
                             @click.prevent="MicroResultSelect($event)"
                             class="btn btn-secondary-danger btn-micro"
                           >
-                            <i class="fa fa-bug" @click.prevent="MicroResultSelect($event)"></i>
+                            <i
+                              class="fa fa-bug"
+                              @click.prevent="MicroResultSelect($event)"
+                            ></i>
                           </button>
                           <button
-                            style="padding: 0.6px; padding-right: 1px; padding-left: 1.2px;"
+                            style="
+                              padding: 0.6px;
+                              padding-right: 1px;
+                              padding-left: 1.2px;
+                            "
                             v-if="uzorak.status != 'ZAPRIMLJEN'"
                             @click.prevent="ResetSample($event)"
                             class="btn btn-secondary-danger btn-micro"
                           >
-                            <i class="fa fa-backward" @click.prevent="ResetSample($event)"></i>
+                            <i
+                              class="fa fa-backward"
+                              @click.prevent="ResetSample($event)"
+                            ></i>
                           </button>
                         </td>
 
                         <!-- ANALIZA -->
 
                         <td :title="test.analit">
-                          <span>{{test.ime}}</span>
+                          <span>{{ test.ime }}</span>
                         </td>
 
                         <!-- REZULTAT -->
@@ -174,27 +219,38 @@
                             @click.prevent="OpenMicro($event, test)"
                           >
                             <span
-                              :id="test.labassay_id"                              
+                              :id="test.labassay_id"
                               class="glyphicon glyphicon-search"
                             ></span>
-                            {{'VIŠE'}}
+                            {{ "VIŠE" }}
                           </button>
                         </td>
                         <td v-if="test.rezultat_m.length < 1">
-                          <button :id="test.labassay_id" class="btn btn-pale btn-micro">
-                            <span :id="test.labassay_id" class="glyphicon glyphicon-ban-circle"></span>
-                            {{'VIŠE'}}
+                          <button
+                            :id="test.labassay_id"
+                            class="btn btn-pale btn-micro"
+                          >
+                            <span
+                              :id="test.labassay_id"
+                              class="glyphicon glyphicon-ban-circle"
+                            ></span>
+                            {{ "VIŠE" }}
                           </button>
                         </td>
 
                         <!-- JEDINICA -->
 
-                        <td>{{test.unit}}</td>
+                        <td>{{ test.unit }}</td>
 
                         <!-- REFERENCE -->
 
-                        <td>{{'/'}}</td>
-                        <td v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN'">
+                        <td>{{ "/" }}</td>
+                        <td
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN'
+                          "
+                        >
                           <i
                             style="font-size: 15px; color: #f7cc36; opacity: 0;"
                             class="glyphicon glyphicon-stats"
@@ -206,7 +262,11 @@
                         <!-- PONOVI -->
 
                         <td
-                          v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN' && MicrobiologyScenario != 'MAIBPoR'"
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN' &&
+                            MicrobiologyScenario != 'MAIBPoR'
+                          "
                         >
                           <button class="btn btn-pale btn-micro">
                             <span class="glyphicon glyphicon-ban-circle"></span>
@@ -227,10 +287,14 @@
                         <td>
                           <i
                             @click.prevent="Exclamation(test)"
-                            v-bind:class="{'fa fa-exclamation-triangle icon-right input-icon error-icon' : false}"
+                            v-bind:class="{
+                              'fa fa-exclamation-triangle icon-right input-icon error-icon': false,
+                            }"
                           ></i>
                           <i
-                            v-bind:class="{'fa fa-check success-icon icon-right input-icon' : false}"
+                            v-bind:class="{
+                              'fa fa-check success-icon icon-right input-icon': false,
+                            }"
                           ></i>
                         </td>
                       </tr>
@@ -270,18 +334,39 @@ END of Microbiology Table |
                   <table class="table table-striped first-td-padding">
                     <thead>
                       <tr align="middle">
-                        <td v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN'"></td>
-                        <td>{{'ANALIZA'}}</td>
-                        <td>{{'REZULTAT'}}</td>
-                        <td>{{'JEDINICA'}}</td>
-                        <td>{{'REFERENCE'}}</td>
-                        <td v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN'"></td>
                         <td
-                          v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN' && calculated"
-                        >{{'AKCIJA'}}</td>
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN'
+                          "
+                        ></td>
+                        <td>{{ "ANALIZA" }}</td>
+                        <td>{{ "REZULTAT" }}</td>
+                        <td>{{ "JEDINICA" }}</td>
+                        <td>{{ "REFERENCE" }}</td>
                         <td
-                          v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN'"
-                        >{{'PONOVI'}}</td>
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN'
+                          "
+                        ></td>
+                        <td
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN' &&
+                            calculated
+                          "
+                        >
+                          {{ "AKCIJA" }}
+                        </td>
+                        <td
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN'
+                          "
+                        >
+                          {{ "PONOVI" }}
+                        </td>
                         <td></td>
                       </tr>
                     </thead>
@@ -294,22 +379,60 @@ END of Microbiology Table |
                         v-for="test in rezultati"
                         :key="test.labassay_id"
                         v-bind:class="{
-                          'table-danger': Interpretacija(test.analit, test.rezultat, test.unit, test.dRef, test.gRef, $store.state.site, test.interp, test.extend, spec)[5] === 'Red' && !test.multidata, 
-                          'table-success': Interpretacija(test.analit, test.rezultat, test.unit, test.dRef, test.gRef, $store.state.site, test.interp, test.extend, spec)[5] === 'Green' && !test.multidata,
-                          'table-warning': Interpretacija(test.analit, test.rezultat, test.unit, test.dRef, test.gRef, $store.state.site, test.interp, test.extend, spec)[5] === 'Yellow' && !test.multidata
+                          'table-danger':
+                            Interpretacija(
+                              test.analit,
+                              test.rezultat,
+                              test.unit,
+                              test.dRef,
+                              test.gRef,
+                              $store.state.site,
+                              test.interp,
+                              test.extend,
+                              spec
+                            )[5] === 'Red' && !test.multidata,
+                          'table-success':
+                            Interpretacija(
+                              test.analit,
+                              test.rezultat,
+                              test.unit,
+                              test.dRef,
+                              test.gRef,
+                              $store.state.site,
+                              test.interp,
+                              test.extend,
+                              spec
+                            )[5] === 'Green' && !test.multidata,
+                          'table-warning':
+                            Interpretacija(
+                              test.analit,
+                              test.rezultat,
+                              test.unit,
+                              test.dRef,
+                              test.gRef,
+                              $store.state.site,
+                              test.interp,
+                              test.extend,
+                              spec
+                            )[5] === 'Yellow' && !test.multidata,
                         }"
                       >
-                        <td v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN'">
+                        <td
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN'
+                          "
+                        >
                           <i
                             v-if="!test.multidata"
                             @click.prevent="SelectAnalyser(test)"
-                            style="color:#4ae387;"
+                            style="color: #4ae387;"
                             class="glyphicon glyphicon-object-align-bottom"
                           ></i>
 
                           <span
                             v-if="test.multidata"
-                            style="color:#d9d9d9;"
+                            style="color: #d9d9d9;"
                             class="glyphicon glyphicon-object-align-bottom"
                           ></span>
                         </td>
@@ -320,7 +443,8 @@ END of Microbiology Table |
                           <span
                             @contextmenu="LabAssayEval($event, test)"
                             @click.prevent="Evaluation(test)"
-                          >{{test.ime}}</span>
+                            >{{ test.ime }}</span
+                          >
                         </td>
 
                         <!-- REZULTAT -->
@@ -328,29 +452,44 @@ END of Microbiology Table |
                         <td v-if="!test.multidata">
                           <div
                             v-show="test.edit == false"
-                            style="display:inline; font-size: 14px; line-height: 4.5px;"
+                            style="
+                              display: inline;
+                              font-size: 14px;
+                              line-height: 4.5px;
+                            "
                           >
                             <label>
                               <strong>{{ test.rezultat }}</strong>
                             </label>
                           </div>
-                          <div v-show="test.edit == true" style="display:inline; line-height: 5px;">
+                          <div
+                            v-show="test.edit == true"
+                            style="display: inline; line-height: 5px;"
+                          >
                             <select
                               v-if="test.select_options != undefined"
-                              style="width:110px"
+                              style="width: 110px;"
                               v-model="test.rezultat"
                             >
                               <option
                                 v-for="option in test.select_options"
                                 :key="option"
-                              >{{ option }}</option>
+                                >{{ option }}</option
+                              >
                             </select>
                           </div>
-                          <div v-show="test.edit == true" style="display:inline;">
+                          <div
+                            v-show="test.edit == true"
+                            style="display: inline;"
+                          >
                             <input
                               v-if="test.select_options === undefined"
                               v-model="test.rezultat"
-                              style="width:110px;font-size: 12px; line-height: 7px;"
+                              style="
+                                width: 110px;
+                                font-size: 12px;
+                                line-height: 7px;
+                              "
                             />
                           </div>
                           <sup
@@ -366,7 +505,7 @@ END of Microbiology Table |
                           </sup>
                           <sup v-show="test.vise < 3">
                             <i
-                              style="font-size: 5px;  opacity: 0;"
+                              style="font-size: 5px; opacity: 0;"
                               class="fa fa-star-o"
                               id="star"
                               title=" "
@@ -377,18 +516,36 @@ END of Microbiology Table |
                           <button
                             :id="test.labassay_id"
                             class="btn btn-primary btn-micro"
-                            @click.prevent="MultiGet($event, test.ime, test.analit, test.rezultat, test.odobren)"
+                            @click.prevent="
+                              MultiGet(
+                                $event,
+                                test.ime,
+                                test.analit,
+                                test.rezultat,
+                                test.odobren
+                              )
+                            "
                           >
                             <span
                               :id="test.labassay_id"
-                              @click.prevent="MultiGet($event, test.ime, test.analit, test.rezultat, test.odobren)"
+                              @click.prevent="
+                                MultiGet(
+                                  $event,
+                                  test.ime,
+                                  test.analit,
+                                  test.rezultat,
+                                  test.odobren
+                                )
+                              "
                               class="glyphicon glyphicon-search"
                             ></span>
-                            {{'VIŠE'}}
+                            {{ "VIŠE" }}
                           </button>
                           <sup
                             v-show="test.multi_count > 2"
-                            @click.prevent="GetResultsMulti(test, uzorak.status)"
+                            @click.prevent="
+                              GetResultsMulti(test, uzorak.status)
+                            "
                           >
                             <i
                               style="font-size: 5px; color: #e34a4a;"
@@ -410,18 +567,36 @@ END of Microbiology Table |
                           <button
                             :id="test.labassay_id"
                             class="btn btn-warning btn-micro"
-                            @click.prevent="MultiGet($event, test.ime, test.analit, test.rezultat, test.odobren)"
+                            @click.prevent="
+                              MultiGet(
+                                $event,
+                                test.ime,
+                                test.analit,
+                                test.rezultat,
+                                test.odobren
+                              )
+                            "
                           >
                             <span
                               :id="test.labassay_id"
-                              @click.prevent="MultiGet($event, test.ime, test.analit, test.rezultat, test.odobren)"
+                              @click.prevent="
+                                MultiGet(
+                                  $event,
+                                  test.ime,
+                                  test.analit,
+                                  test.rezultat,
+                                  test.odobren
+                                )
+                              "
                               class="glyphicon glyphicon-search"
                             ></span>
-                            {{'VIŠE'}}
+                            {{ "VIŠE" }}
                           </button>
                           <sup
                             v-show="test.multi_count > 2"
-                            @click.prevent="GetResultsMulti(test, uzorak.status)"
+                            @click.prevent="
+                              GetResultsMulti(test, uzorak.status)
+                            "
                           >
                             <i
                               style="font-size: 5px; color: #e34a4a;"
@@ -442,15 +617,32 @@ END of Microbiology Table |
 
                         <!-- JEDINICA -->
 
-                        <td>{{test.unit}}</td>
+                        <td>{{ test.unit }}</td>
 
                         <!-- REFERENCE -->
 
+                        <td v-if="!test.multidata">
+                          {{
+                            Interpretacija(
+                              test.analit,
+                              test.rezultat,
+                              test.unit,
+                              test.dRef,
+                              test.gRef,
+                              $store.state.site,
+                              test.interp,
+                              test.extend,
+                              spec
+                            )[4]
+                          }}
+                        </td>
+                        <td v-if="test.multidata">{{ "/" }}</td>
                         <td
-                          v-if="!test.multidata"
-                        >{{Interpretacija(test.analit, test.rezultat, test.unit, test.dRef, test.gRef, $store.state.site, test.interp, test.extend, spec)[4]}}</td>
-                        <td v-if="test.multidata">{{'/'}}</td>
-                        <td v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN'">
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN'
+                          "
+                        >
                           <i
                             v-if="!test.multidata"
                             @click.prevent="Reference($event, test)"
@@ -471,37 +663,67 @@ END of Microbiology Table |
                         <!-- AKCIJA -->
 
                         <td
-                          v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN' && calculated && !test.calculated"
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN' &&
+                            calculated &&
+                            !test.calculated
+                          "
                         >
                           <button class="btn btn-pale btn-micro">
                             <span class="glyphicon glyphicon-ban-circle"></span>
                           </button>
                         </td>
                         <td
-                          v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN' && calculated && test.calculated"
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN' &&
+                            calculated &&
+                            test.calculated
+                          "
                         >
                           <button
-                            @click.prevent="Calculate($event, test.labassay_id, test.ime, test.id)"
+                            @click.prevent="
+                              Calculate(
+                                $event,
+                                test.labassay_id,
+                                test.ime,
+                                test.id
+                              )
+                            "
                             :id="test.test"
                             class="btn btn-primary btn-micro"
                           >
-                            <span :id="test.test" class="fa fa-calculator"></span>
+                            <span
+                              :id="test.test"
+                              class="fa fa-calculator"
+                            ></span>
                           </button>
                         </td>
 
                         <!-- PONOVI -->
 
                         <td
-                          v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN' 
-                          && (test.rezultat === '' || test.manual || test.calculated)"
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN' &&
+                            (test.rezultat === '' ||
+                              test.manual ||
+                              test.calculated)
+                          "
                         >
                           <button class="btn btn-pale btn-micro">
                             <span class="glyphicon glyphicon-ban-circle"></span>
                           </button>
                         </td>
                         <td
-                          v-if="uzorak.status != 'ODOBREN' &&  uzorak.status != 'VERIFICIRAN' 
-                          && test.rezultat != '' && !test.manual && !test.calculated"
+                          v-if="
+                            uzorak.status != 'ODOBREN' &&
+                            uzorak.status != 'VERIFICIRAN' &&
+                            test.rezultat != '' &&
+                            !test.manual &&
+                            !test.calculated
+                          "
                         >
                           <button
                             v-if="!test.retest"
@@ -517,7 +739,10 @@ END of Microbiology Table |
                             class="btn btn-info btn-micro"
                             @click.prevent="RetestDisable($event)"
                           >
-                            <span :id="test.test" class="glyphicon glyphicon-duplicate"></span>
+                            <span
+                              :id="test.test"
+                              class="glyphicon glyphicon-duplicate"
+                            ></span>
                           </button>
                         </td>
 
@@ -526,10 +751,36 @@ END of Microbiology Table |
                         <td>
                           <i
                             @click.prevent="Exclamation(test)"
-                            v-bind:class="{'fa fa-exclamation-triangle icon-right input-icon error-icon' : Interpretacija(test.analit, test.rezultat, test.unit, test.dRef, test.gRef, $store.state.site, test.interp, test.extend, spec)[5] === 'Red' && !test.multidata}"
+                            v-bind:class="{
+                              'fa fa-exclamation-triangle icon-right input-icon error-icon':
+                                Interpretacija(
+                                  test.analit,
+                                  test.rezultat,
+                                  test.unit,
+                                  test.dRef,
+                                  test.gRef,
+                                  $store.state.site,
+                                  test.interp,
+                                  test.extend,
+                                  spec
+                                )[5] === 'Red' && !test.multidata,
+                            }"
                           ></i>
                           <i
-                            v-bind:class="{'fa fa-check success-icon icon-right input-icon' : Interpretacija(test.analit, test.rezultat, test.unit, test.dRef, test.gRef, $store.state.site, test.interp, test.extend, spec)[5] === 'Green' && !test.multidata}"
+                            v-bind:class="{
+                              'fa fa-check success-icon icon-right input-icon':
+                                Interpretacija(
+                                  test.analit,
+                                  test.rezultat,
+                                  test.unit,
+                                  test.dRef,
+                                  test.gRef,
+                                  $store.state.site,
+                                  test.interp,
+                                  test.extend,
+                                  spec
+                                )[5] === 'Green' && !test.multidata,
+                            }"
                           ></i>
                         </td>
                       </tr>
@@ -539,7 +790,6 @@ END of Microbiology Table |
               </div>
 
               <!-- END of Uzorci | Default Table -->
-
             </div>
           </vuestic-collapse-obrada>
         </vuestic-accordion-obrada>
@@ -578,7 +828,7 @@ END of Microbiology Table |
                 @click.prevent="Povratak()"
               >
                 <span class="fa fa-backward"></span>
-                {{ ' POVRATAK'}}
+                {{ " POVRATAK" }}
               </button>
               <button
                 style="text-transform: none; color: #e34a4a;"
@@ -587,7 +837,7 @@ END of Microbiology Table |
                 @click.prevent="Partials()"
               >
                 <span style="color: #e34a4a;" class="fa fa-file-pdf-o"></span>
-                {{ ' Djelimični nalaz'}}
+                {{ " Djelimični nalaz" }}
               </button>
             </div>
           </div>
@@ -605,16 +855,16 @@ END of Microbiology Table |
         cancelText="ODUSTANI"
         okText="POTVRDI"
       >
-        <div slot="title">{{naslov}}</div>
+        <div slot="title">{{ naslov }}</div>
         <div class="table-responsive">
           <table class="table table-striped first-td-padding">
             <thead>
               <tr align="middle">
                 <td width="10%"></td>
-                <td width="20%">{{'ANALIT'}}</td>
-                <td width="30%">{{'REZULTAT'}}</td>
-                <td width="10%">{{'JEDINICA'}}</td>
-                <td width="20%">{{'REFERENCE'}}</td>
+                <td width="20%">{{ "ANALIT" }}</td>
+                <td width="30%">{{ "REZULTAT" }}</td>
+                <td width="10%">{{ "JEDINICA" }}</td>
+                <td width="20%">{{ "REFERENCE" }}</td>
                 <td width="10%"></td>
               </tr>
             </thead>
@@ -624,14 +874,47 @@ END of Microbiology Table |
                 v-for="test in analiti"
                 :key="test.labID"
                 v-bind:class="{
-                    'table-danger': Interpretacija(test.opis, test.rezultat, test.jedinica, test.refd, test.refg, $store.state.site, test.interp, test.extend, spec)[5] === 'Red' && !test.rezultat_multiple.length, 
-                    'table-success': Interpretacija(test.opis, test.rezultat, test.jedinica, test.refd, test.refg, $store.state.site, test.interp, test.extend, spec)[5] === 'Green' && !test.rezultat_multiple.length, 
-                    'table-warning': Interpretacija(test.opis, test.rezultat, test.jedinica, test.refd, test.refg, $store.state.site, test.interp, test.extend, spec)[5] === 'Yellow' && !test.rezultat_multiple.length                                  
-                  }"
+                  'table-danger':
+                    Interpretacija(
+                      test.opis,
+                      test.rezultat,
+                      test.jedinica,
+                      test.refd,
+                      test.refg,
+                      $store.state.site,
+                      test.interp,
+                      test.extend,
+                      spec
+                    )[5] === 'Red' && !test.rezultat_multiple.length,
+                  'table-success':
+                    Interpretacija(
+                      test.opis,
+                      test.rezultat,
+                      test.jedinica,
+                      test.refd,
+                      test.refg,
+                      $store.state.site,
+                      test.interp,
+                      test.extend,
+                      spec
+                    )[5] === 'Green' && !test.rezultat_multiple.length,
+                  'table-warning':
+                    Interpretacija(
+                      test.opis,
+                      test.rezultat,
+                      test.jedinica,
+                      test.refd,
+                      test.refg,
+                      $store.state.site,
+                      test.interp,
+                      test.extend,
+                      spec
+                    )[5] === 'Yellow' && !test.rezultat_multiple.length,
+                }"
               >
-                <td v-if="test.flag != ''">{{test.flag}}</td>
+                <td v-if="test.flag != ''">{{ test.flag }}</td>
                 <td v-if="test.flag === ''">&nbsp;</td>
-                <td :title="test.opis">{{test.naziv}}</td>
+                <td :title="test.opis">{{ test.naziv }}</td>
                 <td :id="test.analit">
                   <div v-show="test.edit == false">
                     <label>
@@ -641,37 +924,105 @@ END of Microbiology Table |
                   <select
                     multiple
                     :size="test.select_options.length"
-                    v-if="test.select_options != undefined && (test.kod === 's03' || test.kod === 's04' || test.kod === 's08' || test.kod === 's09')"
-                    style="min-width:200px;"
+                    v-if="
+                      test.select_options != undefined &&
+                      (test.kod === 's03' ||
+                        test.kod === 's04' ||
+                        test.kod === 's08' ||
+                        test.kod === 's09')
+                    "
+                    style="min-width: 200px;"
                     v-show="test.edit == true"
                     v-model="test.rezultat_multiple"
                   >
-                    <option v-for="option in test.select_options" :key="option">{{ option }}</option>
+                    <option
+                      v-for="option in test.select_options"
+                      :key="option"
+                      >{{ option }}</option
+                    >
                   </select>
                   <select
                     v-if="test.select_options != undefined && (test.kod != 's03' && test.kod != 's04' && test.kod != 's08' && test.kod != 's09')"
-                    style="width:200px;"
+                    style="width: 200px;"
                     v-show="test.edit == true"
                     v-model="test.rezultat"
                   >
-                    <option v-for="option in test.select_options" :key="option">{{ option }}</option>
+                    <option
+                      v-for="option in test.select_options"
+                      :key="option"
+                      >{{ option }}</option
+                    >
                   </select>
                   <input
                     v-if="test.select_options === undefined"
-                    style="width:200px;"
+                    style="width: 200px;"
                     v-show="test.edit == true"
                     v-model="test.rezultat"
                   />
                 </td>
-                <td>{{Interpretacija(test.opis, test.rezultat, test.jedinica, test.refd, test.refg, $store.state.site, test.interp, test.extend, spec)[3]}}</td>
-                <td>{{Interpretacija(test.opis, test.rezultat, test.jedinica, test.refd, test.refg, $store.state.site, test.interp, test.extend, spec)[4]}}</td>
+                <td>
+                  {{
+                    Interpretacija(
+                      test.opis,
+                      test.rezultat,
+                      test.jedinica,
+                      test.refd,
+                      test.refg,
+                      $store.state.site,
+                      test.interp,
+                      test.extend,
+                      spec
+                    )[3]
+                  }}
+                </td>
+                <td>
+                  {{
+                    Interpretacija(
+                      test.opis,
+                      test.rezultat,
+                      test.jedinica,
+                      test.refd,
+                      test.refg,
+                      $store.state.site,
+                      test.interp,
+                      test.extend,
+                      spec
+                    )[4]
+                  }}
+                </td>
                 <td>
                   <i
                     @click.prevent="ExclamationMulti(test)"
-                    v-bind:class="{'fa fa-exclamation-triangle icon-right input-icon error-icon' : Interpretacija(test.opis, test.rezultat, test.jedinica, test.refd, test.refg, $store.state.site, test.interp, test.extend, spec)[5] === 'Red' && !test.rezultat_multiple.length}"
+                    v-bind:class="{
+                      'fa fa-exclamation-triangle icon-right input-icon error-icon':
+                        Interpretacija(
+                          test.opis,
+                          test.rezultat,
+                          test.jedinica,
+                          test.refd,
+                          test.refg,
+                          $store.state.site,
+                          test.interp,
+                          test.extend,
+                          spec
+                        )[5] === 'Red' && !test.rezultat_multiple.length,
+                    }"
                   ></i>
                   <i
-                    v-bind:class="{'fa fa-check success-icon icon-right input-icon' : Interpretacija(test.opis, test.rezultat, test.jedinica, test.refd, test.refg, $store.state.site, test.interp, test.extend, spec)[5] === 'Green' && !test.rezultat_multiple.length}"
+                    v-bind:class="{
+                      'fa fa-check success-icon icon-right input-icon':
+                        Interpretacija(
+                          test.opis,
+                          test.rezultat,
+                          test.jedinica,
+                          test.refd,
+                          test.refg,
+                          $store.state.site,
+                          test.interp,
+                          test.extend,
+                          spec
+                        )[5] === 'Green' && !test.rezultat_multiple.length,
+                    }"
                   ></i>
                 </td>
               </tr>
@@ -711,11 +1062,11 @@ END of Microbiology Table |
         okText="POTVRDI"
       >
         <div slot="title">
-          <span style="color: #acb5be;">{{'Brisanje rezultata: '}}</span>
-          <span style="color: #e34a4a;">{{CurrentTest}}</span>
+          <span style="color: #acb5be;">{{ "Brisanje rezultata: " }}</span>
+          <span style="color: #e34a4a;">{{ CurrentTest }}</span>
         </div>
         <div>
-          <h5>{{ 'Jeste li sigurni da želite obrisati rezultat?'}}</h5>
+          <h5>{{ "Jeste li sigurni da želite obrisati rezultat?" }}</h5>
         </div>
       </vuestic-modal-micro-reset>
 
@@ -724,37 +1075,50 @@ END of Microbiology Table |
         :large="true"
         :sample="sample"
         :select="true"
-        :update="!ShowAntibiotics && !ShowBacteries && MicrobiologyScenario === 'MAIBPoR'"
+        :update="
+          !ShowAntibiotics &&
+          !ShowBacteries &&
+          MicrobiologyScenario === 'MAIBPoR'
+        "
         :povratak="ShowAntibiotics || ShowBacteries"
-        :empty="TemporaryAntibiotics.length > 0 || TemporaryBacteriesAdd.length > 0"
+        :empty="
+          TemporaryAntibiotics.length > 0 || TemporaryBacteriesAdd.length > 0
+        "
         ref="staticModalMicroBacterySelect"
         cancelText="ODUSTANI"
         okText="POTVRDI"
       >
         <div slot="title" v-if="!ShowAntibiotics && !ShowBacteries">
-          <span style="color: #acb5be;">{{'Rezultat analize: '}}</span>
-          <span style="color: #e34a4a;">{{CurrentTest}}</span>
+          <span style="color: #acb5be;">{{ "Rezultat analize: " }}</span>
+          <span style="color: #e34a4a;">{{ CurrentTest }}</span>
         </div>
         <div slot="title" v-if="ShowAntibiotics && !ShowBacteries">
-          <span style="color: #acb5be;">{{'Antibiotici | '}}</span>
-          <span style="color: #e34a4a;">{{"Izbornik"}}</span>
+          <span style="color: #acb5be;">{{ "Antibiotici | " }}</span>
+          <span style="color: #e34a4a;">{{ "Izbornik" }}</span>
         </div>
         <div slot="title" v-if="!ShowAntibiotics && ShowBacteries">
-          <span style="color: #acb5be;">{{'Bakterije | '}}</span>
-          <span style="color: #e34a4a;">{{"Izbornik"}}</span>
+          <span style="color: #acb5be;">{{ "Bakterije | " }}</span>
+          <span style="color: #e34a4a;">{{ "Izbornik" }}</span>
         </div>
         <div>
-
           <!--  -->
 
           <div class="row" v-if="show_table">
             <div
               class="col-md-1"
-              v-if="MicrobiologyScenario === 'MAIBPoR' && ShowBacteries && !ShowAntibiotics"
+              v-if="
+                MicrobiologyScenario === 'MAIBPoR' &&
+                ShowBacteries &&
+                !ShowAntibiotics
+              "
             ></div>
             <div
               class="col-md-10"
-              v-if="MicrobiologyScenario === 'MAIBPoR' && ShowBacteries && !ShowAntibiotics"
+              v-if="
+                MicrobiologyScenario === 'MAIBPoR' &&
+                ShowBacteries &&
+                !ShowAntibiotics
+              "
             >
               <div class="col-md-12" v-if="TemporaryBacteries.length">
                 <div class="row">
@@ -777,12 +1141,14 @@ END of Microbiology Table |
                           v-if="!bactery.chosen"
                           style="color: #e34a4a;"
                           class="abc-label-text"
-                        >{{bactery.opis}}</span>
+                          >{{ bactery.opis }}</span
+                        >
                         <span
                           v-if="bactery.chosen"
                           style="color: #4ae387;"
                           class="abc-label-text"
-                        >{{bactery.opis}}</span>
+                          >{{ bactery.opis }}</span
+                        >
                       </label>
                     </div>
                   </div>
@@ -805,12 +1171,14 @@ END of Microbiology Table |
                           v-if="!bactery.chosen"
                           style="color: #e34a4a;"
                           class="abc-label-text"
-                        >{{bactery.opis}}</span>
+                          >{{ bactery.opis }}</span
+                        >
                         <span
                           v-if="bactery.chosen"
                           style="color: #4ae387;"
                           class="abc-label-text"
-                        >{{bactery.opis}}</span>
+                          >{{ bactery.opis }}</span
+                        >
                       </label>
                     </div>
                   </div>
@@ -833,12 +1201,14 @@ END of Microbiology Table |
                           v-if="!bactery.chosen"
                           style="color: #e34a4a;"
                           class="abc-label-text"
-                        >{{bactery.opis}}</span>
+                          >{{ bactery.opis }}</span
+                        >
                         <span
                           v-if="bactery.chosen"
                           style="color: #4ae387;"
                           class="abc-label-text"
-                        >{{bactery.opis}}</span>
+                          >{{ bactery.opis }}</span
+                        >
                       </label>
                     </div>
                   </div>
@@ -847,11 +1217,19 @@ END of Microbiology Table |
             </div>
             <div
               class="col-md-1"
-              v-if="MicrobiologyScenario === 'MAIBPoR' && ShowAntibiotics && !ShowBacteries"
+              v-if="
+                MicrobiologyScenario === 'MAIBPoR' &&
+                ShowAntibiotics &&
+                !ShowBacteries
+              "
             ></div>
             <div
               class="col-md-10"
-              v-if="MicrobiologyScenario === 'MAIBPoR' && ShowAntibiotics && !ShowBacteries"
+              v-if="
+                MicrobiologyScenario === 'MAIBPoR' &&
+                ShowAntibiotics &&
+                !ShowBacteries
+              "
             >
               <div class="col-md-12" v-if="Antibiotics.length">
                 <div class="row">
@@ -874,12 +1252,14 @@ END of Microbiology Table |
                           v-if="!antibiotik.chosen"
                           style="color: #e34a4a;"
                           class="abc-label-text"
-                        >{{antibiotik.opis}}</span>
+                          >{{ antibiotik.opis }}</span
+                        >
                         <span
                           v-if="antibiotik.chosen"
                           style="color: #4ae387;"
                           class="abc-label-text"
-                        >{{antibiotik.opis}}</span>
+                          >{{ antibiotik.opis }}</span
+                        >
                       </label>
                     </div>
                   </div>
@@ -902,12 +1282,14 @@ END of Microbiology Table |
                           v-if="!antibiotik.chosen"
                           style="color: #e34a4a;"
                           class="abc-label-text"
-                        >{{antibiotik.opis}}</span>
+                          >{{ antibiotik.opis }}</span
+                        >
                         <span
                           v-if="antibiotik.chosen"
                           style="color: #4ae387;"
                           class="abc-label-text"
-                        >{{antibiotik.opis}}</span>
+                          >{{ antibiotik.opis }}</span
+                        >
                       </label>
                     </div>
                   </div>
@@ -930,12 +1312,14 @@ END of Microbiology Table |
                           v-if="!antibiotik.chosen"
                           style="color: #e34a4a;"
                           class="abc-label-text"
-                        >{{antibiotik.opis}}</span>
+                          >{{ antibiotik.opis }}</span
+                        >
                         <span
                           v-if="antibiotik.chosen"
                           style="color: #4ae387;"
                           class="abc-label-text"
-                        >{{antibiotik.opis}}</span>
+                          >{{ antibiotik.opis }}</span
+                        >
                       </label>
                     </div>
                   </div>
@@ -945,34 +1329,49 @@ END of Microbiology Table |
 
             <div
               class="col-md-1"
-              v-if="MicrobiologyScenario === 'MAIBPoR' && !ShowAntibiotics && !ShowBacteries"
+              v-if="
+                MicrobiologyScenario === 'MAIBPoR' &&
+                !ShowAntibiotics &&
+                !ShowBacteries
+              "
             ></div>
             <div
               class="col-md-10"
-              v-if="MicrobiologyScenario === 'MAIBPoR' && !ShowAntibiotics && !ShowBacteries"
+              v-if="
+                MicrobiologyScenario === 'MAIBPoR' &&
+                !ShowAntibiotics &&
+                !ShowBacteries
+              "
             >
               <vuestic-tabs-bactery
                 v-if="SelectedBacteries.length"
                 :names="BacteryTabs"
                 :tab="CurrentTab"
                 :id="CurrentTab"
-                :prikazi="sample.status != 'VERIFICIRAN' && sample.status != 'ODOBREN'"
+                :prikazi="
+                  sample.status != 'VERIFICIRAN' && sample.status != 'ODOBREN'
+                "
                 ref="tabs"
               >
-                <div :slot="CurrentTab" v-for="test in SelectedBacteries" :key="test._id">
+                <div
+                  :slot="CurrentTab"
+                  v-for="test in SelectedBacteries"
+                  :key="test._id"
+                >
                   <div class="row" v-show="test.opis === CurrentTab">
-
                     <!-- Antibiogram -->
 
                     <div class="table-responsive">
                       <table class="table table-striped first-td-padding">
                         <thead>
                           <tr align="left">
-                            <td style="text-transform: none;" width="30%">{{test.antibiogram.opis}}</td>
-                            <td width="10%">{{''}}</td>
-                            <td width="20%">{{''}}</td>
-                            <td width="20%">{{''}}</td>
-                            <td width="20%">{{''}}</td>
+                            <td style="text-transform: none;" width="30%">
+                              {{ test.antibiogram.opis }}
+                            </td>
+                            <td width="10%">{{ "" }}</td>
+                            <td width="20%">{{ "" }}</td>
+                            <td width="20%">{{ "" }}</td>
+                            <td width="20%">{{ "" }}</td>
                           </tr>
                         </thead>
 
@@ -983,14 +1382,21 @@ END of Microbiology Table |
                             align="left"
                             v-for="abtk in test.antibiogram.antibiotici"
                             :key="abtk._id"
-                            v-bind:class="{'table-danger': false, 'table-success': false,'table-warning': false}"
+                            v-bind:class="{
+                              'table-danger': false,
+                              'table-success': false,
+                              'table-warning': false,
+                            }"
                           >
                             <!-- ANALIZA -->
 
-                            <td :title="abtk.opis">{{abtk.opis}}</td>
+                            <td :title="abtk.opis">{{ abtk.opis }}</td>
                             <td>
                               <bactery-radio-button
-                                :disabled="sample.status === 'ODOBREN' || sample.status === 'VERIFICIRAN'"
+                                :disabled="
+                                  sample.status === 'ODOBREN' ||
+                                  sample.status === 'VERIFICIRAN'
+                                "
                                 :label="''"
                                 :value="''"
                                 :id="'' + test._id + abtk._id"
@@ -1000,7 +1406,10 @@ END of Microbiology Table |
                             </td>
                             <td>
                               <postavke-radio-button
-                                :disabled="sample.status === 'ODOBREN' || sample.status === 'VERIFICIRAN'"
+                                :disabled="
+                                  sample.status === 'ODOBREN' ||
+                                  sample.status === 'VERIFICIRAN'
+                                "
                                 :label="'Senzitivan'"
                                 :value="'S'"
                                 :id="'S' + test._id + abtk._id"
@@ -1010,7 +1419,10 @@ END of Microbiology Table |
                             </td>
                             <td>
                               <postavke-radio-button
-                                :disabled="sample.status === 'ODOBREN' || sample.status === 'VERIFICIRAN'"
+                                :disabled="
+                                  sample.status === 'ODOBREN' ||
+                                  sample.status === 'VERIFICIRAN'
+                                "
                                 :label="'Intermedijaran'"
                                 :value="'I'"
                                 :id="'I' + test._id + abtk._id"
@@ -1020,7 +1432,10 @@ END of Microbiology Table |
                             </td>
                             <td>
                               <postavke-radio-button
-                                :disabled="sample.status === 'ODOBREN' || sample.status === 'VERIFICIRAN'"
+                                :disabled="
+                                  sample.status === 'ODOBREN' ||
+                                  sample.status === 'VERIFICIRAN'
+                                "
                                 :label="'Rezistentan'"
                                 :value="'R'"
                                 :id="'R' + test._id + abtk._id"
@@ -1034,7 +1449,6 @@ END of Microbiology Table |
                     </div>
 
                     <!-- END of Antibiogram -->
-
                   </div>
                 </div>
               </vuestic-tabs-bactery>
@@ -1042,13 +1456,17 @@ END of Microbiology Table |
 
             <div
               class="col-md-12"
-              v-if="MicrobiologyScenario === 'MANBNeR' || MicrobiologyScenario === 'MANBPoR' || MicrobiologyScenario === 'MAIBNeR'"
+              v-if="
+                MicrobiologyScenario === 'MANBNeR' ||
+                MicrobiologyScenario === 'MANBPoR' ||
+                MicrobiologyScenario === 'MAIBNeR'
+              "
             >
               <div v-show="show_table" class="table-responsive">
                 <table class="table table-striped first-td-padding">
                   <thead>
                     <tr align="left">
-                      <td>{{'REZULTAT'}}</td>
+                      <td>{{ "REZULTAT" }}</td>
                     </tr>
                   </thead>
 
@@ -1061,12 +1479,21 @@ END of Microbiology Table |
                       v-show="index < 1"
                       :key="test.labassay_id"
                       v-bind:class="{
-                          'table-danger':  (test.rezultat_m.length && test.rezultat_m[0].pozitivan), 
-                          'table-success':  (test.rezultat_m.length && test.rezultat_m[0].negativan),
-                          'table-warning': false
-                        }"
+                        'table-danger':
+                          test.rezultat_m.length &&
+                          test.rezultat_m[0].pozitivan,
+                        'table-success':
+                          test.rezultat_m.length &&
+                          test.rezultat_m[0].negativan,
+                        'table-warning': false,
+                      }"
                     >
-                      <td v-if="sample.status != 'ODOBREN' &&  sample.status != 'VERIFICIRAN'">
+                      <td
+                        v-if="
+                          sample.status != 'ODOBREN' &&
+                          sample.status != 'VERIFICIRAN'
+                        "
+                      >
                         <div class="form-group">
                           <div class="input-group">
                             <textarea
@@ -1075,25 +1502,41 @@ END of Microbiology Table |
                               v-model="test.rezultat"
                               required
                             ></textarea>
-                            <label class="control-label" for="simple-textarea">{{ '' }}</label>
+                            <label
+                              class="control-label"
+                              for="simple-textarea"
+                              >{{ "" }}</label
+                            >
                             <i class="bar"></i>
                           </div>
                         </div>
                       </td>
-                      <td v-if="sample.status === 'ODOBREN' ||  sample.status === 'VERIFICIRAN'">
+                      <td
+                        v-if="
+                          sample.status === 'ODOBREN' ||
+                          sample.status === 'VERIFICIRAN'
+                        "
+                      >
                         <div class="form-group">
                           <div class="input-group">
-                            <input id="input-icon-left" title=" " name="input-icon-left" disabled />
+                            <input
+                              id="input-icon-left"
+                              title=" "
+                              name="input-icon-left"
+                              disabled
+                            />
                             <label
                               v-if="test.rezultat.length"
                               class="control-label"
                               for="input-icon-left"
-                            >{{test.rezultat}}</label>
+                              >{{ test.rezultat }}</label
+                            >
                             <label
                               v-if="!test.rezultat.length"
                               class="control-label"
                               for="input-icon-left"
-                            >{{"Nema podataka."}}</label>
+                              >{{ "Nema podataka." }}</label
+                            >
                             <i class="bar"></i>
                           </div>
                         </div>
@@ -1116,12 +1559,11 @@ END of Microbiology Table |
         okText="POTVRDI"
       >
         <div slot="title">
-          <span style="color: #acb5be;">{{'Rezultat analize: '}}</span>
-          <span style="color: #e34a4a;">{{CurrentTest}}</span>
+          <span style="color: #acb5be;">{{ "Rezultat analize: " }}</span>
+          <span style="color: #e34a4a;">{{ CurrentTest }}</span>
         </div>
 
         <div>
-
           <!--  -->
 
           <div class="row" v-if="show_table">
@@ -1130,7 +1572,7 @@ END of Microbiology Table |
                 <table class="table table-striped first-td-padding">
                   <thead>
                     <tr align="left">
-                      <td>{{'REZULTAT'}}</td>
+                      <td>{{ "REZULTAT" }}</td>
                     </tr>
                   </thead>
 
@@ -1143,12 +1585,21 @@ END of Microbiology Table |
                       v-show="index < 1"
                       :key="test.labassay_id"
                       v-bind:class="{
-                          'table-danger':  (test.rezultat_m.length && test.rezultat_m[0].pozitivan), 
-                          'table-success':  (test.rezultat_m.length && test.rezultat_m[0].negativan),
-                          'table-warning': false
-                        }"
+                        'table-danger':
+                          test.rezultat_m.length &&
+                          test.rezultat_m[0].pozitivan,
+                        'table-success':
+                          test.rezultat_m.length &&
+                          test.rezultat_m[0].negativan,
+                        'table-warning': false,
+                      }"
                     >
-                      <td v-if="sample.status != 'ODOBREN' &&  sample.status != 'VERIFICIRAN'">
+                      <td
+                        v-if="
+                          sample.status != 'ODOBREN' &&
+                          sample.status != 'VERIFICIRAN'
+                        "
+                      >
                         <div class="form-group">
                           <div class="input-group">
                             <textarea
@@ -1157,25 +1608,41 @@ END of Microbiology Table |
                               v-model="test.rezultat"
                               required
                             ></textarea>
-                            <label class="control-label" for="simple-textarea">{{ '' }}</label>
+                            <label
+                              class="control-label"
+                              for="simple-textarea"
+                              >{{ "" }}</label
+                            >
                             <i class="bar"></i>
                           </div>
                         </div>
                       </td>
-                      <td v-if="sample.status === 'ODOBREN' ||  sample.status === 'VERIFICIRAN'">
+                      <td
+                        v-if="
+                          sample.status === 'ODOBREN' ||
+                          sample.status === 'VERIFICIRAN'
+                        "
+                      >
                         <div class="form-group">
                           <div class="input-group">
-                            <input id="input-icon-left" title=" " name="input-icon-left" disabled />
+                            <input
+                              id="input-icon-left"
+                              title=" "
+                              name="input-icon-left"
+                              disabled
+                            />
                             <label
                               v-if="test.rezultat.length"
                               class="control-label"
                               for="input-icon-left"
-                            >{{test.rezultat}}</label>
+                              >{{ test.rezultat }}</label
+                            >
                             <label
                               v-if="!test.rezultat.length"
                               class="control-label"
                               for="input-icon-left"
-                            >{{"Nema podataka."}}</label>
+                              >{{ "Nema podataka." }}</label
+                            >
                             <i class="bar"></i>
                           </div>
                         </div>
@@ -1201,8 +1668,8 @@ END of Microbiology Table |
         okText="POTVRDI"
       >
         <div slot="title">
-          <span style="color: #acb5be;">{{MicrobiologyModalHeader}} |</span>
-          <span style="color: #e34a4a;">{{"Izbornik"}}</span>
+          <span style="color: #acb5be;">{{ MicrobiologyModalHeader }} |</span>
+          <span style="color: #e34a4a;">{{ "Izbornik" }}</span>
         </div>
 
         <div class="row" v-if="!ModalNegative && !ModalPositive">
@@ -1213,8 +1680,13 @@ END of Microbiology Table |
                 <button
                   style="text-transform: none; border: 0px;"
                   class="btn btn-secondary btn-sm wizard-back pull-left"
-                  @click="ModalNegative = true; ModalPositive = false;"
-                >{{'Negativan'}}</button>
+                  @click="
+                    ModalNegative = true;
+                    ModalPositive = false;
+                  "
+                >
+                  {{ "Negativan" }}
+                </button>
               </div>
               <div class="col-md-3"></div>
             </div>
@@ -1226,8 +1698,13 @@ END of Microbiology Table |
                 <button
                   style="text-transform: none; border: 0px;"
                   class="btn btn-secondary-danger btn-sm wizard-next pull-right"
-                  @click="ModalPositive = true; ModalNegative = false;"
-                >{{'Pozitivan'}}</button>
+                  @click="
+                    ModalPositive = true;
+                    ModalNegative = false;
+                  "
+                >
+                  {{ "Pozitivan" }}
+                </button>
               </div>
               <div class="col-md-4"></div>
             </div>
@@ -1252,7 +1729,11 @@ END of Microbiology Table |
 
         <div
           class="row"
-          v-if="!ModalNegative && ModalPositive && !MicrobiologyResult.DefaultBacteries.length"
+          v-if="
+            !ModalNegative &&
+            ModalPositive &&
+            !MicrobiologyResult.DefaultBacteries.length
+          "
         >
           <div class="col-md-1"></div>
           <div class="col-md-11">
@@ -1271,7 +1752,11 @@ END of Microbiology Table |
 
         <div
           class="row"
-          v-if="!ModalNegative && ModalPositive && MicrobiologyResult.DefaultBacteries.length"
+          v-if="
+            !ModalNegative &&
+            ModalPositive &&
+            MicrobiologyResult.DefaultBacteries.length
+          "
         >
           <div class="col-md-6">
             <div class="row">
@@ -1290,7 +1775,9 @@ END of Microbiology Table |
                     @click="SelectBactery(bakt, index)"
                   />
                   <label class="form-check-label" :for="bakt._id">
-                    <span style="color: #e34a4a;" class="abc-label-text">{{bakt.opis}}</span>
+                    <span style="color: #e34a4a;" class="abc-label-text">
+                      {{ bakt.opis }}
+                    </span>
                   </label>
                 </div>
               </div>
@@ -1306,7 +1793,8 @@ END of Microbiology Table |
                   href="#"
                   @click.prevent="ShowAllBacteries = true"
                   style="font-size: 16px; color: #4ae387;"
-                >Prikaži više</a>
+                  >Prikaži više</a
+                >
               </div>
               <div class="col-md-5"></div>
             </div>
@@ -1327,7 +1815,9 @@ END of Microbiology Table |
                     @click="SelectBactery(bakt, index)"
                   />
                   <label class="form-check-label" :for="bakt._id">
-                    <span style="color: #e34a4a;" class="abc-label-text">{{bakt.opis}}</span>
+                    <span style="color: #e34a4a;" class="abc-label-text">
+                      {{ bakt.opis }}
+                    </span>
                   </label>
                 </div>
               </div>
@@ -1369,11 +1859,11 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          <span style="color: #acb5be;">{{'Brisanje uzorka: '}}</span>
-          <span style="color: #e34a4a;">{{sid}}</span>
+          <span style="color: #acb5be;">{{ "Brisanje uzorka: " }}</span>
+          <span style="color: #e34a4a;">{{ sid }}</span>
         </div>
         <div>
-          <h5>{{ 'Jeste li sigurni da želite obrisati uzorak?'}}</h5>
+          <h5>{{ "Jeste li sigurni da želite obrisati uzorak?" }}</h5>
         </div>
       </vuestic-modal-delete>
 
@@ -1385,7 +1875,7 @@ End of Microbiology Modal |
         cancelText="ODUSTANI"
         okText="POTVRDI"
       >
-        <div slot="title">{{ 'Unos komentara za uzorak: ' + sid }}</div>
+        <div slot="title">{{ "Unos komentara za uzorak: " + sid }}</div>
         <div>
           <h5></h5>
         </div>
@@ -1401,7 +1891,7 @@ End of Microbiology Modal |
         cancelText="ODUSTANI"
         okText="POTVRDI"
       >
-        <div slot="title">{{ 'Uređivanje uzorka: ' + sid }}</div>
+        <div slot="title">{{ "Uređivanje uzorka: " + sid }}</div>
         <div>
           <h5></h5>
         </div>
@@ -1416,11 +1906,11 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          {{'Slanje nalaza na adresu: '}}
-          <span style="color: #4ae387;">{{email}}</span>
+          {{ "Slanje nalaza na adresu: " }}
+          <span style="color: #4ae387;">{{ email }}</span>
         </div>
         <div>
-          <h5>{{'Jeste li sigurni da želite poslati nalaz?'}}</h5>
+          <h5>{{ "Jeste li sigurni da želite poslati nalaz?" }}</h5>
         </div>
       </vuestic-modal-mail>
 
@@ -1433,15 +1923,14 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          {{'Izbor rezultata: '}}
-          <span style="color: #e34a4a;">{{labassay}}</span>
+          {{ "Izbor rezultata: " }}
+          <span style="color: #e34a4a;">{{ labassay }}</span>
         </div>
         <div>
           <div class="table-responsive">
             <table class="table table-striped first-td-padding">
               <thead>
                 <tr>
-
                   <!-- <td width="20%"></td> -->
 
                   <td>analizator</td>
@@ -1449,7 +1938,14 @@ End of Microbiology Modal |
                   <td>rezultat</td>
                   <td>jedinica</td>
                   <td>reference</td>
-                  <td v-if="sample_status != 'ODOBREN' &&  sample_status != 'VERIFICIRAN'">izbor</td>
+                  <td
+                    v-if="
+                      sample_status != 'ODOBREN' &&
+                      sample_status != 'VERIFICIRAN'
+                    "
+                  >
+                    izbor
+                  </td>
                   <td align="middle"></td>
                 </tr>
               </thead>
@@ -1459,54 +1955,127 @@ End of Microbiology Modal |
                   v-show="test.rezultat_f != ''"
                   :key="test._id"
                   v-bind:class="{
-                    'table-danger': Interpretacija(vise.labassay.analit, test.rezultat_f, test.jedinice_f, vise.refd, vise.refg, $store.state.site, vise.interp, vise.extend, spec)[5] === 'Red' && !test.multidata, 
-                    'table-success': Interpretacija(vise.labassay.analit, test.rezultat_f, test.jedinice_f, vise.refd, vise.refg, $store.state.site, vise.interp, vise.extend, spec)[5] === 'Green' && !test.multidata,
-                    'table-warning': Interpretacija(vise.labassay.analit, test.rezultat_f, test.jedinice_f, vise.refd, vise.refg, $store.state.site, vise.interp, vise.extend, spec)[5] === 'Yellow' && !test.multidata
+                    'table-danger':
+                      Interpretacija(
+                        vise.labassay.analit,
+                        test.rezultat_f,
+                        test.jedinice_f,
+                        vise.refd,
+                        vise.refg,
+                        $store.state.site,
+                        vise.interp,
+                        vise.extend,
+                        spec
+                      )[5] === 'Red' && !test.multidata,
+                    'table-success':
+                      Interpretacija(
+                        vise.labassay.analit,
+                        test.rezultat_f,
+                        test.jedinice_f,
+                        vise.refd,
+                        vise.refg,
+                        $store.state.site,
+                        vise.interp,
+                        vise.extend,
+                        spec
+                      )[5] === 'Green' && !test.multidata,
+                    'table-warning':
+                      Interpretacija(
+                        vise.labassay.analit,
+                        test.rezultat_f,
+                        test.jedinice_f,
+                        vise.refd,
+                        vise.refg,
+                        $store.state.site,
+                        vise.interp,
+                        vise.extend,
+                        spec
+                      )[5] === 'Yellow' && !test.multidata,
                   }"
                 >
                   <td>{{ test.anaassay.aparat.ime }}</td>
 
                   <td>
-                    {{ JSON.stringify(
-                    test.updated_at
-                    ).slice(9, 11) +
-                    "." +
-                    JSON.stringify(
-                    test.updated_at
-                    ).slice(6, 8) +
-                    "." +
-                    JSON.stringify(
-                    test.updated_at
-                    ).slice(1, 5) + ' | '}}
-                    <sub>
-                      {{JSON.stringify(
-                      test.updated_at
-                      ).slice(12, 20)}}
-                    </sub>
+                    {{
+                      JSON.stringify(test.updated_at).slice(9, 11) +
+                      "." +
+                      JSON.stringify(test.updated_at).slice(6, 8) +
+                      "." +
+                      JSON.stringify(test.updated_at).slice(1, 5) +
+                      " | "
+                    }}
+                    <sub>{{
+                      JSON.stringify(test.updated_at).slice(12, 20)
+                    }}</sub>
                   </td>
                   <td>{{ test.rezultat_f }}</td>
                   <td>{{ test.jedinice_f }}</td>
-                  <td>{{Interpretacija(vise.labassay.analit, test.rezultat_f, test.jedinice_f, vise.refd, vise.refg, $store.state.site, vise.interp, vise.extend, spec)[4]}}</td>
-                  <td v-if="sample_status != 'ODOBREN' &&  sample_status != 'VERIFICIRAN'">
+                  <td>
+                    {{
+                      Interpretacija(
+                        vise.labassay.analit,
+                        test.rezultat_f,
+                        test.jedinice_f,
+                        vise.refd,
+                        vise.refg,
+                        $store.state.site,
+                        vise.interp,
+                        vise.extend,
+                        spec
+                      )[4]
+                    }}
+                  </td>
+                  <td
+                    v-if="
+                      sample_status != 'ODOBREN' &&
+                      sample_status != 'VERIFICIRAN'
+                    "
+                  >
                     <i
                       v-if="!test.izabran"
                       @click.prevent="IzborTesta(vise, test)"
-                      style="font-size: 18px; color:#e34a4a;"
+                      style="font-size: 18px; color: #e34a4a;"
                       class="glyphicon glyphicon-unchecked"
                     ></i>
 
                     <i
                       v-if="test.izabran"
-                      style="font-size: 18px; color:#4ae387;"
+                      style="font-size: 18px; color: #4ae387;"
                       class="glyphicon glyphicon-check"
                     ></i>
                   </td>
                   <td>
                     <i
-                      v-bind:class="{'fa fa-exclamation-triangle icon-right input-icon error-icon' : Interpretacija(vise.labassay.analit, test.rezultat_f, test.jedinice_f, vise.refd, vise.refg, $store.state.site, vise.interp, vise.extend, spec)[5] === 'Red'}"
+                      v-bind:class="{
+                        'fa fa-exclamation-triangle icon-right input-icon error-icon':
+                          Interpretacija(
+                            vise.labassay.analit,
+                            test.rezultat_f,
+                            test.jedinice_f,
+                            vise.refd,
+                            vise.refg,
+                            $store.state.site,
+                            vise.interp,
+                            vise.extend,
+                            spec
+                          )[5] === 'Red',
+                      }"
                     ></i>
                     <i
-                      v-bind:class="{'fa fa-check success-icon icon-right input-icon' : Interpretacija(vise.labassay.analit, test.rezultat_f, test.jedinice_f, vise.refd, vise.refg, $store.state.site, vise.interp, vise.extend, spec)[5] === 'Green'}"
+                      v-bind:class="{
+                        'fa fa-check success-icon icon-right input-icon':
+                          Interpretacija(
+                            vise.labassay.analit,
+                            test.rezultat_f,
+                            test.jedinice_f,
+                            vise.refd,
+                            vise.refg,
+                            $store.state.site,
+                            vise.interp,
+                            vise.extend,
+                            spec
+                          )[5] === 'Green',
+                      }"
                     ></i>
                   </td>
                 </tr>
@@ -1514,7 +2083,6 @@ End of Microbiology Modal |
             </table>
 
             <!-- END OF DRUGA TABELA -->
-
           </div>
         </div>
       </vuestic-modal-all-results>
@@ -1526,11 +2094,11 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          {{''}}
-          <span style="color: #e34a4a;">{{'404: Not Found'}}</span>
+          {{ "" }}
+          <span style="color: #e34a4a;">{{ "404: Not Found" }}</span>
         </div>
         <div>
-          <h5>{{'Greška prilikom čitanja nalaza.'}}</h5>
+          <h5>{{ "Greška prilikom čitanja nalaza." }}</h5>
         </div>
       </vuestic-modal-error>
 
@@ -1541,11 +2109,11 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          {{''}}
-          <span style="color: #e34a4a;">{{'401: Not Authorized'}}</span>
+          {{ "" }}
+          <span style="color: #e34a4a;">{{ "401: Not Authorized" }}</span>
         </div>
         <div>
-          <h5>{{'Nemate odgovarajuće privilegije.'}}</h5>
+          <h5>{{ "Nemate odgovarajuće privilegije." }}</h5>
         </div>
       </vuestic-modal-error>
 
@@ -1556,19 +2124,18 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          {{''}}
-          <span style="color: #e34a4a;">{{warning.analiza}}</span>
+          {{ "" }}
+          <span style="color: #e34a4a;">{{ warning.analiza }}</span>
         </div>
         <div>
-          <h5>{{warning.control}}</h5>
-          <p>{{warning.text}}</p>
+          <h5>{{ warning.control }}</h5>
+          <p>{{ warning.text }}</p>
         </div>
 
         <!-- <div v-if="warning.napomena !=''">
           <h5>{{"Napomena"}}</h5>
           <p>{{warning.napomena}}</p>
         </div>-->
-
       </vuestic-modal-exclamation>
 
       <vuestic-modal-reference
@@ -1578,10 +2145,10 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          {{'Referentne vrijednosti: '}}
-          <span
-            style="color: #e34a4a;"
-          >{{reference.naziv}} ({{reference.opis}})</span>
+          {{ "Referentne vrijednosti: " }}
+          <span style="color: #e34a4a;"
+            >{{ reference.naziv }} ({{ reference.opis }})</span
+          >
         </div>
         <div>
           <div class="row">
@@ -1600,7 +2167,9 @@ End of Microbiology Modal |
 
                   <!-- <i class="glyphicon glyphicon-pencil icon-left input-icon"></i> -->
 
-                  <label class="control-label" for="input-icon-left">{{'Donja'}}</label>
+                  <label class="control-label" for="input-icon-left">
+                    {{ "Donja" }}
+                  </label>
                   <i class="bar"></i>
                 </div>
               </div>
@@ -1620,7 +2189,9 @@ End of Microbiology Modal |
 
                   <!-- <i class="glyphicon glyphicon-pencil icon-left input-icon"></i> -->
 
-                  <label class="control-label" for="input-icon-left">{{'Gornja'}}</label>
+                  <label class="control-label" for="input-icon-left">
+                    {{ "Gornja" }}
+                  </label>
                   <i class="bar"></i>
                 </div>
               </div>
@@ -1649,7 +2220,9 @@ End of Microbiology Modal |
 
                   <!-- <i class="glyphicon glyphicon-pencil icon-left input-icon"></i> -->
 
-                  <label class="control-label" for="input-icon-left">{{reference.interp}}</label>
+                  <label class="control-label" for="input-icon-left">
+                    {{ reference.interp }}
+                  </label>
                   <i class="bar"></i>
                 </div>
               </div>
@@ -1682,10 +2255,9 @@ End of Microbiology Modal |
                     required
                   />
 
-                  <label
-                    class="control-label"
-                    for="input-icon-left"
-                  >{{'Proširena referentna vrijednost'}}</label>
+                  <label class="control-label" for="input-icon-left">
+                    {{ "Proširena referentna vrijednost" }}
+                  </label>
                   <i class="bar"></i>
                 </div>
               </div>
@@ -1700,10 +2272,9 @@ End of Microbiology Modal |
                     required
                   ></textarea>
 
-                  <label
-                    class="control-label"
-                    for="simple-textarea"
-                  >{{'Specifična interpretacija rezultata'}}</label>
+                  <label class="control-label" for="simple-textarea">
+                    {{ "Specifična interpretacija rezultata" }}
+                  </label>
                   <i class="bar"></i>
                 </div>
               </div>
@@ -1722,8 +2293,8 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          {{''}}
-          <span style="color: #e34a4a;">{{'Redni broj pacijenta'}}</span>
+          {{ "" }}
+          <span style="color: #e34a4a;">{{ "Redni broj pacijenta" }}</span>
         </div>
         <div>
           <h5></h5>
@@ -1737,10 +2308,10 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          {{'Izbor analizatora: '}}
-          <span
-            style="color: #e34a4a;"
-          >{{this.analiza.ime + ' (' + this.analiza.analit + ')'}}</span>
+          {{ "Izbor analizatora: " }}
+          <span style="color: #e34a4a;">
+            {{ this.analiza.ime + " (" + this.analiza.analit + ")" }}
+          </span>
         </div>
         <div>
           <vuestic-accordion-obrada>
@@ -1749,7 +2320,9 @@ End of Microbiology Modal |
               :key="element._id"
               :analyser="element"
             >
-              <span slot="header">{{element.ime + ', ' + element.site.naziv}}</span>
+              <span slot="header">
+                {{ element.ime + ", " + element.site.naziv }}
+              </span>
               <div slot="body">
                 <div class="va-row"></div>
               </div>
@@ -1767,8 +2340,8 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          {{'Izbor rezultata: '}}
-          <span style="color: #e34a4a;">{{multi_test}}</span>
+          {{ "Izbor rezultata: " }}
+          <span style="color: #e34a4a;">{{ multi_test }}</span>
         </div>
         <div></div>
       </vuestic-modal-results-multi>
@@ -1782,25 +2355,26 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          <span>{{ime + ' ' + prezime}}</span>
+          <span>{{ ime + " " + prezime }}</span>
         </div>
 
         <div class="row" v-if="Procjena.length && !graph">
           <div class="col-md-12">
             <div class="table-responsive">
-              <table class="table table-striped table-sm color-icon-label-table">
+              <table
+                class="table table-striped table-sm color-icon-label-table"
+              >
                 <thead>
                   <tr align="middle">
-                    <td width="20%">{{'REZULTAT'}}</td>
-                    <td width="20%">{{'JEDINICA'}}</td>
-                    <td width="20%">{{'REFERENCE'}}</td>
-                    <td width="20%">{{'DATUM'}}</td>
-                    <td width="15%">{{'VRIJEME'}}</td>
+                    <td width="20%">{{ "REZULTAT" }}</td>
+                    <td width="20%">{{ "JEDINICA" }}</td>
+                    <td width="20%">{{ "REFERENCE" }}</td>
+                    <td width="20%">{{ "DATUM" }}</td>
+                    <td width="15%">{{ "VRIJEME" }}</td>
                     <td width="5%" align="middle"></td>
                   </tr>
                 </thead>
                 <tbody>
-
                   <!--  -->
 
                   <tr
@@ -1808,32 +2382,103 @@ End of Microbiology Modal |
                     v-for="(element, index) in Procjena"
                     :key="index"
                     v-bind:class="{
-                          'table-danger': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Red', 
-                          'table-success': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Green',
-                          'table-warning': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Yellow'
-                        }"
+                      'table-danger':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Red',
+                      'table-success':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Green',
+                      'table-warning':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Yellow',
+                    }"
                   >
-                    <td width="19%">{{element.rezultat}}</td>
-                    <td width="19%">{{element.jedinica}}</td>
-                    <td
-                      width="19%"
-                    >{{Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[4]}}</td>
-                    <td width="19%">{{element.datum}}</td>
-                    <td width="15%">{{element.vrijeme}}</td>
+                    <td width="19%">{{ element.rezultat }}</td>
+                    <td width="19%">{{ element.jedinica }}</td>
+                    <td width="19%">
+                      {{
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[4]
+                      }}
+                    </td>
+                    <td width="19%">{{ element.datum }}</td>
+                    <td width="15%">{{ element.vrijeme }}</td>
                     <td width="9%" align="middle">
                       <i
-                        v-bind:class="{'fa fa-exclamation-triangle icon-right input-icon error-icon' : Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Red'}"
+                        v-bind:class="{
+                          'fa fa-exclamation-triangle icon-right input-icon error-icon':
+                            Interpretacija(
+                              element.analit,
+                              element.rezultat,
+                              element.jedinica,
+                              element.refd,
+                              element.refg,
+                              $store.state.site,
+                              element.interp,
+                              element.extend,
+                              spec
+                            )[5] === 'Red',
+                        }"
                       ></i>
                       <i
-                        v-bind:class="{'fa fa-check success-icon icon-right input-icon' : Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Green'}"
+                        v-bind:class="{
+                          'fa fa-check success-icon icon-right input-icon':
+                            Interpretacija(
+                              element.analit,
+                              element.rezultat,
+                              element.jedinica,
+                              element.refd,
+                              element.refg,
+                              $store.state.site,
+                              element.interp,
+                              element.extend,
+                              spec
+                            )[5] === 'Green',
+                        }"
                       ></i>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <div style="text-align:center;">
+              <div style="text-align: center;">
                 <span class="circle badge-info"></span>
-                {{table_header}}
+                {{ table_header }}
               </div>
             </div>
           </div>
@@ -1847,16 +2492,19 @@ End of Microbiology Modal |
 
         <div class="row" v-if="showLineChart && graph">
           <div class="col-md-12">
-            <line-chart :options="optionsLineChart" :data="dataLineChart" type="line"></line-chart>
+            <line-chart
+              :options="optionsLineChart"
+              :data="dataLineChart"
+              type="line"
+            ></line-chart>
           </div>
         </div>
         <div class="row" v-if="!showLineChart && graph">
           <div class="col-md-12">
-
             <!-- <div style="text-align:center;"> -->
 
             <div>
-              <span style="color: #e34a4a;">{{"Nema podataka."}}</span>
+              <span style="color: #e34a4a;">{{ "Nema podataka." }}</span>
             </div>
           </div>
         </div>
@@ -1871,26 +2519,29 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          <span style="color: #4ae387;">{{analiza_eval.ime + ' (' + analiza_eval.analit + ')'}}</span>
-          <span>{{" - Rezultati analize u zadnjih 14 dana"}}</span>
+          <span style="color: #4ae387;">
+            {{ analiza_eval.ime + " (" + analiza_eval.analit + ")" }}
+          </span>
+          <span>{{ " - Rezultati analize u zadnjih 14 dana" }}</span>
         </div>
 
         <div class="row" v-if="Procjena.length && !graph">
           <div class="col-md-12">
             <div class="table-responsive">
-              <table class="table table-striped table-sm color-icon-label-table">
+              <table
+                class="table table-striped table-sm color-icon-label-table"
+              >
                 <thead>
                   <tr align="middle">
-                    <td width="20%">{{'REZULTAT'}}</td>
-                    <td width="20%">{{'JEDINICA'}}</td>
-                    <td width="20%">{{'REFERENCE'}}</td>
-                    <td width="20%">{{'DATUM'}}</td>
-                    <td width="15%">{{'VRIJEME'}}</td>
+                    <td width="20%">{{ "REZULTAT" }}</td>
+                    <td width="20%">{{ "JEDINICA" }}</td>
+                    <td width="20%">{{ "REFERENCE" }}</td>
+                    <td width="20%">{{ "DATUM" }}</td>
+                    <td width="15%">{{ "VRIJEME" }}</td>
                     <td width="5%" align="middle"></td>
                   </tr>
                 </thead>
                 <tbody>
-
                   <!--  -->
 
                   <tr
@@ -1898,32 +2549,103 @@ End of Microbiology Modal |
                     v-for="(element, index) in Procjena"
                     :key="index"
                     v-bind:class="{
-                      'table-danger': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Red', 
-                      'table-success': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Green',
-                      'table-warning': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Yellow'
+                      'table-danger':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Red',
+                      'table-success':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Green',
+                      'table-warning':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Yellow',
                     }"
                   >
-                    <td width="19%">{{element.rezultat}}</td>
-                    <td width="19%">{{element.jedinica}}</td>
-                    <td
-                      width="19%"
-                    >{{Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[4]}}</td>
-                    <td width="19%">{{element.datum}}</td>
-                    <td width="15%">{{element.vrijeme}}</td>
+                    <td width="19%">{{ element.rezultat }}</td>
+                    <td width="19%">{{ element.jedinica }}</td>
+                    <td width="19%">
+                      {{
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[4]
+                      }}
+                    </td>
+                    <td width="19%">{{ element.datum }}</td>
+                    <td width="15%">{{ element.vrijeme }}</td>
                     <td width="9%" align="middle">
                       <i
-                        v-bind:class="{'fa fa-exclamation-triangle icon-right input-icon error-icon' : Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Red'}"
+                        v-bind:class="{
+                          'fa fa-exclamation-triangle icon-right input-icon error-icon':
+                            Interpretacija(
+                              element.analit,
+                              element.rezultat,
+                              element.jedinica,
+                              element.refd,
+                              element.refg,
+                              $store.state.site,
+                              element.interp,
+                              element.extend,
+                              spec
+                            )[5] === 'Red',
+                        }"
                       ></i>
                       <i
-                        v-bind:class="{'fa fa-check success-icon icon-right input-icon' : Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Green'}"
+                        v-bind:class="{
+                          'fa fa-check success-icon icon-right input-icon':
+                            Interpretacija(
+                              element.analit,
+                              element.rezultat,
+                              element.jedinica,
+                              element.refd,
+                              element.refg,
+                              $store.state.site,
+                              element.interp,
+                              element.extend,
+                              spec
+                            )[5] === 'Green',
+                        }"
                       ></i>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <div style="text-align:center;">
+              <div style="text-align: center;">
                 <span class="circle badge-info"></span>
-                {{table_header}}
+                {{ table_header }}
               </div>
             </div>
           </div>
@@ -1937,14 +2659,18 @@ End of Microbiology Modal |
 
         <div class="row" v-if="showLineChart && graph">
           <div class="col-md-12">
-            <line-chart :options="optionsLineChart" :data="dataLineChart" type="line"></line-chart>
+            <line-chart
+              :options="optionsLineChart"
+              :data="dataLineChart"
+              type="line"
+            ></line-chart>
           </div>
         </div>
         <div class="row" v-if="!showLineChart && graph">
           <div class="col-md-12">
             <!-- <div style="text-align:center;"> -->
             <div>
-              <span style="color: #e34a4a;">{{"Nema podataka."}}</span>
+              <span style="color: #e34a4a;">{{ "Nema podataka." }}</span>
             </div>
           </div>
         </div>
@@ -1961,7 +2687,7 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          <span>{{ime + ' ' + prezime}}</span>
+          <span>{{ ime + " " + prezime }}</span>
         </div>
 
         <!--  -->
@@ -1969,14 +2695,16 @@ End of Microbiology Modal |
         <div class="row" v-if="Procjena.length && !graph">
           <div class="col-md-12">
             <div class="table-responsive">
-              <table class="table table-striped table-sm color-icon-label-table">
+              <table
+                class="table table-striped table-sm color-icon-label-table"
+              >
                 <thead>
                   <tr align="middle">
-                    <td width="20%">{{'REZULTAT'}}</td>
-                    <td width="20%">{{'JEDINICA'}}</td>
-                    <td width="20%">{{'REFERENCE'}}</td>
-                    <td width="20%">{{'DATUM'}}</td>
-                    <td width="15%">{{'VRIJEME'}}</td>
+                    <td width="20%">{{ "REZULTAT" }}</td>
+                    <td width="20%">{{ "JEDINICA" }}</td>
+                    <td width="20%">{{ "REFERENCE" }}</td>
+                    <td width="20%">{{ "DATUM" }}</td>
+                    <td width="15%">{{ "VRIJEME" }}</td>
                     <td width="5%" align="middle"></td>
                   </tr>
                 </thead>
@@ -1986,32 +2714,103 @@ End of Microbiology Modal |
                     v-for="(element, index) in Procjena"
                     :key="index"
                     v-bind:class="{
-                      'table-danger': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Red', 
-                      'table-success': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Green',
-                      'table-warning': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Yellow'
+                      'table-danger':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Red',
+                      'table-success':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Green',
+                      'table-warning':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Yellow',
                     }"
                   >
-                    <td width="19%">{{element.rezultat}}</td>
-                    <td width="19%">{{element.jedinica}}</td>
-                    <td
-                      width="19%"
-                    >{{Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[4]}}</td>
-                    <td width="19%">{{element.datum}}</td>
-                    <td width="15%">{{element.vrijeme}}</td>
+                    <td width="19%">{{ element.rezultat }}</td>
+                    <td width="19%">{{ element.jedinica }}</td>
+                    <td width="19%">
+                      {{
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[4]
+                      }}
+                    </td>
+                    <td width="19%">{{ element.datum }}</td>
+                    <td width="15%">{{ element.vrijeme }}</td>
                     <td width="9%" align="middle">
                       <i
-                        v-bind:class="{'fa fa-exclamation-triangle icon-right input-icon error-icon' : Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Red'}"
+                        v-bind:class="{
+                          'fa fa-exclamation-triangle icon-right input-icon error-icon':
+                            Interpretacija(
+                              element.analit,
+                              element.rezultat,
+                              element.jedinica,
+                              element.refd,
+                              element.refg,
+                              $store.state.site,
+                              element.interp,
+                              element.extend,
+                              spec
+                            )[5] === 'Red',
+                        }"
                       ></i>
                       <i
-                        v-bind:class="{'fa fa-check success-icon icon-right input-icon' : Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Green'}"
+                        v-bind:class="{
+                          'fa fa-check success-icon icon-right input-icon':
+                            Interpretacija(
+                              element.analit,
+                              element.rezultat,
+                              element.jedinica,
+                              element.refd,
+                              element.refg,
+                              $store.state.site,
+                              element.interp,
+                              element.extend,
+                              spec
+                            )[5] === 'Green',
+                        }"
                       ></i>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <div style="text-align:center;">
+              <div style="text-align: center;">
                 <span class="circle badge-info"></span>
-                {{table_header}}
+                {{ table_header }}
               </div>
             </div>
           </div>
@@ -2020,28 +2819,41 @@ End of Microbiology Modal |
         <div class="row" v-if="!Procjena.length && !graph">
           <div class="col-md-12">
             <div>
-              <span style="color: #e34a4a;">{{"Nema podataka."}}</span>
+              <span style="color: #e34a4a;">{{ "Nema podataka." }}</span>
             </div>
           </div>
         </div>
 
         <div class="row" v-if="showLineChart && graph">
           <div class="col-md-12">
-            <line-chart :options="optionsLineChart" :data="dataLineChart" type="line"></line-chart>
+            <line-chart
+              :options="optionsLineChart"
+              :data="dataLineChart"
+              type="line"
+            ></line-chart>
           </div>
         </div>
         <div class="row" v-if="!showLineChart && graph">
           <div v-if="!showLineChart && !spinner" class="col-md-12">
             <div>
-              <span style="color: #e34a4a;">{{"Nema podataka."}}</span>
+              <span style="color: #e34a4a;">{{ "Nema podataka." }}</span>
             </div>
           </div>
-          <div style="min-height: 400px;" v-if="!showLineChart && spinner" class="col-md-12">
+          <div
+            style="min-height: 400px;"
+            v-if="!showLineChart && spinner"
+            class="col-md-12"
+          >
             <div
-              style="display:flex; flex-direction: row; justify-content: center; align-items: center"
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+              "
             >
-              <div style="float:left;"></div>
-              <span style="vertical-align:middle; ">
+              <div style="float: left;"></div>
+              <span style="vertical-align: middle;">
                 <atom-spinner
                   style="opacity: 0.25;"
                   :animation-duration="1000"
@@ -2065,8 +2877,10 @@ End of Microbiology Modal |
         okText="POTVRDI"
       >
         <div slot="title">
-          <span style="color: #4ae387;">{{analiza_eval.ime + ' (' + analiza_eval.analit + ')'}}</span>
-          <span>{{" - Rezultati analize u zadnjih 14 dana"}}</span>
+          <span style="color: #4ae387;">
+            {{ analiza_eval.ime + " (" + analiza_eval.analit + ")" }}
+          </span>
+          <span>{{ " - Rezultati analize u zadnjih 14 dana" }}</span>
         </div>
 
         <!--  -->
@@ -2074,14 +2888,16 @@ End of Microbiology Modal |
         <div class="row" v-if="Procjena.length && !graph">
           <div class="col-md-12">
             <div class="table-responsive">
-              <table class="table table-striped table-sm color-icon-label-table">
+              <table
+                class="table table-striped table-sm color-icon-label-table"
+              >
                 <thead>
                   <tr align="middle">
-                    <td width="20%">{{'REZULTAT'}}</td>
-                    <td width="20%">{{'JEDINICA'}}</td>
-                    <td width="20%">{{'REFERENCE'}}</td>
-                    <td width="20%">{{'DATUM'}}</td>
-                    <td width="15%">{{'VRIJEME'}}</td>
+                    <td width="20%">{{ "REZULTAT" }}</td>
+                    <td width="20%">{{ "JEDINICA" }}</td>
+                    <td width="20%">{{ "REFERENCE" }}</td>
+                    <td width="20%">{{ "DATUM" }}</td>
+                    <td width="15%">{{ "VRIJEME" }}</td>
                     <td width="5%" align="middle"></td>
                   </tr>
                 </thead>
@@ -2091,32 +2907,103 @@ End of Microbiology Modal |
                     v-for="(element, index) in Procjena"
                     :key="index"
                     v-bind:class="{
-                      'table-danger': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Red', 
-                      'table-success': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Green',
-                      'table-warning': Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Yellow'
+                      'table-danger':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Red',
+                      'table-success':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Green',
+                      'table-warning':
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[5] === 'Yellow',
                     }"
                   >
-                    <td width="19%">{{element.rezultat}}</td>
-                    <td width="19%">{{element.jedinica}}</td>
-                    <td
-                      width="19%"
-                    >{{Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[4]}}</td>
-                    <td width="19%">{{element.datum}}</td>
-                    <td width="15%">{{element.vrijeme}}</td>
+                    <td width="19%">{{ element.rezultat }}</td>
+                    <td width="19%">{{ element.jedinica }}</td>
+                    <td width="19%">
+                      {{
+                        Interpretacija(
+                          element.analit,
+                          element.rezultat,
+                          element.jedinica,
+                          element.refd,
+                          element.refg,
+                          $store.state.site,
+                          element.interp,
+                          element.extend,
+                          spec
+                        )[4]
+                      }}
+                    </td>
+                    <td width="19%">{{ element.datum }}</td>
+                    <td width="15%">{{ element.vrijeme }}</td>
                     <td width="9%" align="middle">
                       <i
-                        v-bind:class="{'fa fa-exclamation-triangle icon-right input-icon error-icon' : Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Red'}"
+                        v-bind:class="{
+                          'fa fa-exclamation-triangle icon-right input-icon error-icon':
+                            Interpretacija(
+                              element.analit,
+                              element.rezultat,
+                              element.jedinica,
+                              element.refd,
+                              element.refg,
+                              $store.state.site,
+                              element.interp,
+                              element.extend,
+                              spec
+                            )[5] === 'Red',
+                        }"
                       ></i>
                       <i
-                        v-bind:class="{'fa fa-check success-icon icon-right input-icon' : Interpretacija(element.analit, element.rezultat, element.jedinica, element.refd, element.refg, $store.state.site, element.interp, element.extend, spec)[5] === 'Green'}"
+                        v-bind:class="{
+                          'fa fa-check success-icon icon-right input-icon':
+                            Interpretacija(
+                              element.analit,
+                              element.rezultat,
+                              element.jedinica,
+                              element.refd,
+                              element.refg,
+                              $store.state.site,
+                              element.interp,
+                              element.extend,
+                              spec
+                            )[5] === 'Green',
+                        }"
                       ></i>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <div style="text-align:center;">
+              <div style="text-align: center;">
                 <span class="circle badge-info"></span>
-                {{table_header}}
+                {{ table_header }}
               </div>
             </div>
           </div>
@@ -2125,28 +3012,41 @@ End of Microbiology Modal |
         <div class="row" v-if="!Procjena.length && !graph">
           <div class="col-md-12">
             <div>
-              <span style="color: #e34a4a;">{{"Nema podataka."}}</span>
+              <span style="color: #e34a4a;">{{ "Nema podataka." }}</span>
             </div>
           </div>
         </div>
 
         <div class="row" v-if="showLineChart && graph">
           <div class="col-md-12">
-            <line-chart :options="optionsLineChart" :data="dataLineChart" type="line"></line-chart>
+            <line-chart
+              :options="optionsLineChart"
+              :data="dataLineChart"
+              type="line"
+            ></line-chart>
           </div>
         </div>
         <div class="row" v-if="!showLineChart && graph">
           <div v-if="!showLineChart && !spinner" class="col-md-12">
             <div>
-              <span style="color: #e34a4a;">{{"Nema podataka."}}</span>
+              <span style="color: #e34a4a;">{{ "Nema podataka." }}</span>
             </div>
           </div>
-          <div style="min-height: 400px;" v-if="!showLineChart && spinner" class="col-md-12">
+          <div
+            style="min-height: 400px;"
+            v-if="!showLineChart && spinner"
+            class="col-md-12"
+          >
             <div
-              style="display:flex; flex-direction: row; justify-content: center; align-items: center"
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+              "
             >
-              <div style="float:left;"></div>
-              <span style="vertical-align:middle; ">
+              <div style="float: left;"></div>
+              <span style="vertical-align: middle;">
                 <atom-spinner
                   style="opacity: 0.25;"
                   :animation-duration="1000"
@@ -2172,7 +3072,7 @@ End of Microbiology Modal |
           ></loading>
         </div>
         <div class="col-md-6">
-          <button v-if="false" @click.prevent="Test">{{'Loading...'}}</button>
+          <button v-if="false" @click.prevent="Test">{{ "Loading..." }}</button>
         </div>
       </div>
     </div>
@@ -2180,7 +3080,6 @@ End of Microbiology Modal |
 </template>
 
 <script>
-
 import Vue from "vue";
 import router from "../../router";
 import store from "vuex-store";
@@ -2204,12 +3103,10 @@ Vue.component("line-chart", LineChart);
 Vue.component("badge-column", BadgeColumn);
 
 export default {
-  
   name: "collapse-obrada",
 
   data() {
     return {
-
       /* -- */
       /* -- */
       /* -- */
@@ -2267,7 +3164,7 @@ export default {
         DefaultBacteries: [],
         RemainingBacteries: [],
         NegativeDescriptions: [],
-        PositiveDescriptions: []
+        PositiveDescriptions: [],
       },
 
       /* -- */
@@ -2371,6 +3268,7 @@ End of Microbiology Data |
       data_spol: "",
       query_date: "",
       today_date: "",
+      starost: "",
       reference: {},
       interpretacije: [
         "none",
@@ -2394,6 +3292,9 @@ End of Microbiology Data |
         "norma",
         "ured",
         "plus",
+        "prisutno",
+        "gljivice",
+        "leuer",
         "morf",
         "titar",
         "tsh",
@@ -2410,7 +3311,7 @@ End of Microbiology Data |
         "exists",
         "blst",
         "leu",
-        "spec"
+        "spec",
       ],
 
       // Toasts
@@ -2438,21 +3339,21 @@ End of Microbiology Data |
       jedinica: "",
       jedinice: [],
       graph: false,
-      table_header: ""
+      table_header: "",
     };
   },
   components: {
     Loading,
-    AtomSpinner
+    AtomSpinner,
   },
 
   watch: {
-    email: function() {
+    email: function () {
       if (this.email.trim() != this.email_tmp.trim()) {
         this.email_changed = true;
       }
     },
-    
+
     /* -- */
     /* -- */
     /* -- */
@@ -2477,9 +3378,8 @@ End of Microbiology Data |
     /* -- */
     /* -- */
 
-    ModalNegative: function() {
+    ModalNegative: function () {
       if (this.ModalNegative) {
-
         console.log("Izbor: negativan");
 
         this.MicrobiologyModalHeader = "Predefinisani rezultati";
@@ -2491,9 +3391,8 @@ End of Microbiology Data |
       }
     },
 
-    ModalPositive: function() {
+    ModalPositive: function () {
       if (this.ModalPositive) {
-
         console.log("Izbor: pozitivan");
 
         if (this.MicrobiologyScenario === "MAIBNoR") {
@@ -2510,7 +3409,7 @@ End of Microbiology Data |
       }
     },
 
-    MicrobiologyScenario: function() {
+    MicrobiologyScenario: function () {
       switch (this.MicrobiologyScenario) {
         case "MAIBNoR":
           // Ima definisan skup bakterija - Nema Rezultat
@@ -2564,7 +3463,7 @@ End of Microbiology Data |
           // console.warn("Nije Mikrobiološka analiza.");
           break;
       }
-    }
+    },
 
     /* -- */
     /* -- */
@@ -2589,7 +3488,6 @@ End of Microbiology Watch |
     /* -- */
     /* -- */
     /* -- */
-
   },
   beforeCreate() {
     http
@@ -2600,20 +3498,19 @@ End of Microbiology Watch |
           this.$store.state.site,
         {}
       )
-      .then(res => {
+      .then((res) => {
         this.jedinice = res.data.jedinica;
       });
   },
   mounted() {
-    bus.$on("Parametar", data => {
-
+    bus.$on("Parametar", (data) => {
       // bus.$emit("Switch");
 
       this.spinner = true;
 
       this.analit = {};
 
-      this.multiparams.forEach(element => {
+      this.multiparams.forEach((element) => {
         if (element.opis === data) {
           this.analit = element;
           this.multiparam_id = element._id;
@@ -2622,9 +3519,7 @@ End of Microbiology Watch |
       });
 
       if (_.isEmpty(this.analit)) {
-
         // console.warn("Empty object.");
-
       } else {
         if (!_.isEmpty(this.Response)) {
           this.showLineChart = false;
@@ -2635,9 +3530,9 @@ End of Microbiology Watch |
           var obj = {};
           var count = 0;
 
-          this.Response.Multi.forEach(element => {
+          this.Response.Multi.forEach((element) => {
             count++;
-            element.multi.forEach(param => {
+            element.multi.forEach((param) => {
               if (
                 this.multiparam_id == param.labassay &&
                 param.rezultat[0].rezultat_f.trim() != ""
@@ -2696,7 +3591,7 @@ End of Microbiology Watch |
             });
 
             if (count == this.Response.Multi.length) {
-              this.Procjena.sort(function(a, b) {
+              this.Procjena.sort(function (a, b) {
                 return Date.parse(a.updated_at) == Date.parse(b.updated_at)
                   ? 0
                   : +(Date.parse(a.updated_at) < Date.parse(b.updated_at)) ||
@@ -2713,7 +3608,7 @@ End of Microbiology Watch |
                   maintainAspectRatio: false,
                   title: {
                     display: true,
-                    text: ""
+                    text: "",
                   },
                   scales: {
                     xAxes: [
@@ -2721,27 +3616,27 @@ End of Microbiology Watch |
                         display: true,
                         gridLines: {
                           display: true,
-                          color: "#eee"
-                        }
-                      }
+                          color: "#eee",
+                        },
+                      },
                     ],
                     yAxes: [
                       {
                         display: true,
                         gridLines: {
                           display: true,
-                          color: "#eee"
-                        }
-                      }
-                    ]
-                  }
+                          color: "#eee",
+                        },
+                      },
+                    ],
+                  },
                 };
 
                 var labels = [];
                 var kontrola = [];
                 var temp = "";
 
-                this.Procjena.forEach(element => {
+                this.Procjena.forEach((element) => {
                   if (!isNaN(element.rezultat.trim())) {
                     switch (element.kontrola) {
                       case "Red":
@@ -2773,9 +3668,9 @@ End of Microbiology Watch |
                       pointBorderColor: kontrola,
                       pointBackgroundColor: kontrola,
                       borderColor: palette.transparent,
-                      data: data
-                    }
-                  ]
+                      data: data,
+                    },
+                  ],
                 };
 
                 if (data.length) {
@@ -2784,7 +3679,6 @@ End of Microbiology Watch |
                   }, 500);
                 }
               } else {
-
                 // console.warn("No data.");
 
                 this.spinner = false;
@@ -2792,15 +3686,13 @@ End of Microbiology Watch |
             }
           });
         } else {
-
           // console.warn("Response not loaded.");
-
         }
       }
     });
 
     bus.$on("graph", () => {
-      this.Procjena.sort(function(a, b) {
+      this.Procjena.sort(function (a, b) {
         return Date.parse(a.updated_at) == Date.parse(b.updated_at)
           ? 0
           : +(Date.parse(a.updated_at) < Date.parse(b.updated_at)) || -1;
@@ -2815,7 +3707,7 @@ End of Microbiology Watch |
           maintainAspectRatio: false,
           title: {
             display: true,
-            text: ""
+            text: "",
           },
           scales: {
             xAxes: [
@@ -2823,27 +3715,27 @@ End of Microbiology Watch |
                 display: true,
                 gridLines: {
                   display: true,
-                  color: "#eee"
-                }
-              }
+                  color: "#eee",
+                },
+              },
             ],
             yAxes: [
               {
                 display: true,
                 gridLines: {
                   display: true,
-                  color: "#eee"
-                }
-              }
-            ]
-          }
+                  color: "#eee",
+                },
+              },
+            ],
+          },
         };
 
         var labels = [];
         var kontrola = [];
         var temp = "";
 
-        this.Procjena.forEach(element => {
+        this.Procjena.forEach((element) => {
           if (!isNaN(element.rezultat.trim())) {
             switch (element.kontrola) {
               case "Red":
@@ -2875,24 +3767,22 @@ End of Microbiology Watch |
               pointBorderColor: kontrola,
               pointBackgroundColor: kontrola,
               borderColor: palette.transparent,
-              data: data
-            }
-          ]
+              data: data,
+            },
+          ],
         };
 
         if (data.length) {
           this.showLineChart = true;
         }
       } else {
-
         // console.warn("No data.");
-
       }
       this.graph = false;
     });
 
     bus.$on("table", () => {
-      this.Procjena.sort(function(a, b) {
+      this.Procjena.sort(function (a, b) {
         return Date.parse(a.updated_at) == Date.parse(b.updated_at)
           ? 0
           : +(Date.parse(a.updated_at) > Date.parse(b.updated_at)) || -1;
@@ -2907,7 +3797,7 @@ End of Microbiology Watch |
           maintainAspectRatio: false,
           title: {
             display: true,
-            text: ""
+            text: "",
           },
           scales: {
             xAxes: [
@@ -2915,27 +3805,27 @@ End of Microbiology Watch |
                 display: true,
                 gridLines: {
                   display: true,
-                  color: "#eee"
-                }
-              }
+                  color: "#eee",
+                },
+              },
             ],
             yAxes: [
               {
                 display: true,
                 gridLines: {
                   display: true,
-                  color: "#eee"
-                }
-              }
-            ]
-          }
+                  color: "#eee",
+                },
+              },
+            ],
+          },
         };
 
         var labels = [];
         var kontrola = [];
         var temp = "";
 
-        this.Procjena.forEach(element => {
+        this.Procjena.forEach((element) => {
           if (!isNaN(element.rezultat.trim())) {
             switch (element.kontrola) {
               case "Red":
@@ -2967,62 +3857,60 @@ End of Microbiology Watch |
               pointBorderColor: kontrola,
               pointBackgroundColor: kontrola,
               borderColor: palette.transparent,
-              data: data
-            }
-          ]
+              data: data,
+            },
+          ],
         };
 
         if (data.length) {
           this.showLineChart = true;
         }
       } else {
-
         // console.warn("No data.");
-
       }
       this.graph = true;
     });
 
-    bus.$on("trash", data => {
+    bus.$on("trash", (data) => {
       this.sid = data.sid;
       this.$refs.staticModalDeleteSample.open();
     });
 
-    bus.$on("edit", data => {
+    bus.$on("edit", (data) => {
       this.sid = data.sid;
       this.$refs.staticModalEditSample.open();
     });
 
-    bus.$on("comment", data => {
+    bus.$on("comment", (data) => {
       this.sid = data.sid;
       this.$refs.staticModalComment.open();
     });
 
-    bus.$on("barcode", data => {
+    bus.$on("barcode", (data) => {
       this.BarcodePrint(data);
     });
 
-    bus.$on("save", data => {
+    bus.$on("save", (data) => {
       this.SaveResults(this.rezultati, "save");
     });
 
-    bus.$on("check", data => {
+    bus.$on("check", (data) => {
       this.Approve(this.rezultati);
     });
 
-    bus.$on("verify", data => {
+    bus.$on("verify", (data) => {
       this.Verify(data, "verify");
     });
 
-    bus.$on("undo", data => {
+    bus.$on("undo", (data) => {
       this.Disapprove(this.rezultati, "undo");
     });
 
-    bus.$on("unlock", data => {
+    bus.$on("unlock", (data) => {
       this.UnVerify(data, "unlock");
     });
 
-    bus.$on("Nalaz", data => {
+    bus.$on("Nalaz", (data) => {
       if (!data.final_pdf) {
         this.$refs.staticModalError.open();
       } else {
@@ -3032,7 +3920,7 @@ End of Microbiology Watch |
 
         var options = {
           width: "100%",
-          height: "800px"
+          height: "800px",
         };
         PDFObject.embed(this.url, "#pdf-container", options);
 
@@ -3042,7 +3930,7 @@ End of Microbiology Watch |
       }
     });
 
-    bus.$on("pdf", data => {
+    bus.$on("pdf", (data) => {
       if (!data.pdf_exists) {
         this.$refs.staticModalError.open();
       } else {
@@ -3052,7 +3940,7 @@ End of Microbiology Watch |
 
         var options = {
           width: "100%",
-          height: "800px"
+          height: "800px",
         };
         PDFObject.embed(this.url, "#pdf-container", options);
 
@@ -3061,8 +3949,7 @@ End of Microbiology Watch |
       }
     });
 
-    bus.$on("Sample", data => {
-
+    bus.$on("Sample", (data) => {
       /* -- */
       /* -- */
       /* -- */
@@ -3120,15 +4007,15 @@ End of Microbiology Get Sample Check |
       this.GetSingleSample(data);
     });
 
-    bus.$on("Deleted", data => {
+    bus.$on("Deleted", (data) => {
       this.DeletedSample(data);
     });
 
-    bus.$on("Edited", data => {
+    bus.$on("Edited", (data) => {
       this.EditSample(data);
     });
 
-    bus.$on("SaveMulti", data => {
+    bus.$on("SaveMulti", (data) => {
       this.SaveMultiResults(this.analiti, data);
     });
 
@@ -3137,13 +4024,11 @@ End of Microbiology Get Sample Check |
     });
 
     bus.$on("Error", () => {
-
       // Generate new Report
-      console.warn("Greška prilikom čitanja nalaza.");      
-
+      console.warn("Greška prilikom čitanja nalaza.");
     });
 
-    bus.$on("Analyser", data => {
+    bus.$on("Analyser", (data) => {
       this.AnalyserSelected(data);
     });
 
@@ -3159,9 +4044,9 @@ End of Microbiology Get Sample Check |
       this.$refs.staticModalFind.open();
     });
 
-    bus.$on("Push", data => {
+    bus.$on("Push", (data) => {
       if (this.$route.params.id != data) {
-        this.Results.forEach(element => {
+        this.Results.forEach((element) => {
           if (element.pid == data) {
             router.push(
               "/obrada/rezultati/" +
@@ -3174,7 +4059,6 @@ End of Microbiology Get Sample Check |
           }
         });
       } else {
-
         // console.warn("No change required.");
       }
     });
@@ -3201,9 +4085,7 @@ End of Microbiology Get Sample Check |
         this.reference.gref === "" ||
         this.reference.dref > this.reference.gref
       ) {
-
         // console.warn("Invalid value.");
-
       } else {
         document.getElementById(this.$store.state.sid).click();
 
@@ -3212,9 +4094,9 @@ End of Microbiology Get Sample Check |
             email: this.$store.state.userId,
             token: this.$store.state.token,
             site: this.$store.state.site,
-            reference: this.reference
+            reference: this.reference,
           })
-          .then(res => {
+          .then((res) => {
             setTimeout(() => {
               document.getElementById(this.$store.state.sid).click();
             }, 500);
@@ -3222,7 +4104,7 @@ End of Microbiology Get Sample Check |
       }
     });
 
-    bus.$on("retest", data => {
+    bus.$on("retest", (data) => {
       this.RetestSave(data);
     });
 
@@ -3250,7 +4132,7 @@ End of Microbiology Get Sample Check |
     /* -- */
     /* -- */
 
-    bus.$on("Antibiotik", data => {
+    bus.$on("Antibiotik", (data) => {
       // console.log("Prikaz izbornika antibiotika.");
       if (
         this.sample.status != "ODOBREN" &&
@@ -3260,16 +4142,16 @@ End of Microbiology Get Sample Check |
         this.TemporaryBacteries = [];
         this.TemporaryBacteriesAdd = [];
 
-        this.Antibiotics.forEach(element => {
+        this.Antibiotics.forEach((element) => {
           element.chosen = false;
           element.disabled = false;
         });
 
-        this.SelectedBacteries.forEach(selected => {
+        this.SelectedBacteries.forEach((selected) => {
           // Bacteria name must be Unique.
           if (selected.opis == data) {
-            selected.antibiogram.antibiotici.forEach(ant => {
-              this.Antibiotics.forEach(antibiotik => {
+            selected.antibiogram.antibiotici.forEach((ant) => {
+              this.Antibiotics.forEach((antibiotik) => {
                 if (antibiotik._id == ant._id) {
                   antibiotik.disabled = true;
                   antibiotik.chosen = true;
@@ -3284,13 +4166,13 @@ End of Microbiology Get Sample Check |
       }
     });
 
-    bus.$on("tabChanged", data => {
+    bus.$on("tabChanged", (data) => {
       // console.log("Tab changed.");
       this.CurrentTab = data;
       // console.log("Active tab: " + this.CurrentTab)
     });
 
-    bus.$on("AllowClick", data => {
+    bus.$on("AllowClick", (data) => {
       if (this.MicrobiologySample) {
         if (data) {
           this.AllowGetSample = false;
@@ -3303,19 +4185,18 @@ End of Microbiology Get Sample Check |
     });
 
     bus.$on("MicroReset", () => {
-      
       console.log("Reset: " + this.$store.state.sid);
       var Scenario = this.MicrobiologyScenario;
-      
+
       this.rezultati[0].rezultat = "";
       this.rezultati[0].rezultat_m = [];
       this.rezultati[0].realizovan = false;
 
-      this.MicrobiologyResult.DefaultBacteries.forEach(element => {
+      this.MicrobiologyResult.DefaultBacteries.forEach((element) => {
         element.chosen = false;
       });
 
-      this.MicrobiologyResult.RemainingBacteries.forEach(element => {
+      this.MicrobiologyResult.RemainingBacteries.forEach((element) => {
         element.chosen = false;
       });
 
@@ -3331,9 +4212,9 @@ End of Microbiology Get Sample Check |
             email: this.$store.state.userId,
             token: this.$store.state.token,
             site: this.$store.state.site,
-            rezultati: this.rezultati
+            rezultati: this.rezultati,
           })
-          .then(res => {
+          .then((res) => {
             http
               .get(
                 "rezultati/odobravanje/samples/" +
@@ -3348,15 +4229,13 @@ End of Microbiology Get Sample Check |
                   this.$route.query.date,
                 {}
               )
-              .then(res => {
-
+              .then((res) => {
                 // console.log(res.data)
                 this.uzorci = [];
 
-                res.data.results.forEach(element => {
-
-                  if(this.$store.state.sid === element.id){
-                    console.log(element.rezultati[0].rezultat[0])
+                res.data.results.forEach((element) => {
+                  if (this.$store.state.sid === element.id) {
+                    console.log(element.rezultati[0].rezultat[0]);
                   }
 
                   var check = 0;
@@ -3369,7 +4248,7 @@ End of Microbiology Get Sample Check |
                     var status_uzorka = element.status;
                   }
 
-                  element.rezultati.forEach(test => {
+                  element.rezultati.forEach((test) => {
                     check++;
 
                     if (
@@ -3385,7 +4264,6 @@ End of Microbiology Get Sample Check |
                     }
 
                     if (check === element.rezultati.length) {
-
                       // console.log("Provjera: Reset sample")
 
                       if (status_uzorka === "VERIFICIRAN") {
@@ -3395,7 +4273,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (status_uzorka === "ODOBREN") {
                         this.uzorci.push({
@@ -3404,7 +4282,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (zaprimljen < 1) {
                         this.uzorci.push({
@@ -3413,7 +4291,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (realizovan < 1) {
                         var stat = "ZAPRIMLJEN";
@@ -3430,7 +4308,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else {
                         this.uzorci.push({
@@ -3439,23 +4317,25 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       }
                     }
                   });
                 });
 
-                this.uzorci = this.uzorci.sort(function(a, b) {
+                this.uzorci = this.uzorci.sort(function (a, b) {
                   return a.sid.localeCompare(b.sid, undefined, {
                     numeric: true,
-                    sensitivity: "base"
+                    sensitivity: "base",
                   });
                 });
               })
-              .then(res => {
+              .then((res) => {
                 this.MicrobiologyScenario = "MAIBNoR";
-                console.log("Scenario: " + Scenario + " - > " + this.MicrobiologyScenario)
+                console.log(
+                  "Scenario: " + Scenario + " - > " + this.MicrobiologyScenario
+                );
                 this.main = true;
                 bus.$emit("CloseMicroReset");
               });
@@ -3468,9 +4348,9 @@ End of Microbiology Get Sample Check |
             email: this.$store.state.userId,
             token: this.$store.state.token,
             site: this.$store.state.site,
-            rezultati: this.rezultati
+            rezultati: this.rezultati,
           })
-          .then(res => {
+          .then((res) => {
             http
               .get(
                 "rezultati/odobravanje/samples/" +
@@ -3485,15 +4365,13 @@ End of Microbiology Get Sample Check |
                   this.$route.query.date,
                 {}
               )
-              .then(res => {
-
+              .then((res) => {
                 // console.log(res.data)
                 this.uzorci = [];
 
-                res.data.results.forEach(element => {
-
-                  if(this.$store.state.sid === element.id){
-                    console.log(element.rezultati[0].rezultat[0])
+                res.data.results.forEach((element) => {
+                  if (this.$store.state.sid === element.id) {
+                    console.log(element.rezultati[0].rezultat[0]);
                   }
 
                   var check = 0;
@@ -3506,7 +4384,7 @@ End of Microbiology Get Sample Check |
                     var status_uzorka = element.status;
                   }
 
-                  element.rezultati.forEach(test => {
+                  element.rezultati.forEach((test) => {
                     check++;
 
                     if (
@@ -3529,7 +4407,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (status_uzorka === "ODOBREN") {
                         this.uzorci.push({
@@ -3538,7 +4416,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (zaprimljen < 1) {
                         this.uzorci.push({
@@ -3547,7 +4425,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (realizovan < 1) {
                         var stat = "ZAPRIMLJEN";
@@ -3564,7 +4442,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else {
                         this.uzorci.push({
@@ -3573,23 +4451,25 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       }
                     }
                   });
                 });
 
-                this.uzorci = this.uzorci.sort(function(a, b) {
+                this.uzorci = this.uzorci.sort(function (a, b) {
                   return a.sid.localeCompare(b.sid, undefined, {
                     numeric: true,
-                    sensitivity: "base"
+                    sensitivity: "base",
                   });
                 });
               })
-              .then(res => {
+              .then((res) => {
                 this.MicrobiologyScenario = "MANBNoR";
-                console.log("Scenario: " + Scenario + " - > " + this.MicrobiologyScenario)
+                console.log(
+                  "Scenario: " + Scenario + " - > " + this.MicrobiologyScenario
+                );
                 this.main = true;
                 bus.$emit("CloseMicroReset");
               });
@@ -3603,7 +4483,7 @@ End of Microbiology Get Sample Check |
       console.log("Defining result...");
 
       var Scenario = this.MicrobiologyScenario;
-      
+
       switch (this.MicrobiologyScenario) {
         case "MAIBNoR":
           // Ima definisan skup bakterija
@@ -3625,10 +4505,10 @@ End of Microbiology Get Sample Check |
                   rbr_a: null,
                   naziv: null,
                   opis: null,
-                  rezultat: null
-                }
-              ]
-            }
+                  rezultat: null,
+                },
+              ],
+            },
           });
 
           if (this.ModalNegative) {
@@ -3641,9 +4521,9 @@ End of Microbiology Get Sample Check |
                 email: this.$store.state.userId,
                 token: this.$store.state.token,
                 site: this.$store.state.site,
-                rezultati: this.rezultati
+                rezultati: this.rezultati,
               })
-              .then(res => {
+              .then((res) => {
                 http
                   .get(
                     "rezultati/odobravanje/samples/" +
@@ -3658,13 +4538,12 @@ End of Microbiology Get Sample Check |
                       this.$route.query.date,
                     {}
                   )
-                  .then(res => {
+                  .then((res) => {
                     this.uzorci = [];
 
-                    res.data.results.forEach(element => {
-
-                      if(this.$store.state.sid === element.id){
-                        console.log(element.rezultati[0].rezultat[0])
+                    res.data.results.forEach((element) => {
+                      if (this.$store.state.sid === element.id) {
+                        console.log(element.rezultati[0].rezultat[0]);
                       }
 
                       var check = 0;
@@ -3677,7 +4556,7 @@ End of Microbiology Get Sample Check |
                         var status_uzorka = element.status;
                       }
 
-                      element.rezultati.forEach(test => {
+                      element.rezultati.forEach((test) => {
                         check++;
 
                         if (
@@ -3702,7 +4581,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (status_uzorka === "ODOBREN") {
                             this.uzorci.push({
@@ -3711,7 +4590,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (zaprimljen < 1) {
                             this.uzorci.push({
@@ -3720,7 +4599,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (realizovan < 1) {
                             var stat = "ZAPRIMLJEN";
@@ -3738,7 +4617,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else {
                             this.uzorci.push({
@@ -3747,39 +4626,44 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           }
                         }
                       });
                     });
 
-                    this.uzorci = this.uzorci.sort(function(a, b) {
+                    this.uzorci = this.uzorci.sort(function (a, b) {
                       return a.sid.localeCompare(b.sid, undefined, {
                         numeric: true,
-                        sensitivity: "base"
+                        sensitivity: "base",
                       });
                     });
                   })
-                  .then(res => {
+                  .then((res) => {
                     bus.$emit("CloseMicroResult");
                     this.rezultati[0].realizovan = true;
                     this.MicrobiologyScenario = "MAIBNeR";
-                    console.log("Scenario: " + Scenario + " - > " + this.MicrobiologyScenario)
+                    console.log(
+                      "Scenario: " +
+                        Scenario +
+                        " - > " +
+                        this.MicrobiologyScenario
+                    );
                     this.main = true;
                     this.isLoading = false;
                   });
               });
           } else {
             this.PositiveResultSelection = "";
-            this.SelectedBacteries.forEach(element => {
+            this.SelectedBacteries.forEach((element) => {
               this.PositiveResultSelection =
                 this.PositiveResultSelection + element.opis + "\n";
               var Antibiotici = [];
               var antibiotik = {};
 
-              this.Antibiotics.forEach(antibiotik => {
-                element.antibiogram.antibiotici.forEach(ant => {
+              this.Antibiotics.forEach((antibiotik) => {
+                element.antibiogram.antibiotici.forEach((ant) => {
                   if (antibiotik._id == ant) {
                     antibiotik = {
                       _id: antibiotik._id,
@@ -3787,7 +4671,7 @@ End of Microbiology Get Sample Check |
                       naziv: antibiotik.naziv,
                       opis: antibiotik.opis,
                       disabled: false,
-                      rezultat: ""
+                      rezultat: "",
                     };
                     Antibiotici.push(antibiotik);
                     antibiotik = {};
@@ -3806,8 +4690,8 @@ End of Microbiology Get Sample Check |
                   _id: element.antibiogram._id,
                   naziv: element.antibiogram.naziv,
                   opis: element.antibiogram.opis,
-                  antibiotici: [...Antibiotici]
-                }
+                  antibiotici: [...Antibiotici],
+                },
               });
             });
 
@@ -3820,9 +4704,9 @@ End of Microbiology Get Sample Check |
                 email: this.$store.state.userId,
                 token: this.$store.state.token,
                 site: this.$store.state.site,
-                rezultati: this.rezultati
+                rezultati: this.rezultati,
               })
-              .then(res => {
+              .then((res) => {
                 http
                   .get(
                     "rezultati/odobravanje/samples/" +
@@ -3837,13 +4721,12 @@ End of Microbiology Get Sample Check |
                       this.$route.query.date,
                     {}
                   )
-                  .then(res => {
+                  .then((res) => {
                     this.uzorci = [];
 
-                    res.data.results.forEach(element => {
-
-                      if(this.$store.state.sid === element.id){
-                        console.log(element.rezultati[0].rezultat[0])
+                    res.data.results.forEach((element) => {
+                      if (this.$store.state.sid === element.id) {
+                        console.log(element.rezultati[0].rezultat[0]);
                       }
 
                       var check = 0;
@@ -3856,7 +4739,7 @@ End of Microbiology Get Sample Check |
                         var status_uzorka = element.status;
                       }
 
-                      element.rezultati.forEach(test => {
+                      element.rezultati.forEach((test) => {
                         check++;
 
                         if (
@@ -3881,7 +4764,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (status_uzorka === "ODOBREN") {
                             this.uzorci.push({
@@ -3890,7 +4773,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (zaprimljen < 1) {
                             this.uzorci.push({
@@ -3899,7 +4782,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (realizovan < 1) {
                             var stat = "ZAPRIMLJEN";
@@ -3917,7 +4800,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else {
                             this.uzorci.push({
@@ -3926,25 +4809,30 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           }
                         }
                       });
                     });
 
-                    this.uzorci = this.uzorci.sort(function(a, b) {
+                    this.uzorci = this.uzorci.sort(function (a, b) {
                       return a.sid.localeCompare(b.sid, undefined, {
                         numeric: true,
-                        sensitivity: "base"
+                        sensitivity: "base",
                       });
                     });
                   })
-                  .then(res => {
+                  .then((res) => {
                     bus.$emit("CloseMicroResult");
                     this.rezultati[0].realizovan = true;
                     this.MicrobiologyScenario = "MAIBPoR";
-                    console.log("Scenario: " + Scenario + " - > " + this.MicrobiologyScenario)
+                    console.log(
+                      "Scenario: " +
+                        Scenario +
+                        " - > " +
+                        this.MicrobiologyScenario
+                    );
                     this.main = true;
                     this.isLoading = false;
                   });
@@ -3973,11 +4861,11 @@ End of Microbiology Get Sample Check |
                     rbr_a: null,
                     naziv: null,
                     opis: null,
-                    rezultat: null
-                  }
-                ]
-              }
-            }
+                    rezultat: null,
+                  },
+                ],
+              },
+            },
           ];
 
           if (this.ModalNegative) {
@@ -3990,9 +4878,9 @@ End of Microbiology Get Sample Check |
                 email: this.$store.state.userId,
                 token: this.$store.state.token,
                 site: this.$store.state.site,
-                rezultati: this.rezultati
+                rezultati: this.rezultati,
               })
-              .then(res => {
+              .then((res) => {
                 http
                   .get(
                     "rezultati/odobravanje/samples/" +
@@ -4007,13 +4895,12 @@ End of Microbiology Get Sample Check |
                       this.$route.query.date,
                     {}
                   )
-                  .then(res => {
+                  .then((res) => {
                     this.uzorci = [];
 
-                    res.data.results.forEach(element => {
-
-                      if(this.$store.state.sid === element.id){
-                        console.log(element.rezultati[0].rezultat[0])
+                    res.data.results.forEach((element) => {
+                      if (this.$store.state.sid === element.id) {
+                        console.log(element.rezultati[0].rezultat[0]);
                       }
 
                       var check = 0;
@@ -4026,7 +4913,7 @@ End of Microbiology Get Sample Check |
                         var status_uzorka = element.status;
                       }
 
-                      element.rezultati.forEach(test => {
+                      element.rezultati.forEach((test) => {
                         check++;
 
                         if (
@@ -4051,7 +4938,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (status_uzorka === "ODOBREN") {
                             this.uzorci.push({
@@ -4060,7 +4947,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (zaprimljen < 1) {
                             this.uzorci.push({
@@ -4069,7 +4956,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (realizovan < 1) {
                             var stat = "ZAPRIMLJEN";
@@ -4087,7 +4974,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else {
                             this.uzorci.push({
@@ -4096,25 +4983,30 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           }
                         }
                       });
                     });
 
-                    this.uzorci = this.uzorci.sort(function(a, b) {
+                    this.uzorci = this.uzorci.sort(function (a, b) {
                       return a.sid.localeCompare(b.sid, undefined, {
                         numeric: true,
-                        sensitivity: "base"
+                        sensitivity: "base",
                       });
                     });
                   })
-                  .then(res => {
+                  .then((res) => {
                     bus.$emit("CloseMicroResult");
                     this.rezultati[0].realizovan = true;
                     this.MicrobiologyScenario = "MANBNeR";
-                    console.log("Scenario: " + Scenario + " - > " + this.MicrobiologyScenario)
+                    console.log(
+                      "Scenario: " +
+                        Scenario +
+                        " - > " +
+                        this.MicrobiologyScenario
+                    );
                     this.main = true;
                     this.isLoading = false;
                   });
@@ -4129,9 +5021,9 @@ End of Microbiology Get Sample Check |
                 email: this.$store.state.userId,
                 token: this.$store.state.token,
                 site: this.$store.state.site,
-                rezultati: this.rezultati
+                rezultati: this.rezultati,
               })
-              .then(res => {
+              .then((res) => {
                 http
                   .get(
                     "rezultati/odobravanje/samples/" +
@@ -4146,13 +5038,12 @@ End of Microbiology Get Sample Check |
                       this.$route.query.date,
                     {}
                   )
-                  .then(res => {
+                  .then((res) => {
                     this.uzorci = [];
 
-                    res.data.results.forEach(element => {
-
-                      if(this.$store.state.sid === element.id){
-                        console.log(element.rezultati[0].rezultat[0])
+                    res.data.results.forEach((element) => {
+                      if (this.$store.state.sid === element.id) {
+                        console.log(element.rezultati[0].rezultat[0]);
                       }
 
                       var check = 0;
@@ -4165,7 +5056,7 @@ End of Microbiology Get Sample Check |
                         var status_uzorka = element.status;
                       }
 
-                      element.rezultati.forEach(test => {
+                      element.rezultati.forEach((test) => {
                         check++;
 
                         if (
@@ -4190,7 +5081,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (status_uzorka === "ODOBREN") {
                             this.uzorci.push({
@@ -4199,7 +5090,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (zaprimljen < 1) {
                             this.uzorci.push({
@@ -4208,7 +5099,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else if (realizovan < 1) {
                             var stat = "ZAPRIMLJEN";
@@ -4226,7 +5117,7 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           } else {
                             this.uzorci.push({
@@ -4235,25 +5126,30 @@ End of Microbiology Get Sample Check |
                               pdf_exists: element.pdf_exists,
                               tip: element.sample.tip,
                               _id: element._id,
-                              removed: false
+                              removed: false,
                             });
                           }
                         }
                       });
                     });
 
-                    this.uzorci = this.uzorci.sort(function(a, b) {
+                    this.uzorci = this.uzorci.sort(function (a, b) {
                       return a.sid.localeCompare(b.sid, undefined, {
                         numeric: true,
-                        sensitivity: "base"
+                        sensitivity: "base",
                       });
                     });
                   })
-                  .then(res => {
+                  .then((res) => {
                     bus.$emit("CloseMicroResult");
                     this.rezultati[0].realizovan = true;
                     this.MicrobiologyScenario = "MANBPoR";
-                    console.log("Scenario: " + Scenario + " - > " + this.MicrobiologyScenario)
+                    console.log(
+                      "Scenario: " +
+                        Scenario +
+                        " - > " +
+                        this.MicrobiologyScenario
+                    );
                     this.main = true;
                     this.isLoading = false;
                   });
@@ -4264,7 +5160,7 @@ End of Microbiology Get Sample Check |
 
         default:
           break;
-      }      
+      }
     });
 
     bus.$on("ResetResultSelection", () => {
@@ -4316,11 +5212,11 @@ End of Microbiology Get Sample Check |
           break;
       }
 
-      this.MicrobiologyResult.DefaultBacteries.forEach(element => {
+      this.MicrobiologyResult.DefaultBacteries.forEach((element) => {
         element.chosen = false;
       });
 
-      this.MicrobiologyResult.RemainingBacteries.forEach(element => {
+      this.MicrobiologyResult.RemainingBacteries.forEach((element) => {
         element.chosen = false;
       });
 
@@ -4329,7 +5225,6 @@ End of Microbiology Get Sample Check |
     });
 
     bus.$on("CancelMicroResult", () => {
-
       switch (this.MicrobiologyScenario) {
         case "MAIBNoR":
           this.ModalNegative = false;
@@ -4377,11 +5272,11 @@ End of Microbiology Get Sample Check |
           break;
       }
 
-      this.MicrobiologyResult.DefaultBacteries.forEach(element => {
+      this.MicrobiologyResult.DefaultBacteries.forEach((element) => {
         element.chosen = false;
       });
 
-      this.MicrobiologyResult.RemainingBacteries.forEach(element => {
+      this.MicrobiologyResult.RemainingBacteries.forEach((element) => {
         element.chosen = false;
       });
 
@@ -4390,8 +5285,7 @@ End of Microbiology Get Sample Check |
     });
 
     bus.$on("MicroBactery", () => {
-
-      console.log('Saving main result...');
+      console.log("Saving main result...");
 
       this.isLoading = true;
       this.main = false;
@@ -4401,9 +5295,9 @@ End of Microbiology Get Sample Check |
           email: this.$store.state.userId,
           token: this.$store.state.token,
           site: this.$store.state.site,
-          rezultati: this.rezultati
+          rezultati: this.rezultati,
         })
-        .then(res => {
+        .then((res) => {
           http
             .get(
               "rezultati/odobravanje/samples/" +
@@ -4418,15 +5312,14 @@ End of Microbiology Get Sample Check |
                 this.$route.query.date,
               {}
             )
-            .then(res => {
+            .then((res) => {
               this.uzorci = [];
 
-              res.data.results.forEach(element => {
-
-                if(this.$store.state.sid === element.id){
-                  console.log(element.rezultati[0].rezultat[0])
+              res.data.results.forEach((element) => {
+                if (this.$store.state.sid === element.id) {
+                  console.log(element.rezultati[0].rezultat[0]);
                 }
-                
+
                 var check = 0;
                 var zaprimljen = 0;
                 var realizovan = 0;
@@ -4437,7 +5330,7 @@ End of Microbiology Get Sample Check |
                   var status_uzorka = element.status;
                 }
 
-                element.rezultati.forEach(test => {
+                element.rezultati.forEach((test) => {
                   check++;
 
                   if (
@@ -4460,7 +5353,7 @@ End of Microbiology Get Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (status_uzorka === "ODOBREN") {
                       this.uzorci.push({
@@ -4469,7 +5362,7 @@ End of Microbiology Get Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (zaprimljen < 1) {
                       this.uzorci.push({
@@ -4478,7 +5371,7 @@ End of Microbiology Get Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (realizovan < 1) {
                       var stat = "ZAPRIMLJEN";
@@ -4495,7 +5388,7 @@ End of Microbiology Get Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else {
                       this.uzorci.push({
@@ -4504,21 +5397,21 @@ End of Microbiology Get Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     }
                   }
                 });
               });
 
-              this.uzorci = this.uzorci.sort(function(a, b) {
+              this.uzorci = this.uzorci.sort(function (a, b) {
                 return a.sid.localeCompare(b.sid, undefined, {
                   numeric: true,
-                  sensitivity: "base"
+                  sensitivity: "base",
                 });
               });
             })
-            .then(res => {
+            .then((res) => {
               this.main = true;
               this.isLoading = false;
               bus.$emit("CloseMicroBactery");
@@ -4526,25 +5419,22 @@ End of Microbiology Get Sample Check |
         });
     });
 
-    bus.$on("CancelMicroBactery", () => {
+    bus.$on("CancelMicroBactery", () => {});
 
-    });
-
-    bus.$on("PovratakMicroBactery", () => {     
+    bus.$on("PovratakMicroBactery", () => {
       this.ShowAntibiotics = false;
       this.ShowBacteries = false;
     });
 
     bus.$on("SpasiMicroBactery", () => {
-      
       if (this.TemporaryBacteriesAdd.length) {
-        console.log('Dodavanje bakterija...');
+        console.log("Dodavanje bakterija...");
         var bakterija = {};
         var antibiogram = {};
         var antibiotik = {};
 
-        this.TemporaryBacteriesAdd.forEach(element => {
-          this.Antibiograms.forEach(antibgr => {
+        this.TemporaryBacteriesAdd.forEach((element) => {
+          this.Antibiograms.forEach((antibgr) => {
             if (
               JSON.stringify(element.antibiogram._id) ===
               JSON.stringify(antibgr._id)
@@ -4553,7 +5443,7 @@ End of Microbiology Get Sample Check |
             }
           });
 
-          antibiogram.antibiotici.forEach(antbtk => {
+          antibiogram.antibiotici.forEach((antbtk) => {
             antbtk.disabled = false;
             antbtk.rezultat = "";
           });
@@ -4644,16 +5534,16 @@ End of Microbiology Get Sample Check |
             ]
           }
         }; */
-      }else{
-        console.log('Dodavanje antibiotika...');
+      } else {
+        console.log("Dodavanje antibiotika...");
       }
 
       if (
         this.TemporaryAntibiotics.length ||
         this.TemporaryBacteriesAdd.length
       ) {
-        this.TemporaryAntibiotics.forEach(element => {
-          this.rezultati[0].rezultat_m.forEach(selected => {
+        this.TemporaryAntibiotics.forEach((element) => {
+          this.rezultati[0].rezultat_m.forEach((selected) => {
             if (selected.opis == this.CurrentTab) {
               selected.antibiogram.antibiotici.push(element);
             }
@@ -4669,9 +5559,9 @@ End of Microbiology Get Sample Check |
             email: this.$store.state.userId,
             token: this.$store.state.token,
             site: this.$store.state.site,
-            rezultati: this.rezultati
+            rezultati: this.rezultati,
           })
-          .then(res => {
+          .then((res) => {
             http
               .get(
                 "rezultati/odobravanje/samples/" +
@@ -4686,13 +5576,12 @@ End of Microbiology Get Sample Check |
                   this.$route.query.date,
                 {}
               )
-              .then(res => {
+              .then((res) => {
                 this.uzorci = [];
 
-                res.data.results.forEach(element => {
-
-                  if(this.$store.state.sid === element.id){
-                    console.log(element.rezultati[0].rezultat[0])
+                res.data.results.forEach((element) => {
+                  if (this.$store.state.sid === element.id) {
+                    console.log(element.rezultati[0].rezultat[0]);
                   }
 
                   var check = 0;
@@ -4705,7 +5594,7 @@ End of Microbiology Get Sample Check |
                     var status_uzorka = element.status;
                   }
 
-                  element.rezultati.forEach(test => {
+                  element.rezultati.forEach((test) => {
                     check++;
 
                     if (
@@ -4728,7 +5617,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (status_uzorka === "ODOBREN") {
                         this.uzorci.push({
@@ -4737,7 +5626,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (zaprimljen < 1) {
                         this.uzorci.push({
@@ -4746,7 +5635,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (realizovan < 1) {
                         var stat = "ZAPRIMLJEN";
@@ -4763,7 +5652,7 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else {
                         this.uzorci.push({
@@ -4772,27 +5661,27 @@ End of Microbiology Get Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       }
                     }
                   });
                 });
 
-                this.uzorci = this.uzorci.sort(function(a, b) {
+                this.uzorci = this.uzorci.sort(function (a, b) {
                   return a.sid.localeCompare(b.sid, undefined, {
                     numeric: true,
-                    sensitivity: "base"
+                    sensitivity: "base",
                   });
                 });
               })
-              .then(res => {
+              .then((res) => {
                 this.MicrobiologyScenario = "MAIBPoR";
                 this.ShowAntibiotics = false;
                 this.ShowBacteries = false;
                 // this.show_table = true;
                 this.main = true;
-                this.isLoading = false
+                this.isLoading = false;
 
                 if (this.TemporaryBacteriesAdd.length) {
                   this.CurrentTab = this.BacteryTabs[
@@ -4808,8 +5697,7 @@ End of Microbiology Get Sample Check |
       }
     });
 
-    bus.$on("UpdateMicroBactery", data => {
-     
+    bus.$on("UpdateMicroBactery", (data) => {
       if (
         !this.ShowAntibiotics &&
         !this.ShowBacteries &&
@@ -4824,7 +5712,7 @@ End of Microbiology Get Sample Check |
           this.TemporaryBacteriesAdd = [];
           var obj = {};
 
-          this.Bacteries.forEach(element => {
+          this.Bacteries.forEach((element) => {
             obj.chosen = false;
             obj.disabled = false;
             obj._id = element._id;
@@ -4837,8 +5725,8 @@ End of Microbiology Get Sample Check |
             obj = {};
           });
 
-          this.TemporaryBacteries.forEach(element => {
-            this.SelectedBacteries.forEach(selected => {
+          this.TemporaryBacteries.forEach((element) => {
+            this.SelectedBacteries.forEach((selected) => {
               if (selected._id == element._id) {
                 element.chosen = true;
                 element.disabled = true;
@@ -4874,7 +5762,6 @@ End of | Microbiology Bus from Modal
     /* -- */
     /* -- */
     /* -- */
-
   },
 
   beforeDestroy() {
@@ -4975,9 +5862,8 @@ End of Microbiology Bus Off |
     /* -- */
     /* -- */
     /* -- */
-
   },
-  
+
   destroyed() {
     // console.log("Component is being destroyed...");
     // this.$destroy();
@@ -5038,19 +5924,17 @@ End of Microbiology Bus Off |
       this.pagination = true;
     }
 
-    this.interpretacije = this.interpretacije.sort(function(a, b) {
+    this.interpretacije = this.interpretacije.sort(function (a, b) {
       return a.localeCompare(b, undefined, {
         numeric: true,
-        sensitivity: "base"
+        sensitivity: "base",
       });
     });
   },
 
   methods: {
-
     RetestSave(data) {
-
-      this.isLoading = true
+      this.isLoading = true;
 
       // console.log(this.rezultati)
 
@@ -5059,18 +5943,16 @@ End of Microbiology Bus Off |
           sid: this.$store.state.sid,
           rezultati: this.rezultati,
           site: this.$store.state.site,
-          token: this.$store.state.token
+          token: this.$store.state.token,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.success) {
-            this.isLoading = false
+            this.isLoading = false;
             this.save_retest = false;
-          }else{
-
+          } else {
           }
         });
     },
-
 
     ExclamationMulti(test) {
       this.warning = { analiza: "", text: "", napomena: "", control: "" };
@@ -5084,10 +5966,9 @@ End of Microbiology Bus Off |
 
       // console.log(test.analit)
 
-      this.analitiprikaz.forEach(element => {
-        element.labassay.multiparam.forEach(param => {
+      this.analitiprikaz.forEach((element) => {
+        element.labassay.multiparam.forEach((param) => {
           if (JSON.stringify(param._id) == JSON.stringify(test.analit)) {
-
             // console.log(element)
             // console.log(param)
 
@@ -5115,7 +5996,7 @@ End of Microbiology Bus Off |
             analiza: m_opis,
             text: m_interp.snizeno.text.trim(),
             napomena: m_interp.napomena.trim(),
-            control: "Sniženo"
+            control: "Sniženo",
           };
           break;
 
@@ -5126,7 +6007,7 @@ End of Microbiology Bus Off |
                 analiza: m_opis,
                 text: m_interp.poviseno.text.trim(),
                 napomena: m_interp.napomena.trim(),
-                control: "Pozitivan"
+                control: "Pozitivan",
               };
               break;
 
@@ -5135,7 +6016,7 @@ End of Microbiology Bus Off |
                 analiza: m_opis,
                 text: m_interp.poviseno.text.trim(),
                 napomena: m_interp.napomena.trim(),
-                control: "Povišeno"
+                control: "Povišeno",
               };
               break;
           }
@@ -5148,10 +6029,8 @@ End of Microbiology Bus Off |
       }
 
       if (this.warning.text && this.warning.text != "") {
-
         // console.log(this.warning.analiza + " | " + this.warning.control + " - " + this.warning.text);
         // this.$refs.staticModalExclamation.open();
-
       }
     },
 
@@ -5180,7 +6059,7 @@ End of Microbiology Bus Off |
             analiza: test.analit,
             text: test.interpretacija.snizeno.text.trim(),
             napomena: test.interpretacija.napomena.trim(),
-            control: "Sniženo"
+            control: "Sniženo",
           };
           break;
 
@@ -5191,7 +6070,7 @@ End of Microbiology Bus Off |
                 analiza: test.analit,
                 text: test.interpretacija.poviseno.text.trim(),
                 napomena: test.interpretacija.napomena.trim(),
-                control: "Pozitivan"
+                control: "Pozitivan",
               };
               break;
 
@@ -5200,7 +6079,7 @@ End of Microbiology Bus Off |
                 analiza: test.analit,
                 text: test.interpretacija.poviseno.text.trim(),
                 napomena: test.interpretacija.napomena.trim(),
-                control: "Povišeno"
+                control: "Povišeno",
               };
               break;
           }
@@ -5239,14 +6118,14 @@ End of Microbiology Bus Off |
               "14",
             {}
           )
-          .then(response => {
+          .then((response) => {
             if (response.data.Results.length) {
               var obj = {};
               var count = 0;
 
-              response.data.Results.forEach(element => {
+              response.data.Results.forEach((element) => {
                 count++;
-                element.rezultati.forEach(rez => {
+                element.rezultati.forEach((rez) => {
                   if (
                     rez.labassay === test.labassay_id &&
                     element.verificiran &&
@@ -5310,7 +6189,7 @@ End of Microbiology Bus Off |
                 });
 
                 if (count == response.data.Results.length) {
-                  this.Procjena.sort(function(a, b) {
+                  this.Procjena.sort(function (a, b) {
                     return Date.parse(a.updated_at) == Date.parse(b.updated_at)
                       ? 0
                       : +(
@@ -5328,7 +6207,7 @@ End of Microbiology Bus Off |
                       maintainAspectRatio: false,
                       title: {
                         display: true,
-                        text: ""
+                        text: "",
                       },
                       scales: {
                         xAxes: [
@@ -5336,27 +6215,27 @@ End of Microbiology Bus Off |
                             display: true,
                             gridLines: {
                               display: true,
-                              color: "#eee"
-                            }
-                          }
+                              color: "#eee",
+                            },
+                          },
                         ],
                         yAxes: [
                           {
                             display: true,
                             gridLines: {
                               display: true,
-                              color: "#eee"
-                            }
-                          }
-                        ]
-                      }
+                              color: "#eee",
+                            },
+                          },
+                        ],
+                      },
                     };
 
                     var labels = [];
                     var kontrola = [];
                     var temp = "";
 
-                    this.Procjena.forEach(element => {
+                    this.Procjena.forEach((element) => {
                       if (!isNaN(element.rezultat.trim())) {
                         switch (element.kontrola) {
                           case "Red":
@@ -5388,9 +6267,9 @@ End of Microbiology Bus Off |
                           pointBorderColor: kontrola,
                           pointBackgroundColor: kontrola,
                           borderColor: palette.transparent,
-                          data: data
-                        }
-                      ]
+                          data: data,
+                        },
+                      ],
                     };
 
                     if (data.length) {
@@ -5401,21 +6280,16 @@ End of Microbiology Bus Off |
 
                     this.$refs.staticModalLabAssayEvalSingle.open();
                   } else {
-
                     // console.warn("No data.");
-
                   }
                 }
               });
             } else {
-
               // console.warn("No data.");
-
             }
             this.isLoading = false;
           });
       } else {
-
         // console.warn(test.ime + " | " + test.analit);
 
         this.multiparam_izbor = test.multiparam[0].opis;
@@ -5425,7 +6299,7 @@ End of Microbiology Bus Off |
 
         this.multiparam_izbornik = [];
 
-        test.multiparam.forEach(element => {
+        test.multiparam.forEach((element) => {
           this.multiparam_izbornik.push(element.opis);
           this.multiparams.push(element);
         });
@@ -5446,16 +6320,16 @@ End of Microbiology Bus Off |
               "14",
             {}
           )
-          .then(response => {
+          .then((response) => {
             if (response.data.Multi.length) {
               this.Response = response.data;
 
               var obj = {};
               var count = 0;
 
-              response.data.Multi.forEach(element => {
+              response.data.Multi.forEach((element) => {
                 count++;
-                element.multi.forEach(param => {
+                element.multi.forEach((param) => {
                   if (
                     this.multiparam_id == param.labassay &&
                     param.rezultat[0].rezultat_f.trim() != ""
@@ -5511,7 +6385,7 @@ End of Microbiology Bus Off |
                 });
 
                 if (count == response.data.Multi.length) {
-                  this.Procjena.sort(function(a, b) {
+                  this.Procjena.sort(function (a, b) {
                     return Date.parse(a.updated_at) == Date.parse(b.updated_at)
                       ? 0
                       : +(
@@ -5529,7 +6403,7 @@ End of Microbiology Bus Off |
                       maintainAspectRatio: false,
                       title: {
                         display: true,
-                        text: ""
+                        text: "",
                       },
                       scales: {
                         xAxes: [
@@ -5537,27 +6411,27 @@ End of Microbiology Bus Off |
                             display: true,
                             gridLines: {
                               display: true,
-                              color: "#eee"
-                            }
-                          }
+                              color: "#eee",
+                            },
+                          },
                         ],
                         yAxes: [
                           {
                             display: true,
                             gridLines: {
                               display: true,
-                              color: "#eee"
-                            }
-                          }
-                        ]
-                      }
+                              color: "#eee",
+                            },
+                          },
+                        ],
+                      },
                     };
 
                     var labels = [];
                     var kontrola = [];
                     var temp = "";
 
-                    this.Procjena.forEach(element => {
+                    this.Procjena.forEach((element) => {
                       if (!isNaN(element.rezultat.trim())) {
                         switch (element.kontrola) {
                           case "Red":
@@ -5589,9 +6463,9 @@ End of Microbiology Bus Off |
                           pointBorderColor: kontrola,
                           pointBackgroundColor: kontrola,
                           borderColor: palette.transparent,
-                          data: data
-                        }
-                      ]
+                          data: data,
+                        },
+                      ],
                     };
 
                     if (data.length) {
@@ -5600,16 +6474,12 @@ End of Microbiology Bus Off |
 
                     this.$refs.staticModalLabAssayEvalMulti.open();
                   } else {
-
                     // console.warn("No data.");
-
                   }
                 }
               });
             } else {
-
               // console.warn("No data.");
-
             }
             this.isLoading = false;
           });
@@ -5632,7 +6502,7 @@ End of Microbiology Bus Off |
 
           this.multiparam_izbornik = [];
 
-          test.multiparam.forEach(element => {
+          test.multiparam.forEach((element) => {
             this.multiparam_izbornik.push(element.opis);
             this.multiparams.push(element);
           });
@@ -5653,16 +6523,16 @@ End of Microbiology Bus Off |
                 test.labassay_id,
               {}
             )
-            .then(response => {
+            .then((response) => {
               if (response.data.Multi.length) {
                 this.Response = response.data;
 
                 var obj = {};
                 var count = 0;
 
-                response.data.Multi.forEach(element => {
+                response.data.Multi.forEach((element) => {
                   count++;
-                  element.multi.forEach(param => {
+                  element.multi.forEach((param) => {
                     if (
                       this.multiparam_id == param.labassay &&
                       param.rezultat[0].rezultat_f.trim() != ""
@@ -5718,7 +6588,7 @@ End of Microbiology Bus Off |
                   });
 
                   if (count == response.data.Multi.length) {
-                    this.Procjena.sort(function(a, b) {
+                    this.Procjena.sort(function (a, b) {
                       return Date.parse(a.updated_at) ==
                         Date.parse(b.updated_at)
                         ? 0
@@ -5737,7 +6607,7 @@ End of Microbiology Bus Off |
                         maintainAspectRatio: false,
                         title: {
                           display: true,
-                          text: ""
+                          text: "",
                         },
                         scales: {
                           xAxes: [
@@ -5745,27 +6615,27 @@ End of Microbiology Bus Off |
                               display: true,
                               gridLines: {
                                 display: true,
-                                color: "#eee"
-                              }
-                            }
+                                color: "#eee",
+                              },
+                            },
                           ],
                           yAxes: [
                             {
                               display: true,
                               gridLines: {
                                 display: true,
-                                color: "#eee"
-                              }
-                            }
-                          ]
-                        }
+                                color: "#eee",
+                              },
+                            },
+                          ],
+                        },
                       };
 
                       var labels = [];
                       var kontrola = [];
                       var temp = "";
 
-                      this.Procjena.forEach(element => {
+                      this.Procjena.forEach((element) => {
                         if (!isNaN(element.rezultat.trim())) {
                           switch (element.kontrola) {
                             case "Red":
@@ -5798,9 +6668,9 @@ End of Microbiology Bus Off |
                             pointBorderColor: kontrola,
                             pointBackgroundColor: kontrola,
                             borderColor: palette.transparent,
-                            data: data
-                          }
-                        ]
+                            data: data,
+                          },
+                        ],
                       };
 
                       if (data.length) {
@@ -5809,16 +6679,12 @@ End of Microbiology Bus Off |
 
                       this.$refs.staticModalEvaluationMulti.open();
                     } else {
-
                       // console.warn("No data.");
-
                     }
                   }
                 });
               } else {
-
                 // console.warn("No data.");
-
               }
               this.isLoading = false;
             });
@@ -5837,14 +6703,14 @@ End of Microbiology Bus Off |
                 this.pacijent,
               {}
             )
-            .then(response => {
+            .then((response) => {
               if (response.data.Results.length) {
                 var obj = {};
                 var count = 0;
 
-                response.data.Results.forEach(element => {
+                response.data.Results.forEach((element) => {
                   count++;
-                  element.rezultati.forEach(rez => {
+                  element.rezultati.forEach((rez) => {
                     if (
                       rez.labassay === test.labassay_id &&
                       element.verificiran &&
@@ -5908,7 +6774,7 @@ End of Microbiology Bus Off |
                   });
 
                   if (count == response.data.Results.length) {
-                    this.Procjena.sort(function(a, b) {
+                    this.Procjena.sort(function (a, b) {
                       return Date.parse(a.updated_at) ==
                         Date.parse(b.updated_at)
                         ? 0
@@ -5927,7 +6793,7 @@ End of Microbiology Bus Off |
                         maintainAspectRatio: false,
                         title: {
                           display: true,
-                          text: ""
+                          text: "",
                         },
                         scales: {
                           xAxes: [
@@ -5935,27 +6801,27 @@ End of Microbiology Bus Off |
                               display: true,
                               gridLines: {
                                 display: true,
-                                color: "#eee"
-                              }
-                            }
+                                color: "#eee",
+                              },
+                            },
                           ],
                           yAxes: [
                             {
                               display: true,
                               gridLines: {
                                 display: true,
-                                color: "#eee"
-                              }
-                            }
-                          ]
-                        }
+                                color: "#eee",
+                              },
+                            },
+                          ],
+                        },
                       };
 
                       var labels = [];
                       var kontrola = [];
                       var temp = "";
 
-                      this.Procjena.forEach(element => {
+                      this.Procjena.forEach((element) => {
                         if (!isNaN(element.rezultat.trim())) {
                           switch (element.kontrola) {
                             case "Red":
@@ -5988,9 +6854,9 @@ End of Microbiology Bus Off |
                             pointBorderColor: kontrola,
                             pointBackgroundColor: kontrola,
                             borderColor: palette.transparent,
-                            data: data
-                          }
-                        ]
+                            data: data,
+                          },
+                        ],
                       };
 
                       if (data.length) {
@@ -5999,16 +6865,12 @@ End of Microbiology Bus Off |
 
                       this.$refs.staticModalEvaluationSingle.open();
                     } else {
-
                       // console.warn("No data.");
-
                     }
                   }
                 });
               } else {
-
                 // console.warn("No data.");
-
               }
               this.isLoading = false;
             });
@@ -6042,13 +6904,13 @@ End of Microbiology Bus Off |
 
     filteredAntibiotics(column, columns) {
       return this.Antibiotics.filter(
-        item => this.Antibiotics.indexOf(item) % columns === column - 1
+        (item) => this.Antibiotics.indexOf(item) % columns === column - 1
       );
     },
 
     filteredBacteries(column, columns) {
       return this.TemporaryBacteries.filter(
-        item => this.TemporaryBacteries.indexOf(item) % columns === column - 1
+        (item) => this.TemporaryBacteries.indexOf(item) % columns === column - 1
       );
     },
 
@@ -6086,7 +6948,6 @@ End of Microbiology Bus Off |
     },
 
     OpenMicroSelect($event, test) {
-
       console.log("Select Modal opening...");
 
       this.CurrentTab = "";
@@ -6110,12 +6971,12 @@ End of Microbiology Bus Off |
             this.$store.state.site,
           {}
         )
-        .then(res => {
+        .then((res) => {
           console.log(res.data);
           var test = {};
 
           if (res.data.data.length) {
-            res.data.data.sort(function(a, b) {
+            res.data.data.sort(function (a, b) {
               return a.testovi.labassay.grupa + a.testovi.labassay.grouporder ==
                 b.testovi.labassay.grupa + b.testovi.labassay.grouporder
                 ? 0
@@ -6128,7 +6989,7 @@ End of Microbiology Bus Off |
             this.testovi = res.data.data;
             this.analitiprikaz = res.data.multidata;
 
-            res.data.data.forEach(element => {
+            res.data.data.forEach((element) => {
               test = {};
               test.realizovan = false;
 
@@ -6141,7 +7002,7 @@ End of Microbiology Bus Off |
               test.multi_count = 0;
               test.multi_rezultati = [];
 
-              res.data.multidata.forEach(multi => {
+              res.data.multidata.forEach((multi) => {
                 if (multi.labassay._id === element.testovi.labassay._id) {
                   test.multi_rezultati = multi.rezultat;
                   test.multi_count = multi.rezultat[0].rezultat.length;
@@ -6166,7 +7027,7 @@ End of Microbiology Bus Off |
                     .replace(/^\d+/, "")
               );
 
-              element.testovi.rezultat.forEach(rezultat => {
+              element.testovi.rezultat.forEach((rezultat) => {
                 test.sekcija = rezultat.anaassay.sekcija;
                 test.rezultat = rezultat.rezultat_f;
                 test.result = rezultat;
@@ -6233,11 +7094,11 @@ End of Microbiology Bus Off |
                 var counter = 0;
                 var ima = false;
 
-                this.Bacteries.forEach(element => {
+                this.Bacteries.forEach((element) => {
                   element.chosen = false;
                   counter = 0;
                   ima = false;
-                  this.rezultati[0].bakterije.forEach(bakt => {
+                  this.rezultati[0].bakterije.forEach((bakt) => {
                     counter++;
                     if (element._id == bakt) {
                       ima = true;
@@ -6280,7 +7141,7 @@ End of Microbiology Bus Off |
                     this.SelectedBacteries = [];
                     this.BacteryTabs = [];
 
-                    this.rezultati[0].rezultat_m.forEach(element => {
+                    this.rezultati[0].rezultat_m.forEach((element) => {
                       // console.log(element)
                       if (element.bakterija) {
                         this.SelectedBacteries.push(element);
@@ -6288,8 +7149,8 @@ End of Microbiology Bus Off |
                       }
                     });
 
-                    console.log("Izabrane bakterije:")
-                    console.log(this.SelectedBacteries)
+                    console.log("Izabrane bakterije:");
+                    console.log(this.SelectedBacteries);
 
                     let maxVal = this.SelectedBacteries.reduce((max, val) =>
                       max.antibiogram.antibiotici.length >
@@ -6303,16 +7164,16 @@ End of Microbiology Bus Off |
                     }
                     this.CurrentTab = this.SelectedBacteries[0].opis;
 
-                    bakterijed.forEach(element => {
-                      this.SelectedBacteries.forEach(bact => {
+                    bakterijed.forEach((element) => {
+                      this.SelectedBacteries.forEach((bact) => {
                         if (element._id == bact._id) {
                           element.chosen = true;
                         }
                       });
                     });
 
-                    bakterijei.forEach(element => {
-                      this.SelectedBacteries.forEach(bact => {
+                    bakterijei.forEach((element) => {
+                      this.SelectedBacteries.forEach((bact) => {
                         if (element._id == bact._id) {
                           element.chosen = true;
                         }
@@ -6389,7 +7250,7 @@ End of Microbiology Bus Off |
                 DefaultBacteries: [...bakterijei],
                 RemainingBacteries: [...bakterijed],
                 NegativeDescriptions: [...neg_rezultati],
-                PositiveDescriptions: [...poz_rezultati]
+                PositiveDescriptions: [...poz_rezultati],
               };
             } else {
               this.MicrobiologyScenario = "Unknown";
@@ -6403,11 +7264,11 @@ End of Microbiology Bus Off |
                 DefaultBacteries: [],
                 RemainingBacteries: [],
                 NegativeDescriptions: [],
-                PositiveDescriptions: []
+                PositiveDescriptions: [],
               };
             }
 
-            this.rezultati.forEach(element => {
+            this.rezultati.forEach((element) => {
               if (element.calculated) {
                 this.calculated = true;
               }
@@ -6446,12 +7307,12 @@ End of Microbiology Bus Off |
             this.$store.state.site,
           {}
         )
-        .then(res => {
+        .then((res) => {
           console.log(res.data);
           var test = {};
 
           if (res.data.data.length) {
-            res.data.data.sort(function(a, b) {
+            res.data.data.sort(function (a, b) {
               return a.testovi.labassay.grupa + a.testovi.labassay.grouporder ==
                 b.testovi.labassay.grupa + b.testovi.labassay.grouporder
                 ? 0
@@ -6464,7 +7325,7 @@ End of Microbiology Bus Off |
             this.testovi = res.data.data;
             this.analitiprikaz = res.data.multidata;
 
-            res.data.data.forEach(element => {
+            res.data.data.forEach((element) => {
               test = {};
               test.realizovan = false;
 
@@ -6477,7 +7338,7 @@ End of Microbiology Bus Off |
               test.multi_count = 0;
               test.multi_rezultati = [];
 
-              res.data.multidata.forEach(multi => {
+              res.data.multidata.forEach((multi) => {
                 if (multi.labassay._id === element.testovi.labassay._id) {
                   test.multi_rezultati = multi.rezultat;
                   test.multi_count = multi.rezultat[0].rezultat.length;
@@ -6502,7 +7363,7 @@ End of Microbiology Bus Off |
                     .replace(/^\d+/, "")
               );
 
-              element.testovi.rezultat.forEach(rezultat => {
+              element.testovi.rezultat.forEach((rezultat) => {
                 test.sekcija = rezultat.anaassay.sekcija;
                 test.rezultat = rezultat.rezultat_f;
                 test.result = rezultat;
@@ -6569,11 +7430,11 @@ End of Microbiology Bus Off |
                 var counter = 0;
                 var ima = false;
 
-                this.Bacteries.forEach(element => {
+                this.Bacteries.forEach((element) => {
                   element.chosen = false;
                   counter = 0;
                   ima = false;
-                  this.rezultati[0].bakterije.forEach(bakt => {
+                  this.rezultati[0].bakterije.forEach((bakt) => {
                     counter++;
                     if (element._id == bakt) {
                       ima = true;
@@ -6616,7 +7477,7 @@ End of Microbiology Bus Off |
                     this.SelectedBacteries = [];
                     this.BacteryTabs = [];
 
-                    this.rezultati[0].rezultat_m.forEach(element => {
+                    this.rezultati[0].rezultat_m.forEach((element) => {
                       // console.log(element)
                       if (element.bakterija) {
                         this.SelectedBacteries.push(element);
@@ -6624,8 +7485,8 @@ End of Microbiology Bus Off |
                       }
                     });
 
-                    console.log("Izabrane bakterije:")
-                    console.log(this.SelectedBacteries)
+                    console.log("Izabrane bakterije:");
+                    console.log(this.SelectedBacteries);
 
                     let maxVal = this.SelectedBacteries.reduce((max, val) =>
                       max.antibiogram.antibiotici.length >
@@ -6639,16 +7500,16 @@ End of Microbiology Bus Off |
                     }
                     this.CurrentTab = this.SelectedBacteries[0].opis;
 
-                    bakterijed.forEach(element => {
-                      this.SelectedBacteries.forEach(bact => {
+                    bakterijed.forEach((element) => {
+                      this.SelectedBacteries.forEach((bact) => {
                         if (element._id == bact._id) {
                           element.chosen = true;
                         }
                       });
                     });
 
-                    bakterijei.forEach(element => {
-                      this.SelectedBacteries.forEach(bact => {
+                    bakterijei.forEach((element) => {
+                      this.SelectedBacteries.forEach((bact) => {
                         if (element._id == bact._id) {
                           element.chosen = true;
                         }
@@ -6725,7 +7586,7 @@ End of Microbiology Bus Off |
                 DefaultBacteries: [...bakterijei],
                 RemainingBacteries: [...bakterijed],
                 NegativeDescriptions: [...neg_rezultati],
-                PositiveDescriptions: [...poz_rezultati]
+                PositiveDescriptions: [...poz_rezultati],
               };
             } else {
               this.MicrobiologyScenario = "Unknown";
@@ -6739,11 +7600,11 @@ End of Microbiology Bus Off |
                 DefaultBacteries: [],
                 RemainingBacteries: [],
                 NegativeDescriptions: [],
-                PositiveDescriptions: []
+                PositiveDescriptions: [],
               };
             }
 
-            this.rezultati.forEach(element => {
+            this.rezultati.forEach((element) => {
               if (element.calculated) {
                 this.calculated = true;
               }
@@ -6778,7 +7639,7 @@ End of Microbiology Bus Off |
     },
 
     MicroResultSelect(event) {
-      this.uzorci.forEach(element => {
+      this.uzorci.forEach((element) => {
         if (element.sid === this.$store.state.sid) {
           this.sample.status = "ZAPRIMLJEN";
         }
@@ -6821,7 +7682,7 @@ End of Microbiology Methods |
 
       var check = 0;
       var found = false;
-      this.Results.forEach(element => {
+      this.Results.forEach((element) => {
         check++;
         if (element.pid == this.Previous.pid) {
           found = true;
@@ -6851,11 +7712,11 @@ End of Microbiology Methods |
                 this.$route.query.date,
               {}
             )
-            .then(res => {
-              res.data.rezultati = res.data.rezultati.sort(function(a, b) {
+            .then((res) => {
+              res.data.rezultati = res.data.rezultati.sort(function (a, b) {
                 return a.pid.localeCompare(b.pid, undefined, {
                   numeric: true,
-                  sensitivity: "base"
+                  sensitivity: "base",
                 });
               });
 
@@ -6863,7 +7724,6 @@ End of Microbiology Methods |
                 res.data.rezultati[res.data.rezultati.length - 1].pid;
               this.data_min = res.data.rezultati[0].pid;
               if (Object.getOwnPropertyNames(res.data).length === 0) {
-
                 // console.warn("No data.");
 
                 this.pagination = true;
@@ -6898,7 +7758,7 @@ End of Microbiology Methods |
 
       var check = 0;
       var found = false;
-      this.Results.forEach(element => {
+      this.Results.forEach((element) => {
         check++;
         if (element.pid == this.Next.pid) {
           found = true;
@@ -6928,11 +7788,11 @@ End of Microbiology Methods |
                 this.$route.query.date,
               {}
             )
-            .then(res => {
-              res.data.rezultati = res.data.rezultati.sort(function(a, b) {
+            .then((res) => {
+              res.data.rezultati = res.data.rezultati.sort(function (a, b) {
                 return a.pid.localeCompare(b.pid, undefined, {
                   numeric: true,
-                  sensitivity: "base"
+                  sensitivity: "base",
                 });
               });
 
@@ -6940,7 +7800,6 @@ End of Microbiology Methods |
                 res.data.rezultati[res.data.rezultati.length - 1].pid;
               this.data_min = res.data.rezultati[0].pid;
               if (Object.getOwnPropertyNames(res.data).length === 0) {
-
                 // console.warn("No data.");
 
                 this.pagination = true;
@@ -6968,7 +7827,6 @@ End of Microbiology Methods |
     },
 
     Created() {
-
       /* -- */
       /* -- */
       /* -- */
@@ -7018,7 +7876,7 @@ End of Microbiology Provjera |
       /* -- */
       /* -- */
       /* -- */
-      
+
       http
         .get(
           "rezultati/odobravanje/samples/" +
@@ -7033,16 +7891,15 @@ End of Microbiology Provjera |
             this.$route.query.date,
           {}
         )
-        .then(res => {
+        .then((res) => {
           this.header =
-
             // "Obrada rezultata za pacijenta: " +
             res.data.results[0].patient.ime +
             " " +
             res.data.results[0].patient.prezime;
           this.lokacija = res.data.lokacija;
           this.klijent = res.data.results[0].customer;
-          console.log(this.klijent)
+          console.log(this.klijent);
           this.final_pdf = res.data.final_pdf;
 
           this.analyser_patient = res.data.results[0].patient;
@@ -7059,6 +7916,33 @@ End of Microbiology Provjera |
           this.email = res.data.results[0].patient.email.trim();
           this.email_tmp = res.data.results[0].patient.email.trim();
 
+          // Starost
+
+          var str = "";
+          var tmp = "";
+          var jmbgDan = this.jmbg.slice(0, 2);
+          var jmbgMjesec = this.jmbg.slice(2, 4);
+          var jmbgGodina = this.jmbg.slice(4, 7);
+
+          if (jmbgGodina[0] === "9") {
+            str = "1";
+            tmp = jmbgGodina;
+            jmbgGodina = str.concat(tmp);
+          } else if (jmbgGodina[0] === "0") {
+            str = "2";
+            tmp = jmbgGodina;
+            jmbgGodina = str.concat(tmp);
+          } else {
+            console.warn("Invalid year...");
+          }
+
+          var date = jmbgGodina + "-" + jmbgMjesec + "-" + jmbgDan;
+          var jmbgObj = this.parse_date(date);
+          var zGodina = jmbgObj.years + 1;
+          this.starost = zGodina;
+
+          //
+
           if (!this.Email(this.email)) {
             this.email = "";
             this.email_tmp = "";
@@ -7073,7 +7957,7 @@ End of Microbiology Provjera |
           this.partials = [];
           this.partials_condition = false;
 
-          res.data.results.forEach(element => {
+          res.data.results.forEach((element) => {
             if (element.verificiran) {
               this.verified++;
               this.partials.push(element._id);
@@ -7104,7 +7988,7 @@ End of Microbiology Provjera |
           this.nalaz.patient = res.data.results[0].patient._id;
           this.nalaz.samples = [];
 
-          res.data.results.forEach(element => {
+          res.data.results.forEach((element) => {
             var check = 0;
             var zaprimljen = 0;
             var realizovan = 0;
@@ -7117,7 +8001,7 @@ End of Microbiology Provjera |
 
             this.nalaz.samples.push(element._id);
 
-            element.rezultati.forEach(test => {
+            element.rezultati.forEach((test) => {
               check++;
 
               if (test.rezultat[test.rezultat.length - 1].rezultat_f === "") {
@@ -7129,7 +8013,6 @@ End of Microbiology Provjera |
               }
 
               if (check === element.rezultati.length) {
-
                 /* -- */
                 /* -- */
                 /* -- */
@@ -7191,7 +8074,7 @@ End of Microbiology Provjera |
                     pdf_exists: element.pdf_exists,
                     tip: element.sample.tip,
                     _id: element._id,
-                    removed: false
+                    removed: false,
                   });
                 } else if (status_uzorka === "ODOBREN") {
                   this.uzorci.push({
@@ -7200,7 +8083,7 @@ End of Microbiology Provjera |
                     pdf_exists: element.pdf_exists,
                     tip: element.sample.tip,
                     _id: element._id,
-                    removed: false
+                    removed: false,
                   });
                 } else if (zaprimljen < 1) {
                   this.uzorci.push({
@@ -7209,7 +8092,7 @@ End of Microbiology Provjera |
                     pdf_exists: element.pdf_exists,
                     tip: element.sample.tip,
                     _id: element._id,
-                    removed: false
+                    removed: false,
                   });
                 } else if (realizovan < 1) {
                   var stat = "ZAPRIMLJEN";
@@ -7224,7 +8107,7 @@ End of Microbiology Provjera |
                     pdf_exists: element.pdf_exists,
                     tip: element.sample.tip,
                     _id: element._id,
-                    removed: false
+                    removed: false,
                   });
                 } else {
                   this.uzorci.push({
@@ -7233,17 +8116,17 @@ End of Microbiology Provjera |
                     pdf_exists: element.pdf_exists,
                     tip: element.sample.tip,
                     _id: element._id,
-                    removed: false
+                    removed: false,
                   });
                 }
               }
             });
           });
 
-          this.uzorci = this.uzorci.sort(function(a, b) {
+          this.uzorci = this.uzorci.sort(function (a, b) {
             return a.sid.localeCompare(b.sid, undefined, {
               numeric: true,
-              sensitivity: "base"
+              sensitivity: "base",
             });
           });
           this.main = true;
@@ -7263,11 +8146,11 @@ End of Microbiology Provjera |
                 this.$route.query.date,
               {}
             )
-            .then(res => {
-              res.data.rezultati = res.data.rezultati.sort(function(a, b) {
+            .then((res) => {
+              res.data.rezultati = res.data.rezultati.sort(function (a, b) {
                 return a.pid.localeCompare(b.pid, undefined, {
                   numeric: true,
-                  sensitivity: "base"
+                  sensitivity: "base",
                 });
               });
 
@@ -7275,7 +8158,6 @@ End of Microbiology Provjera |
                 res.data.rezultati[res.data.rezultati.length - 1].pid;
               this.data_min = res.data.rezultati[0].pid;
               if (Object.getOwnPropertyNames(res.data).length === 0) {
-
                 // console.warn("No data.");
 
                 this.pagination = true;
@@ -7317,7 +8199,7 @@ End of Microbiology Provjera |
                       this.$store.state.site,
                     {}
                   )
-                  .then(res => {
+                  .then((res) => {
                     this.Bacteries = res.data.bakterije;
                     http
                       .get(
@@ -7327,13 +8209,13 @@ End of Microbiology Provjera |
                           this.$store.state.site,
                         {}
                       )
-                      .then(res => {
+                      .then((res) => {
                         this.Antibiograms = res.data.antibiogrami;
 
-                        this.Antibiograms.sort(function(a, b) {
+                        this.Antibiograms.sort(function (a, b) {
                           return a.naziv.localeCompare(b.naziv, undefined, {
                             numeric: true,
-                            sensitivity: "base"
+                            sensitivity: "base",
                           });
                         });
 
@@ -7345,17 +8227,17 @@ End of Microbiology Provjera |
                               this.$store.state.site,
                             {}
                           )
-                          .then(res => {
-                            res.data.antibiotici.sort(function(a, b) {
+                          .then((res) => {
+                            res.data.antibiotici.sort(function (a, b) {
                               return a.rbr_a.localeCompare(b.rbr_a, undefined, {
                                 numeric: true,
-                                sensitivity: "base"
+                                sensitivity: "base",
                               });
                             });
 
                             this.Antibiotics = [];
 
-                            res.data.antibiotici.forEach(element => {
+                            res.data.antibiotici.forEach((element) => {
                               element.chosen = false;
                               element.disabled = false;
                               this.Antibiotics.push(element);
@@ -7388,7 +8270,6 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
               /* -- */
               /* -- */
               /* -- */
-
             });
         });
     },
@@ -7403,7 +8284,7 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
       this.pdf = false;
     },
 
-    Email: function(email) {
+    Email: function (email) {
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
         return true;
       } else {
@@ -7411,7 +8292,41 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
       }
     },
 
+    parse_date: function (date) {
+      // Takes one string parameter -- date in YYYY-MM-DD
+      date = date.split("-");
+      var today = new Date();
+      var year = today.getFullYear();
+      var month = today.getMonth() + 1;
+      var day = today.getDate();
+      var yy = parseInt(date[0]);
+      var mm = parseInt(date[1]);
+      var dd = parseInt(date[2]);
+      var years, months, days;
+      // months
+      months = month - mm;
+      if (day < dd) {
+        months = months - 1;
+      }
+      // years
+      years = year - yy;
+      if (month * 100 + day < mm * 100 + dd) {
+        years = years - 1;
+        months = months + 12;
+      }
+      // days
+      days = Math.floor(
+        (today.getTime() -
+          new Date(yy + years, mm + months - 1, dd).getTime()) /
+          (24 * 60 * 60 * 1000)
+      );
+      //
+      return { years: years, months: months, days: days };
+    },
+
     GetSingleSample(data) {
+      // "_id" : ObjectId("5f1877edb34ecd0c70fb0adc"), AnaAssays (Starost)
+
       this.testovi = [];
       this.rezultati = [];
       this.analitiprikaz = [];
@@ -7432,11 +8347,11 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
             this.$store.state.site,
           {}
         )
-        .then(res => {
+        .then((res) => {
           var test = {};
 
           if (res.data.data.length) {
-            res.data.data.sort(function(a, b) {
+            res.data.data.sort(function (a, b) {
               return a.testovi.labassay.grupa + a.testovi.labassay.grouporder ==
                 b.testovi.labassay.grupa + b.testovi.labassay.grouporder
                 ? 0
@@ -7451,7 +8366,7 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
 
             // console.log(this.analitiprikaz);
 
-            res.data.data.forEach(element => {
+            res.data.data.forEach((element) => {
               test = {};
               test.realizovan = false;
 
@@ -7464,7 +8379,7 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
               test.multi_count = 0;
               test.multi_rezultati = [];
 
-              res.data.multidata.forEach(multi => {
+              res.data.multidata.forEach((multi) => {
                 if (multi.labassay._id === element.testovi.labassay._id) {
                   test.multi_rezultati = multi.rezultat;
                   test.multi_count = multi.rezultat[0].rezultat.length;
@@ -7490,9 +8405,19 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
                     .replace(/^\d+/, "")
               );
 
-              element.testovi.rezultat.forEach(rezultat => {
+              element.testovi.rezultat.forEach((rezultat) => {
                 test.sekcija = rezultat.anaassay.sekcija;
-                test.rezultat = rezultat.rezultat_f;
+
+                if (
+                  rezultat.anaassay._id === "5f1877edb34ecd0c70fb0adc" &&
+                  rezultat.rezultat_f.trim() == ""
+                ) {
+                  console.log("Starost pacijenta: " + this.starost);
+                  test.rezultat = JSON.stringify(this.starost);
+                } else {
+                  test.rezultat = rezultat.rezultat_f;
+                }
+
                 test.result = rezultat;
                 test.anaassay = rezultat.anaassay;
 
@@ -7561,7 +8486,6 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
 
             // if (this.MicrobiologySample && this.AllowGetSample) {
             if (this.MicrobiologySample) {
-
               // On first Click
               // console.warn("Microbiology sample check.");
 
@@ -7579,7 +8503,6 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
               poz_rezultati = [...this.rezultati[0].pos_description];
 
               if (this.rezultati[0].bakterije.length) {
-
                 console.log("Ima bakterije.");
 
                 bakterioloski = true;
@@ -7587,11 +8510,11 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
                 var counter = 0;
                 var ima = false;
 
-                this.Bacteries.forEach(element => {
+                this.Bacteries.forEach((element) => {
                   element.chosen = false;
                   counter = 0;
                   ima = false;
-                  this.rezultati[0].bakterije.forEach(bakt => {
+                  this.rezultati[0].bakterije.forEach((bakt) => {
                     counter++;
                     if (element._id == bakt) {
                       ima = true;
@@ -7637,7 +8560,7 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
                     this.SelectedBacteries = [];
                     this.BacteryTabs = [];
 
-                    this.rezultati[0].rezultat_m.forEach(element => {
+                    this.rezultati[0].rezultat_m.forEach((element) => {
                       // console.log(element)
                       if (element.bakterija) {
                         this.SelectedBacteries.push(element);
@@ -7645,8 +8568,8 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
                       }
                     });
 
-                    console.log("Izabrane bakterije:")
-                    console.log(this.SelectedBacteries)
+                    console.log("Izabrane bakterije:");
+                    console.log(this.SelectedBacteries);
 
                     let maxVal = this.SelectedBacteries.reduce((max, val) =>
                       max.antibiogram.antibiotici.length >
@@ -7660,16 +8583,16 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
                     }
                     this.CurrentTab = this.SelectedBacteries[0].opis;
 
-                    bakterijed.forEach(element => {
-                      this.SelectedBacteries.forEach(bact => {
+                    bakterijed.forEach((element) => {
+                      this.SelectedBacteries.forEach((bact) => {
                         if (element._id == bact._id) {
                           element.chosen = true;
                         }
                       });
                     });
 
-                    bakterijei.forEach(element => {
-                      this.SelectedBacteries.forEach(bact => {
+                    bakterijei.forEach((element) => {
+                      this.SelectedBacteries.forEach((bact) => {
                         if (element._id == bact._id) {
                           element.chosen = true;
                         }
@@ -7753,11 +8676,10 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
                 DefaultBacteries: [...bakterijei],
                 RemainingBacteries: [...bakterijed],
                 NegativeDescriptions: [...neg_rezultati],
-                PositiveDescriptions: [...poz_rezultati]
+                PositiveDescriptions: [...poz_rezultati],
               };
               // console.log(this.MicrobiologyResult)
             } else {
-
               // console.log("Uzorak nije mikrobiološki || Sample closed");
 
               this.MicrobiologyScenario = "Unknown";
@@ -7771,7 +8693,7 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
                 DefaultBacteries: [],
                 RemainingBacteries: [],
                 NegativeDescriptions: [],
-                PositiveDescriptions: []
+                PositiveDescriptions: [],
               };
             }
 
@@ -7799,7 +8721,7 @@ End of Microbiology Sample Check |
             /* -- */
             /* -- */
 
-            this.rezultati.forEach(element => {
+            this.rezultati.forEach((element) => {
               if (element.calculated) {
                 this.calculated = true;
               }
@@ -7848,22 +8770,22 @@ End of Microbiology Sample Check |
             test.labassay_id,
           {}
         )
-        .then(res => {
+        .then((res) => {
           this.analysers = [];
 
-          res.data.anaassays.forEach(element => {
+          res.data.anaassays.forEach((element) => {
             element.aparat.site = element.site;
             this.analysers.push(element.aparat);
           });
 
-          this.analysers.forEach(analyser => {
+          this.analysers.forEach((analyser) => {
             analyser.selected = false;
           });
 
           this.analiza = test;
 
-          this.rezultati.forEach(element => {
-            this.analysers.forEach(analyser => {
+          this.rezultati.forEach((element) => {
+            this.analysers.forEach((analyser) => {
               if (
                 element.ime === this.analiza.ime &&
                 element.anaassay.aparat === analyser._id
@@ -7884,7 +8806,6 @@ End of Microbiology Sample Check |
         this.$refs.staticModalAparati.close();
 
         // console.warn("No change required.");
-
       } else {
         http
           .post("rezultati/odobravanje/references", {
@@ -7893,13 +8814,13 @@ End of Microbiology Sample Check |
             id: this.sample.sid,
             pacijent: this.analyser_patient,
             analiza: this.analiza,
-            analyser: this.analyser
+            analyser: this.analyser,
           })
-          .then(res => {
+          .then((res) => {
             if (res.data.success) {
               var data = {};
 
-              this.uzorci.forEach(element => {
+              this.uzorci.forEach((element) => {
                 if (element.sid === this.$store.state.sid) {
                   data = element;
                 }
@@ -7925,11 +8846,11 @@ End of Microbiology Sample Check |
                     this.$store.state.site,
                   {}
                 )
-                .then(res => {
+                .then((res) => {
                   var test = {};
 
                   if (res.data.data.length) {
-                    res.data.data.sort(function(a, b) {
+                    res.data.data.sort(function (a, b) {
                       return a.testovi.labassay.grupa +
                         a.testovi.labassay.grouporder ==
                         b.testovi.labassay.grupa + b.testovi.labassay.grouporder
@@ -7945,7 +8866,7 @@ End of Microbiology Sample Check |
                     this.testovi = res.data.data;
                     this.analitiprikaz = res.data.multidata;
 
-                    res.data.data.forEach(element => {
+                    res.data.data.forEach((element) => {
                       test = {};
                       test.realizovan = false;
 
@@ -7958,7 +8879,7 @@ End of Microbiology Sample Check |
                       test.multi_count = 0;
                       test.multi_rezultati = [];
 
-                      res.data.multidata.forEach(multi => {
+                      res.data.multidata.forEach((multi) => {
                         if (
                           multi.labassay._id === element.testovi.labassay._id
                         ) {
@@ -7986,7 +8907,7 @@ End of Microbiology Sample Check |
                             .replace(/^\d+/, "")
                       );
 
-                      element.testovi.rezultat.forEach(rezultat => {
+                      element.testovi.rezultat.forEach((rezultat) => {
                         test.sekcija = rezultat.anaassay.sekcija;
                         test.rezultat = rezultat.rezultat_f;
                         test.result = rezultat;
@@ -8037,7 +8958,7 @@ End of Microbiology Sample Check |
                       this.rezultati.push(test);
                     });
 
-                    this.rezultati.forEach(element => {
+                    this.rezultati.forEach((element) => {
                       if (element.calculated) {
                         this.calculated = true;
                       }
@@ -8049,10 +8970,8 @@ End of Microbiology Sample Check |
                 });
               this.$refs.staticModalAparati.close();
             } else {
-
               // console.warn(res.data.message);
               // this.$refs.staticModalAparati.close();
-
             }
           });
       }
@@ -8068,7 +8987,7 @@ End of Microbiology Sample Check |
         gref: test.gRef,
         interp: test.interp,
         extend: test.extend,
-        jedinica: test.jedinica
+        jedinica: test.jedinica,
       };
       this.$refs.staticModalReference.open();
     },
@@ -8086,7 +9005,7 @@ End of Microbiology Sample Check |
             this.$store.state.site,
           {}
         )
-        .then(res => {
+        .then((res) => {
           printEPL(
             res.data.name + " " + res.data.surname,
             this.sid,
@@ -8103,12 +9022,11 @@ End of Microbiology Sample Check |
     },
 
     SaveResults(rezultati, from) {
-
       // Vue Loading Overlay Component
       this.isLoading = true;
 
       if (!this.MicrobiologySample) {
-        rezultati.forEach(element => {
+        rezultati.forEach((element) => {
           element.rezultat = element.rezultat.replace(/,/g, ".");
         });
 
@@ -8120,9 +9038,9 @@ End of Microbiology Sample Check |
           email: this.$store.state.userId,
           token: this.$store.state.token,
           site: this.$store.state.site,
-          rezultati: rezultati
+          rezultati: rezultati,
         })
-        .then(res => {
+        .then((res) => {
           http
             .get(
               "rezultati/odobravanje/samples/" +
@@ -8137,10 +9055,10 @@ End of Microbiology Sample Check |
                 this.$route.query.date,
               {}
             )
-            .then(res => {
+            .then((res) => {
               this.uzorci = [];
 
-              res.data.results.forEach(element => {
+              res.data.results.forEach((element) => {
                 var check = 0;
                 var zaprimljen = 0;
                 var realizovan = 0;
@@ -8151,7 +9069,7 @@ End of Microbiology Sample Check |
                   var status_uzorka = element.status;
                 }
 
-                element.rezultati.forEach(test => {
+                element.rezultati.forEach((test) => {
                   check++;
 
                   if (
@@ -8167,7 +9085,6 @@ End of Microbiology Sample Check |
                   }
 
                   if (check === element.rezultati.length) {
-
                     // console.log("Provjera: Save (single)")
 
                     if (status_uzorka === "VERIFICIRAN") {
@@ -8177,7 +9094,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (status_uzorka === "ODOBREN") {
                       this.uzorci.push({
@@ -8186,7 +9103,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (zaprimljen < 1) {
                       this.uzorci.push({
@@ -8195,7 +9112,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (realizovan < 1) {
                       var stat = "ZAPRIMLJEN";
@@ -8212,7 +9129,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else {
                       this.uzorci.push({
@@ -8221,17 +9138,17 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     }
                   }
                 });
               });
 
-              this.uzorci = this.uzorci.sort(function(a, b) {
+              this.uzorci = this.uzorci.sort(function (a, b) {
                 return a.sid.localeCompare(b.sid, undefined, {
                   numeric: true,
-                  sensitivity: "base"
+                  sensitivity: "base",
                 });
               });
 
@@ -8242,7 +9159,7 @@ End of Microbiology Sample Check |
     },
 
     DeletedSample(data) {
-      this.uzorci.forEach(element => {
+      this.uzorci.forEach((element) => {
         if (element.sid === data) {
           element.removed = false;
         }
@@ -8272,7 +9189,7 @@ End of Microbiology Sample Check |
               this.$route.query.date,
             {}
           )
-          .then(res => {
+          .then((res) => {
             this.count = res.data.results.length;
             this.approved = 0;
 
@@ -8283,7 +9200,7 @@ End of Microbiology Sample Check |
 
             this.resdata = res.data.results;
 
-            res.data.results.forEach(element => {
+            res.data.results.forEach((element) => {
               if (
                 element.status === "ODOBREN" ||
                 element.status === "VERIFICIRAN"
@@ -8304,7 +9221,7 @@ End of Microbiology Sample Check |
             if (this.count == this.approved) {
               var report = [];
 
-              this.uzorci.forEach(element => {
+              this.uzorci.forEach((element) => {
                 report.push(element._id);
               });
 
@@ -8321,9 +9238,9 @@ End of Microbiology Sample Check |
                   idNalaza: "",
                   location: "/",
                   klijent: this.klijent,
-                  naziv: this.timestamp
+                  naziv: this.timestamp,
                 })
-                .then(res => {
+                .then((res) => {
                   if (res.data.success) {
                     http
                       .post("nalazi/memo", {
@@ -8332,14 +9249,14 @@ End of Microbiology Sample Check |
                         timestamp: this.timestamp,
                         height: res.data.memo,
                         location: "/",
-                        naziv: this.timestamp
+                        naziv: this.timestamp,
                       })
-                      .then(res => {
+                      .then((res) => {
                         this.final_pdf = true;
 
                         this.uzorci = [];
 
-                        this.resdata.forEach(element => {
+                        this.resdata.forEach((element) => {
                           var check = 0;
                           var zaprimljen = 0;
                           var realizovan = 0;
@@ -8350,7 +9267,7 @@ End of Microbiology Sample Check |
                             var status_uzorka = element.status;
                           }
 
-                          element.rezultati.forEach(test => {
+                          element.rezultati.forEach((test) => {
                             check++;
 
                             if (
@@ -8368,7 +9285,6 @@ End of Microbiology Sample Check |
                             }
 
                             if (check === element.rezultati.length) {
-
                               // console.log("Provjera: Sample Delete")
 
                               if (status_uzorka === "VERIFICIRAN") {
@@ -8378,7 +9294,7 @@ End of Microbiology Sample Check |
                                   pdf_exists: element.pdf_exists,
                                   tip: element.sample.tip,
                                   _id: element._id,
-                                  removed: false
+                                  removed: false,
                                 });
                               } else if (status_uzorka === "ODOBREN") {
                                 this.uzorci.push({
@@ -8387,7 +9303,7 @@ End of Microbiology Sample Check |
                                   pdf_exists: element.pdf_exists,
                                   tip: element.sample.tip,
                                   _id: element._id,
-                                  removed: false
+                                  removed: false,
                                 });
                               } else if (zaprimljen < 1) {
                                 this.uzorci.push({
@@ -8396,7 +9312,7 @@ End of Microbiology Sample Check |
                                   pdf_exists: element.pdf_exists,
                                   tip: element.sample.tip,
                                   _id: element._id,
-                                  removed: false
+                                  removed: false,
                                 });
                               } else if (realizovan < 1) {
                                 var stat = "ZAPRIMLJEN";
@@ -8416,7 +9332,7 @@ End of Microbiology Sample Check |
                                   pdf_exists: element.pdf_exists,
                                   tip: element.sample.tip,
                                   _id: element._id,
-                                  removed: false
+                                  removed: false,
                                 });
                               } else {
                                 this.uzorci.push({
@@ -8425,17 +9341,17 @@ End of Microbiology Sample Check |
                                   pdf_exists: element.pdf_exists,
                                   tip: element.sample.tip,
                                   _id: element._id,
-                                  removed: false
+                                  removed: false,
                                 });
                               }
                             }
                           });
                         });
 
-                        this.uzorci = this.uzorci.sort(function(a, b) {
+                        this.uzorci = this.uzorci.sort(function (a, b) {
                           return a.sid.localeCompare(b.sid, undefined, {
                             numeric: true,
-                            sensitivity: "base"
+                            sensitivity: "base",
                           });
                         });
 
@@ -8447,7 +9363,7 @@ End of Microbiology Sample Check |
             } else {
               this.uzorci = [];
 
-              res.data.results.forEach(element => {
+              res.data.results.forEach((element) => {
                 var check = 0;
                 var zaprimljen = 0;
                 var realizovan = 0;
@@ -8458,7 +9374,7 @@ End of Microbiology Sample Check |
                   var status_uzorka = element.status;
                 }
 
-                element.rezultati.forEach(test => {
+                element.rezultati.forEach((test) => {
                   check++;
 
                   if (
@@ -8474,7 +9390,6 @@ End of Microbiology Sample Check |
                   }
 
                   if (check === element.rezultati.length) {
-
                     // console.log("Provjera: Sample Delete")
 
                     if (status_uzorka === "VERIFICIRAN") {
@@ -8484,7 +9399,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (status_uzorka === "ODOBREN") {
                       this.uzorci.push({
@@ -8493,7 +9408,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (zaprimljen < 1) {
                       this.uzorci.push({
@@ -8502,7 +9417,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (realizovan < 1) {
                       var stat = "ZAPRIMLJEN";
@@ -8519,7 +9434,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else {
                       this.uzorci.push({
@@ -8528,17 +9443,17 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     }
                   }
                 });
               });
 
-              this.uzorci = this.uzorci.sort(function(a, b) {
+              this.uzorci = this.uzorci.sort(function (a, b) {
                 return a.sid.localeCompare(b.sid, undefined, {
                   numeric: true,
-                  sensitivity: "base"
+                  sensitivity: "base",
                 });
               });
 
@@ -8568,10 +9483,10 @@ End of Microbiology Sample Check |
             this.$route.query.date,
           {}
         )
-        .then(res => {
+        .then((res) => {
           this.uzorci = [];
 
-          res.data.results.forEach(element => {
+          res.data.results.forEach((element) => {
             var check = 0;
             var zaprimljen = 0;
             var realizovan = 0;
@@ -8582,7 +9497,7 @@ End of Microbiology Sample Check |
               var status_uzorka = element.status;
             }
 
-            element.rezultati.forEach(test => {
+            element.rezultati.forEach((test) => {
               check++;
 
               if (test.rezultat[test.rezultat.length - 1].rezultat_f === "") {
@@ -8594,7 +9509,6 @@ End of Microbiology Sample Check |
               }
 
               if (check === element.rezultati.length) {
-
                 // console.log("Provjera: Edit")
 
                 if (status_uzorka === "VERIFICIRAN") {
@@ -8604,7 +9518,7 @@ End of Microbiology Sample Check |
                     pdf_exists: element.pdf_exists,
                     tip: element.sample.tip,
                     _id: element._id,
-                    removed: false
+                    removed: false,
                   });
                 } else if (status_uzorka === "ODOBREN") {
                   this.uzorci.push({
@@ -8613,7 +9527,7 @@ End of Microbiology Sample Check |
                     pdf_exists: element.pdf_exists,
                     tip: element.sample.tip,
                     _id: element._id,
-                    removed: false
+                    removed: false,
                   });
                 } else if (zaprimljen < 1) {
                   this.uzorci.push({
@@ -8622,7 +9536,7 @@ End of Microbiology Sample Check |
                     pdf_exists: element.pdf_exists,
                     tip: element.sample.tip,
                     _id: element._id,
-                    removed: false
+                    removed: false,
                   });
                 } else if (realizovan < 1) {
                   var stat = "ZAPRIMLJEN";
@@ -8637,7 +9551,7 @@ End of Microbiology Sample Check |
                     pdf_exists: element.pdf_exists,
                     tip: element.sample.tip,
                     _id: element._id,
-                    removed: false
+                    removed: false,
                   });
                 } else {
                   this.uzorci.push({
@@ -8646,17 +9560,17 @@ End of Microbiology Sample Check |
                     pdf_exists: element.pdf_exists,
                     tip: element.sample.tip,
                     _id: element._id,
-                    removed: false
+                    removed: false,
                   });
                 }
               }
             });
           });
 
-          this.uzorci = this.uzorci.sort(function(a, b) {
+          this.uzorci = this.uzorci.sort(function (a, b) {
             return a.sid.localeCompare(b.sid, undefined, {
               numeric: true,
-              sensitivity: "base"
+              sensitivity: "base",
             });
           });
         })
@@ -8667,65 +9581,61 @@ End of Microbiology Sample Check |
         });
     },
 
-    RetestEnable: function(event) {
-
-      this.rezultati.forEach(element => {
+    RetestEnable: function (event) {
+      this.rezultati.forEach((element) => {
         if (element.test === event.target.id) {
           element.retest = true;
         }
       });
 
-      this.save_retest = true
+      this.save_retest = true;
 
-
-       http
+      http
         .post("rezultati/odobravanje/retest/da/", {
           id_u: this.$store.state.sid,
           id_t: event.target.id,
           site: this.$store.state.site,
-          token: this.$store.state.token
+          token: this.$store.state.token,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.success) {
-            this.rezultati.forEach(element => {
+            this.rezultati.forEach((element) => {
               if (element.test === event.target.id) {
                 element.retest = true;
               }
             });
           }
-        }); 
+        });
     },
 
-    RetestDisable: function(event) {
-
-      this.rezultati.forEach(element => {
+    RetestDisable: function (event) {
+      this.rezultati.forEach((element) => {
         if (element.test === event.target.id) {
           element.retest = false;
         }
       });
 
-      this.save_retest = true
+      this.save_retest = true;
 
-       http
+      http
         .post("rezultati/odobravanje/retest/ne/", {
           id_u: this.$store.state.sid,
           id_t: event.target.id,
           site: this.$store.state.site,
-          token: this.$store.state.token
+          token: this.$store.state.token,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.success) {
-            this.rezultati.forEach(element => {
+            this.rezultati.forEach((element) => {
               if (element.test === event.target.id) {
                 element.retest = false;
               }
             });
           }
-        }); 
+        });
     },
 
-    MultiGet: function(event, naziv, ana, rezultat, odobren) {
-
+    MultiGet: function (event, naziv, ana, rezultat, odobren) {
       // Sediment urina
       // console.log(event.target.id)
 
@@ -8735,24 +9645,36 @@ End of Microbiology Sample Check |
       var i = 0;
       var kontrola = false;
 
-      this.uzorci.forEach(element => {
+      this.uzorci.forEach((element) => {
         if (element.sid === this.$store.state.sid) {
           this.check = element.status;
         }
       });
 
-      this.analitiprikaz.forEach(element => {
+      this.analitiprikaz.forEach((element) => {
         i++;
         single = {};
 
         var opcije = null;
         opcije = izbornik.data;
 
+        var noResult = true;
+
         if (event.target.id === element.labassay._id) {
-          element.rezultat.forEach(analit => {
+          console.log(element.labassay)
+          element.rezultat.forEach((analit) => {
+            if (analit.rezultat[0].rezultat_f.trim() != "") {
+              noResult = false;
+            }
+          });
+          console.log(noResult)
+        }
+
+        if (event.target.id === element.labassay._id) {
+          element.rezultat.forEach((analit) => {
             single.kod = analit.rezultat[0].module_sn;
 
-            element.labassay.multiparam.forEach(mparam => {
+            element.labassay.multiparam.forEach((mparam) => {
               if (mparam.kod === single.kod) {
                 if (mparam.izbornik.length) {
                   // console.log(mparam.kod);
@@ -8787,7 +9709,6 @@ End of Microbiology Sample Check |
               single.select_options != undefined &&
               !single.select_options.includes(analit.rezultat[0].rezultat_f)
             ) {
-
               // Sediment urina (Epitelne ćelije, Kristali i Soli)
               if (
                 single.kod != "s03" &&
@@ -8821,7 +9742,6 @@ End of Microbiology Sample Check |
                 single.kod === "s08" ||
                 single.kod === "s09")
             ) {
-
               // Sediment urina (Epitelne ćelije, Kristali i Soli)
               single.rezultat_multiple = single.rezultat.split(";");
               for (var i = single.rezultat_multiple.length - 1; i >= 0; i--) {
@@ -8851,7 +9771,9 @@ End of Microbiology Sample Check |
                 analit.rezultat[0].rezultat_f === "" &&
                 single.select_options != undefined
               ) {
-                single.rezultat = single.select_options[1];
+                if (noResult) {
+                  single.rezultat = single.select_options[1];
+                }
               }
             }
 
@@ -8859,8 +9781,8 @@ End of Microbiology Sample Check |
             single.izbor = ana;
 
             // Opšti pregled urina (Urobilinogen)
-            if(single.kod === "o12" && single.rezultat.trim() === ""){
-              single.rezultat = "16"
+            if (single.kod === "o12" && single.rezultat.trim() === "") {
+              single.rezultat = "16";
             }
 
             this.analiti.push(single);
@@ -8879,7 +9801,7 @@ End of Microbiology Sample Check |
       }
     },
 
-    Interpretacija: function(
+    Interpretacija: function (
       test,
       rezultat,
       jedinica,
@@ -8908,7 +9830,6 @@ End of Microbiology Sample Check |
     },
 
     SendMail(email) {
-
       // Vue Loading Overlay Component
       this.isLoading = true;
 
@@ -8919,10 +9840,9 @@ End of Microbiology Sample Check |
           email: email,
           timestamp: this.timestamp,
           location: "/",
-          naziv: this.timestamp
+          naziv: this.timestamp,
         })
-        .then(res => {
-
+        .then((res) => {
           // Vue Loading Overlay Component
           this.isLoading = false;
 
@@ -8937,7 +9857,7 @@ End of Microbiology Sample Check |
               position: this.toastPosition,
               duration: 2500,
               fullWidth: this.false,
-              className: this.className
+              className: this.className,
             });
 
             if (this.email_changed) {
@@ -8945,9 +9865,9 @@ End of Microbiology Sample Check |
                 .post("pacijenti/detalji/update/" + this.pacijent, {
                   email: email.trim(),
                   token: this.$store.state.token,
-                  site: this.$store.state.site
+                  site: this.$store.state.site,
                 })
-                .then(res => {});
+                .then((res) => {});
             }
           } else {
             this.toastText = "Greška prilikom slanja nalaza!";
@@ -8960,20 +9880,20 @@ End of Microbiology Sample Check |
               position: this.toastPosition,
               duration: 2500,
               fullWidth: this.false,
-              className: this.className
+              className: this.className,
             });
           }
         });
     },
 
     SaveMultiResults(analiti, data) {
-      analiti.forEach(analit => {
+      analiti.forEach((analit) => {
         analit.rezultat = analit.rezultat.replace(/,/g, ".");
 
         if (analit.rezultat_multiple.length) {
           analit.rezultat = "";
 
-          analit.rezultat_multiple.forEach(element => {
+          analit.rezultat_multiple.forEach((element) => {
             if (element === "") {
             } else {
               analit.rezultat = analit.rezultat + element + ";";
@@ -8993,9 +9913,9 @@ End of Microbiology Sample Check |
         .post("/rezultati/odobravanje/analiti/" + this.$store.state.sid, {
           analiti: analiti,
           site: this.$store.state.site,
-          token: this.$store.state.token
+          token: this.$store.state.token,
         })
-        .then(res => {
+        .then((res) => {
           http
             .get(
               "rezultati/odobravanje/samples/" +
@@ -9010,10 +9930,10 @@ End of Microbiology Sample Check |
                 this.$route.query.date,
               {}
             )
-            .then(res => {
+            .then((res) => {
               this.uzorci = [];
 
-              res.data.results.forEach(element => {
+              res.data.results.forEach((element) => {
                 var check = 0;
                 var zaprimljen = 0;
                 var realizovan = 0;
@@ -9024,7 +9944,7 @@ End of Microbiology Sample Check |
                   var status_uzorka = element.status;
                 }
 
-                element.rezultati.forEach(test => {
+                element.rezultati.forEach((test) => {
                   check++;
 
                   if (
@@ -9040,7 +9960,6 @@ End of Microbiology Sample Check |
                   }
 
                   if (check === element.rezultati.length) {
-
                     // console.log("Provjera: Save (multi)")
 
                     if (status_uzorka === "VERIFICIRAN") {
@@ -9050,7 +9969,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (status_uzorka === "ODOBREN") {
                       this.uzorci.push({
@@ -9059,7 +9978,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (zaprimljen < 1) {
                       this.uzorci.push({
@@ -9068,7 +9987,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (realizovan < 1) {
                       var stat = "ZAPRIMLJEN";
@@ -9085,7 +10004,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else {
                       this.uzorci.push({
@@ -9094,17 +10013,17 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     }
                   }
                 });
               });
 
-              this.uzorci = this.uzorci.sort(function(a, b) {
+              this.uzorci = this.uzorci.sort(function (a, b) {
                 return a.sid.localeCompare(b.sid, undefined, {
                   numeric: true,
-                  sensitivity: "base"
+                  sensitivity: "base",
                 });
               });
 
@@ -9112,10 +10031,10 @@ End of Microbiology Sample Check |
               this.isLoading = false;
             });
         })
-        .then(res => {
+        .then((res) => {
           var data = {};
 
-          this.uzorci.forEach(element => {
+          this.uzorci.forEach((element) => {
             if (element.sid === this.$store.state.sid) {
               data = element;
             }
@@ -9141,11 +10060,11 @@ End of Microbiology Sample Check |
                 this.$store.state.site,
               {}
             )
-            .then(res => {
+            .then((res) => {
               var test = {};
 
               if (res.data.data.length) {
-                res.data.data.sort(function(a, b) {
+                res.data.data.sort(function (a, b) {
                   return a.testovi.labassay.grupa +
                     a.testovi.labassay.grouporder ==
                     b.testovi.labassay.grupa + b.testovi.labassay.grouporder
@@ -9160,7 +10079,7 @@ End of Microbiology Sample Check |
                 this.testovi = res.data.data;
                 this.analitiprikaz = res.data.multidata;
 
-                res.data.data.forEach(element => {
+                res.data.data.forEach((element) => {
                   test = {};
                   test.realizovan = false;
 
@@ -9173,7 +10092,7 @@ End of Microbiology Sample Check |
                   test.multi_count = 0;
                   test.multi_rezultati = [];
 
-                  res.data.multidata.forEach(multi => {
+                  res.data.multidata.forEach((multi) => {
                     if (multi.labassay._id === element.testovi.labassay._id) {
                       test.multi_rezultati = multi.rezultat;
                       test.multi_count = multi.rezultat[0].rezultat.length;
@@ -9199,7 +10118,7 @@ End of Microbiology Sample Check |
                         .replace(/^\d+/, "")
                   );
 
-                  element.testovi.rezultat.forEach(rezultat => {
+                  element.testovi.rezultat.forEach((rezultat) => {
                     test.sekcija = rezultat.anaassay.sekcija;
                     test.rezultat = rezultat.rezultat_f;
                     test.result = rezultat;
@@ -9247,7 +10166,7 @@ End of Microbiology Sample Check |
                   this.rezultati.push(test);
                 });
 
-                this.rezultati.forEach(element => {
+                this.rezultati.forEach((element) => {
                   if (element.calculated) {
                     this.calculated = true;
                   }
@@ -9260,16 +10179,16 @@ End of Microbiology Sample Check |
         });
     },
 
-    Calculate: function(event, id, ime, edited) {
+    Calculate: function (event, id, ime, edited) {
       http
         .post("/rezultati/odobravanje/calculate/" + this.$store.state.sid, {
           _id: id,
           token: this.$store.state.token,
           site: this.$store.state.site,
           ime: ime,
-          pid: this.pid
+          pid: this.pid,
         })
-        .then(res => {
+        .then((res) => {
           http
             .get(
               "rezultati/odobravanje/samples/" +
@@ -9284,10 +10203,10 @@ End of Microbiology Sample Check |
                 this.$route.query.date,
               {}
             )
-            .then(res => {
+            .then((res) => {
               this.uzorci = [];
 
-              res.data.results.forEach(element => {
+              res.data.results.forEach((element) => {
                 var check = 0;
                 var zaprimljen = 0;
                 var realizovan = 0;
@@ -9298,7 +10217,7 @@ End of Microbiology Sample Check |
                   var status_uzorka = element.status;
                 }
 
-                element.rezultati.forEach(test => {
+                element.rezultati.forEach((test) => {
                   check++;
 
                   if (
@@ -9314,7 +10233,6 @@ End of Microbiology Sample Check |
                   }
 
                   if (check === element.rezultati.length) {
-
                     // console.log("Provjera: Calculate")
 
                     if (status_uzorka === "VERIFICIRAN") {
@@ -9324,7 +10242,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (status_uzorka === "ODOBREN") {
                       this.uzorci.push({
@@ -9333,7 +10251,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (zaprimljen < 1) {
                       this.uzorci.push({
@@ -9342,7 +10260,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (realizovan < 1) {
                       var stat = "ZAPRIMLJEN";
@@ -9359,7 +10277,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else {
                       this.uzorci.push({
@@ -9368,25 +10286,25 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     }
                   }
                 });
               });
 
-              this.uzorci = this.uzorci.sort(function(a, b) {
+              this.uzorci = this.uzorci.sort(function (a, b) {
                 return a.sid.localeCompare(b.sid, undefined, {
                   numeric: true,
-                  sensitivity: "base"
+                  sensitivity: "base",
                 });
               });
             });
         })
-        .then(res => {
+        .then((res) => {
           var data = {};
 
-          this.uzorci.forEach(element => {
+          this.uzorci.forEach((element) => {
             if (element.sid === this.$store.state.sid) {
               data = element;
             }
@@ -9410,11 +10328,11 @@ End of Microbiology Sample Check |
                 this.$store.state.site,
               {}
             )
-            .then(res => {
+            .then((res) => {
               var test = {};
 
               if (res.data.data.length) {
-                res.data.data.sort(function(a, b) {
+                res.data.data.sort(function (a, b) {
                   return a.testovi.labassay.grupa +
                     a.testovi.labassay.grouporder ==
                     b.testovi.labassay.grupa + b.testovi.labassay.grouporder
@@ -9429,7 +10347,7 @@ End of Microbiology Sample Check |
                 this.testovi = res.data.data;
                 this.analitiprikaz = res.data.multidata;
 
-                res.data.data.forEach(element => {
+                res.data.data.forEach((element) => {
                   test = {};
                   test.realizovan = false;
 
@@ -9442,7 +10360,7 @@ End of Microbiology Sample Check |
                   test.multi_count = 0;
                   test.multi_rezultati = [];
 
-                  res.data.multidata.forEach(multi => {
+                  res.data.multidata.forEach((multi) => {
                     if (multi.labassay._id === element.testovi.labassay._id) {
                       test.multi_rezultati = multi.rezultat;
                       test.multi_count = multi.rezultat[0].rezultat.length;
@@ -9468,7 +10386,7 @@ End of Microbiology Sample Check |
                         .replace(/^\d+/, "")
                   );
 
-                  element.testovi.rezultat.forEach(rezultat => {
+                  element.testovi.rezultat.forEach((rezultat) => {
                     test.sekcija = rezultat.anaassay.sekcija;
                     test.rezultat = rezultat.rezultat_f;
                     test.result = rezultat;
@@ -9516,7 +10434,7 @@ End of Microbiology Sample Check |
                   this.rezultati.push(test);
                 });
 
-                this.rezultati.forEach(element => {
+                this.rezultati.forEach((element) => {
                   if (element.calculated) {
                     this.calculated = true;
                   }
@@ -9529,14 +10447,14 @@ End of Microbiology Sample Check |
     },
 
     Approve(rezultati) {
-      this.rezultati.forEach(element => {
+      this.rezultati.forEach((element) => {
         element.edit = false;
       });
 
       this.calculated = false;
 
       if (!this.MicrobiologySample) {
-        rezultati.forEach(element => {
+        rezultati.forEach((element) => {
           element.rezultat = element.rezultat.replace(/,/g, ".");
         });
 
@@ -9548,10 +10466,9 @@ End of Microbiology Sample Check |
           email: this.$store.state.userId,
           token: this.$store.state.token,
           site: this.$store.state.site,
-          rezultati: rezultati
+          rezultati: rezultati,
         })
-        .then(res => {
-
+        .then((res) => {
           // Vue Loading Overlay Component
           this.isLoading = true;
 
@@ -9559,14 +10476,14 @@ End of Microbiology Sample Check |
             .post("/rezultati/odobravanje/odobri/" + this.$store.state.sid, {
               testovi: rezultati,
               site: this.$store.state.site,
-              token: this.$store.state.token
+              token: this.$store.state.token,
             })
-            .then(res => {
+            .then((res) => {
               this.sample.status = "ODOBREN";
 
               this.report = {};
 
-              this.uzorci.forEach(element => {
+              this.uzorci.forEach((element) => {
                 if (element.sid === this.$store.state.sid) {
                   this.report = element;
                 }
@@ -9588,9 +10505,9 @@ End of Microbiology Sample Check |
                   idNalaza: "",
                   location: "/samples",
                   klijent: this.klijent,
-                  naziv: this.report.sid
+                  naziv: this.report.sid,
                 })
-                .then(res => {
+                .then((res) => {
                   http
                     .get(
                       "rezultati/odobravanje/samples/" +
@@ -9605,7 +10522,7 @@ End of Microbiology Sample Check |
                         this.$route.query.date,
                       {}
                     )
-                    .then(res => {
+                    .then((res) => {
                       this.final_pdf = res.data.final_pdf;
 
                       this.count = res.data.results.length;
@@ -9614,7 +10531,7 @@ End of Microbiology Sample Check |
                       this.odobren = true;
                       this.verificiran = true;
 
-                      res.data.results.forEach(element => {
+                      res.data.results.forEach((element) => {
                         if (
                           element.status === "ODOBREN" ||
                           element.status === "VERIFICIRAN"
@@ -9635,12 +10552,11 @@ End of Microbiology Sample Check |
                       var response = res.data.results;
 
                       if (this.count == this.approved) {
-
                         // console.warn("Generate new Report.");
 
                         var report = [];
 
-                        this.uzorci.forEach(element => {
+                        this.uzorci.forEach((element) => {
                           report.push(element._id);
                         });
 
@@ -9657,9 +10573,9 @@ End of Microbiology Sample Check |
                             idNalaza: "",
                             location: "/",
                             klijent: this.klijent,
-                            naziv: this.timestamp
+                            naziv: this.timestamp,
                           })
-                          .then(res => {
+                          .then((res) => {
                             if (res.data.success) {
                               http
                                 .post("nalazi/memo", {
@@ -9668,12 +10584,12 @@ End of Microbiology Sample Check |
                                   timestamp: this.timestamp,
                                   height: res.data.memo,
                                   location: "/",
-                                  naziv: this.timestamp
+                                  naziv: this.timestamp,
                                 })
-                                .then(res => {
+                                .then((res) => {
                                   this.uzorci = [];
 
-                                  response.forEach(element => {
+                                  response.forEach((element) => {
                                     var check = 0;
                                     var zaprimljen = 0;
                                     var realizovan = 0;
@@ -9684,7 +10600,7 @@ End of Microbiology Sample Check |
                                       var status_uzorka = element.status;
                                     }
 
-                                    element.rezultati.forEach(test => {
+                                    element.rezultati.forEach((test) => {
                                       check++;
 
                                       if (
@@ -9702,7 +10618,6 @@ End of Microbiology Sample Check |
                                       }
 
                                       if (check === element.rezultati.length) {
-
                                         // console.log("Provjera: Approve")
 
                                         if (status_uzorka === "VERIFICIRAN") {
@@ -9712,7 +10627,7 @@ End of Microbiology Sample Check |
                                             pdf_exists: element.pdf_exists,
                                             tip: element.sample.tip,
                                             _id: element._id,
-                                            removed: false
+                                            removed: false,
                                           });
                                         } else if (
                                           status_uzorka === "ODOBREN"
@@ -9723,7 +10638,7 @@ End of Microbiology Sample Check |
                                             pdf_exists: element.pdf_exists,
                                             tip: element.sample.tip,
                                             _id: element._id,
-                                            removed: false
+                                            removed: false,
                                           });
                                         } else if (zaprimljen < 1) {
                                           this.uzorci.push({
@@ -9732,7 +10647,7 @@ End of Microbiology Sample Check |
                                             pdf_exists: element.pdf_exists,
                                             tip: element.sample.tip,
                                             _id: element._id,
-                                            removed: false
+                                            removed: false,
                                           });
                                         } else if (realizovan < 1) {
                                           var stat = "ZAPRIMLJEN";
@@ -9754,7 +10669,7 @@ End of Microbiology Sample Check |
                                             pdf_exists: element.pdf_exists,
                                             tip: element.sample.tip,
                                             _id: element._id,
-                                            removed: false
+                                            removed: false,
                                           });
                                         } else {
                                           this.uzorci.push({
@@ -9763,14 +10678,14 @@ End of Microbiology Sample Check |
                                             pdf_exists: element.pdf_exists,
                                             tip: element.sample.tip,
                                             _id: element._id,
-                                            removed: false
+                                            removed: false,
                                           });
                                         }
                                       }
                                     });
                                   });
 
-                                  this.uzorci = this.uzorci.sort(function(
+                                  this.uzorci = this.uzorci.sort(function (
                                     a,
                                     b
                                   ) {
@@ -9779,7 +10694,7 @@ End of Microbiology Sample Check |
                                       undefined,
                                       {
                                         numeric: true,
-                                        sensitivity: "base"
+                                        sensitivity: "base",
                                       }
                                     );
                                   });
@@ -9794,7 +10709,7 @@ End of Microbiology Sample Check |
                       } else {
                         this.uzorci = [];
 
-                        res.data.results.forEach(element => {
+                        res.data.results.forEach((element) => {
                           var check = 0;
                           var zaprimljen = 0;
                           var realizovan = 0;
@@ -9805,7 +10720,7 @@ End of Microbiology Sample Check |
                             var status_uzorka = element.status;
                           }
 
-                          element.rezultati.forEach(test => {
+                          element.rezultati.forEach((test) => {
                             check++;
 
                             if (
@@ -9823,7 +10738,6 @@ End of Microbiology Sample Check |
                             }
 
                             if (check === element.rezultati.length) {
-
                               // console.log("Provjera: Approve")
 
                               if (status_uzorka === "VERIFICIRAN") {
@@ -9833,7 +10747,7 @@ End of Microbiology Sample Check |
                                   pdf_exists: element.pdf_exists,
                                   tip: element.sample.tip,
                                   _id: element._id,
-                                  removed: false
+                                  removed: false,
                                 });
                               } else if (status_uzorka === "ODOBREN") {
                                 this.uzorci.push({
@@ -9842,7 +10756,7 @@ End of Microbiology Sample Check |
                                   pdf_exists: element.pdf_exists,
                                   tip: element.sample.tip,
                                   _id: element._id,
-                                  removed: false
+                                  removed: false,
                                 });
                               } else if (zaprimljen < 1) {
                                 this.uzorci.push({
@@ -9851,7 +10765,7 @@ End of Microbiology Sample Check |
                                   pdf_exists: element.pdf_exists,
                                   tip: element.sample.tip,
                                   _id: element._id,
-                                  removed: false
+                                  removed: false,
                                 });
                               } else if (realizovan < 1) {
                                 var stat = "ZAPRIMLJEN";
@@ -9871,7 +10785,7 @@ End of Microbiology Sample Check |
                                   pdf_exists: element.pdf_exists,
                                   tip: element.sample.tip,
                                   _id: element._id,
-                                  removed: false
+                                  removed: false,
                                 });
                               } else {
                                 this.uzorci.push({
@@ -9880,17 +10794,17 @@ End of Microbiology Sample Check |
                                   pdf_exists: element.pdf_exists,
                                   tip: element.sample.tip,
                                   _id: element._id,
-                                  removed: false
+                                  removed: false,
                                 });
                               }
                             }
                           });
                         });
 
-                        this.uzorci = this.uzorci.sort(function(a, b) {
+                        this.uzorci = this.uzorci.sort(function (a, b) {
                           return a.sid.localeCompare(b.sid, undefined, {
                             numeric: true,
-                            sensitivity: "base"
+                            sensitivity: "base",
                           });
                         });
 
@@ -9900,14 +10814,14 @@ End of Microbiology Sample Check |
                         this.isLoading = false;
                       }
                     })
-                    .then(res => {});
+                    .then((res) => {});
                 });
             });
         });
     },
 
     Disapprove(rezultati, from) {
-      this.rezultati.forEach(element => {
+      this.rezultati.forEach((element) => {
         if (element.calculated) {
           this.calculated = true;
         }
@@ -9917,10 +10831,9 @@ End of Microbiology Sample Check |
         .post("/rezultati/odobravanje/ukloni/" + this.$store.state.sid, {
           testovi: rezultati,
           site: this.$store.state.site,
-          token: this.$store.state.token
+          token: this.$store.state.token,
         })
-        .then(res => {
-
+        .then((res) => {
           // Vue Loading Overlay Component
           this.isLoading = true;
 
@@ -9938,7 +10851,7 @@ End of Microbiology Sample Check |
                 this.$route.query.date,
               {}
             )
-            .then(res => {
+            .then((res) => {
               this.sample.status = "REALIZOVAN";
 
               this.final_pdf = res.data.final_pdf;
@@ -9949,7 +10862,7 @@ End of Microbiology Sample Check |
               this.odobren = true;
               this.verificiran = true;
 
-              res.data.results.forEach(element => {
+              res.data.results.forEach((element) => {
                 if (
                   element.status === "ODOBREN" ||
                   element.status === "VERIFICIRAN"
@@ -9969,7 +10882,7 @@ End of Microbiology Sample Check |
 
               this.uzorci = [];
 
-              res.data.results.forEach(element => {
+              res.data.results.forEach((element) => {
                 var check = 0;
                 var zaprimljen = 0;
                 var realizovan = 0;
@@ -9980,7 +10893,7 @@ End of Microbiology Sample Check |
                   var status_uzorka = element.status;
                 }
 
-                element.rezultati.forEach(test => {
+                element.rezultati.forEach((test) => {
                   check++;
 
                   if (
@@ -9996,7 +10909,6 @@ End of Microbiology Sample Check |
                   }
 
                   if (check === element.rezultati.length) {
-
                     // console.log("Provjera: Disapprove")
 
                     if (status_uzorka === "VERIFICIRAN") {
@@ -10006,7 +10918,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (status_uzorka === "ODOBREN") {
                       this.uzorci.push({
@@ -10015,7 +10927,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (zaprimljen < 1) {
                       this.uzorci.push({
@@ -10024,7 +10936,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else if (realizovan < 1) {
                       var stat = "ZAPRIMLJEN";
@@ -10041,7 +10953,7 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     } else {
                       this.uzorci.push({
@@ -10050,24 +10962,24 @@ End of Microbiology Sample Check |
                         pdf_exists: element.pdf_exists,
                         tip: element.sample.tip,
                         _id: element._id,
-                        removed: false
+                        removed: false,
                       });
                     }
                   }
                 });
               });
 
-              this.uzorci = this.uzorci.sort(function(a, b) {
+              this.uzorci = this.uzorci.sort(function (a, b) {
                 return a.sid.localeCompare(b.sid, undefined, {
                   numeric: true,
-                  sensitivity: "base"
+                  sensitivity: "base",
                 });
               });
 
               this.main = true;
             });
 
-          this.rezultati.forEach(element => {
+          this.rezultati.forEach((element) => {
             element.edit = true;
           });
 
@@ -10084,9 +10996,9 @@ End of Microbiology Sample Check |
           .post("/rezultati/obrada/verifikacija/" + this.$store.state.sid, {
             site: this.$store.state.site,
             token: this.$store.state.token,
-            verify: true
+            verify: true,
           })
-          .then(res => {
+          .then((res) => {
             http
               .get(
                 "rezultati/odobravanje/samples/" +
@@ -10101,7 +11013,7 @@ End of Microbiology Sample Check |
                   this.$route.query.date,
                 {}
               )
-              .then(res => {
+              .then((res) => {
                 this.sample.status = "VERIFICIRAN";
 
                 this.final_pdf = res.data.final_pdf;
@@ -10115,7 +11027,7 @@ End of Microbiology Sample Check |
                 this.partials = [];
                 this.partials_condition = false;
 
-                res.data.results.forEach(element => {
+                res.data.results.forEach((element) => {
                   if (element.verificiran) {
                     this.partials.push(element._id);
                     this.verified++;
@@ -10143,7 +11055,7 @@ End of Microbiology Sample Check |
 
                 this.uzorci = [];
 
-                res.data.results.forEach(element => {
+                res.data.results.forEach((element) => {
                   var check = 0;
                   var zaprimljen = 0;
                   var realizovan = 0;
@@ -10154,7 +11066,7 @@ End of Microbiology Sample Check |
                     var status_uzorka = element.status;
                   }
 
-                  element.rezultati.forEach(test => {
+                  element.rezultati.forEach((test) => {
                     check++;
 
                     if (
@@ -10170,7 +11082,6 @@ End of Microbiology Sample Check |
                     }
 
                     if (check === element.rezultati.length) {
-
                       // console.log("Provjera: Verify")
 
                       if (status_uzorka === "VERIFICIRAN") {
@@ -10180,7 +11091,7 @@ End of Microbiology Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (status_uzorka === "ODOBREN") {
                         this.uzorci.push({
@@ -10189,7 +11100,7 @@ End of Microbiology Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (zaprimljen < 1) {
                         this.uzorci.push({
@@ -10198,7 +11109,7 @@ End of Microbiology Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (realizovan < 1) {
                         var stat = "ZAPRIMLJEN";
@@ -10215,7 +11126,7 @@ End of Microbiology Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else {
                         this.uzorci.push({
@@ -10224,17 +11135,17 @@ End of Microbiology Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       }
                     }
                   });
                 });
 
-                this.uzorci = this.uzorci.sort(function(a, b) {
+                this.uzorci = this.uzorci.sort(function (a, b) {
                   return a.sid.localeCompare(b.sid, undefined, {
                     numeric: true,
-                    sensitivity: "base"
+                    sensitivity: "base",
                   });
                 });
 
@@ -10246,9 +11157,9 @@ End of Microbiology Sample Check |
                       timestamp: this.timestamp,
                       location: "/",
                       naziv: this.timestamp,
-                      status: true
+                      status: true,
                     })
-                    .then(res => {
+                    .then((res) => {
                       this.main = true;
 
                       if (this.lokacija.sendEmail) {
@@ -10259,9 +11170,9 @@ End of Microbiology Sample Check |
                             email: this.lokacija.email,
                             timestamp: this.timestamp,
                             location: "/",
-                            naziv: this.timestamp
+                            naziv: this.timestamp,
                           })
-                          .then(res => {
+                          .then((res) => {
                             if (res.data.success) {
                             } else {
                               this.toastText = "Greška prilikom slanja nalaza!";
@@ -10274,7 +11185,7 @@ End of Microbiology Sample Check |
                                 position: this.toastPosition,
                                 duration: 2500,
                                 fullWidth: this.false,
-                                className: this.className
+                                className: this.className,
                               });
                             }
                           });
@@ -10300,9 +11211,9 @@ End of Microbiology Sample Check |
           .post("/rezultati/obrada/verifikacija/" + data.sid, {
             site: this.$store.state.site,
             token: this.$store.state.token,
-            verify: false
+            verify: false,
           })
-          .then(res => {
+          .then((res) => {
             http
               .get(
                 "rezultati/odobravanje/samples/" +
@@ -10317,7 +11228,7 @@ End of Microbiology Sample Check |
                   this.$route.query.date,
                 {}
               )
-              .then(res => {
+              .then((res) => {
                 this.sample.status = "ODOBREN";
 
                 this.final_pdf = res.data.final_pdf;
@@ -10331,7 +11242,7 @@ End of Microbiology Sample Check |
                 this.partials = [];
                 this.partials_condition = false;
 
-                res.data.results.forEach(element => {
+                res.data.results.forEach((element) => {
                   if (element.verificiran) {
                     this.verified++;
                     this.partials.push(element._id);
@@ -10359,7 +11270,7 @@ End of Microbiology Sample Check |
 
                 this.uzorci = [];
 
-                res.data.results.forEach(element => {
+                res.data.results.forEach((element) => {
                   var check = 0;
                   var zaprimljen = 0;
                   var realizovan = 0;
@@ -10370,7 +11281,7 @@ End of Microbiology Sample Check |
                     var status_uzorka = element.status;
                   }
 
-                  element.rezultati.forEach(test => {
+                  element.rezultati.forEach((test) => {
                     check++;
 
                     if (
@@ -10386,9 +11297,8 @@ End of Microbiology Sample Check |
                     }
 
                     if (check === element.rezultati.length) {
-
                       // console.log("Provjera: Unverify")
-                      
+
                       if (status_uzorka === "VERIFICIRAN") {
                         this.uzorci.push({
                           sid: element.id,
@@ -10396,7 +11306,7 @@ End of Microbiology Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (status_uzorka === "ODOBREN") {
                         this.uzorci.push({
@@ -10405,7 +11315,7 @@ End of Microbiology Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (zaprimljen < 1) {
                         this.uzorci.push({
@@ -10414,7 +11324,7 @@ End of Microbiology Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else if (realizovan < 1) {
                         var stat = "ZAPRIMLJEN";
@@ -10431,7 +11341,7 @@ End of Microbiology Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       } else {
                         this.uzorci.push({
@@ -10440,17 +11350,17 @@ End of Microbiology Sample Check |
                           pdf_exists: element.pdf_exists,
                           tip: element.sample.tip,
                           _id: element._id,
-                          removed: false
+                          removed: false,
                         });
                       }
                     }
                   });
                 });
 
-                this.uzorci = this.uzorci.sort(function(a, b) {
+                this.uzorci = this.uzorci.sort(function (a, b) {
                   return a.sid.localeCompare(b.sid, undefined, {
                     numeric: true,
-                    sensitivity: "base"
+                    sensitivity: "base",
                   });
                 });
 
@@ -10462,9 +11372,9 @@ End of Microbiology Sample Check |
                       timestamp: this.timestamp,
                       location: "/",
                       naziv: this.timestamp,
-                      status: false
+                      status: false,
                     })
-                    .then(res => {
+                    .then((res) => {
                       this.main = true;
                     });
                 } else {
@@ -10488,17 +11398,17 @@ End of Microbiology Sample Check |
             this.$store.state.site,
           {
             id: this.sample.sid,
-            labassay: data.labassay_id
+            labassay: data.labassay_id,
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.success) {
             this.vise = res.data.element;
             this.labassay =
               this.vise.labassay.naziv + " (" + this.vise.labassay.analit + ")";
 
             var i = 0;
-            res.data.element.rezultat.forEach(element => {
+            res.data.element.rezultat.forEach((element) => {
               i++;
               if (res.data.element.rezultat.length == i) {
                 element.izabran = true;
@@ -10507,7 +11417,7 @@ End of Microbiology Sample Check |
               }
             });
 
-            this.vise.rezultat.sort(function(a, b) {
+            this.vise.rezultat.sort(function (a, b) {
               return Date.parse(a.created_at) == Date.parse(b.created_at)
                 ? 0
                 : +(Date.parse(a.created_at) < Date.parse(b.created_at)) || -1;
@@ -10528,8 +11438,8 @@ End of Microbiology Sample Check |
 
       // this.multi_rezultati = data.multi_rezultati
 
-      data.multi_rezultati.forEach(element => {
-        element.rezultat.forEach(rez => {});
+      data.multi_rezultati.forEach((element) => {
+        element.rezultat.forEach((rez) => {});
       });
     },
 
@@ -10546,10 +11456,10 @@ End of Microbiology Sample Check |
           {
             id: this.sample.sid,
             labassay: vise.labassay._id,
-            picked: test._id
+            picked: test._id,
           }
         )
-        .then(res => {
+        .then((res) => {
           document.getElementById(this.sample.sid).click();
           this.$refs.staticModalAllResults.close();
         });
@@ -10569,9 +11479,9 @@ End of Microbiology Sample Check |
           idNalaza: "",
           location: "/partials",
           klijent: this.klijent,
-          naziv: this.timestamp
+          naziv: this.timestamp,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.success) {
             if (!res.data.success) {
               this.$refs.staticModalError.open();
@@ -10582,7 +11492,7 @@ End of Microbiology Sample Check |
 
               var options = {
                 width: "100%",
-                height: "800px"
+                height: "800px",
               };
               PDFObject.embed(this.url, "#pdf-container", options);
 
@@ -10592,8 +11502,8 @@ End of Microbiology Sample Check |
             }
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

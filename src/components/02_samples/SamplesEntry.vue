@@ -258,7 +258,7 @@
                     <ul
                       class="vuestic-page-not-found-search__list"
                       v-for="(category, index) in filterItems"
-                      v-show="index < ($store.state.display.rows * $store.state.display.columns)"
+                      v-show="index < ($store.state.display.rows * $store.state.display.columns) && category.categoryName != 'Ostalo'"
                       :key="index"
                       style="color: #f7cc36;"
                     >
@@ -289,7 +289,7 @@
                     <ul
                       class="vuestic-page-not-found-search__list"
                       v-for="(category, index) in filterItems"
-                      v-show="index > (($store.state.display.rows * $store.state.display.columns) - 1)"
+                      v-show="index > (($store.state.display.rows * $store.state.display.columns) - 1) && category.categoryName != 'Ostalo'"
                       :key="index"
                       style="color: #f7cc36;"
                     >
@@ -320,7 +320,7 @@
                     <ul
                       class="vuestic-page-not-found-search__list"
                       v-for="(categoryTmp, index) in filterItemsTmp"
-                      v-show="index < ($store.state.display.rows * $store.state.display.columns)"
+                      v-show="index < ($store.state.display.rows * $store.state.display.columns) && categoryTmp.categoryName != 'Ostalo'"
                       :key="index"
                       style="color: #f7cc36;"
                     >

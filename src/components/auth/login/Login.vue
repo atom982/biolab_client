@@ -13,7 +13,7 @@
               required="required"
               oninvalid="this.setCustomValidity('Unesite korisničko ime.')"
               oninput="setCustomValidity('')"
-            >
+            />
             <label class="control-label" for="email">{{'Korisničko ime'}}</label>
             <i class="bar"></i>
           </div>
@@ -28,7 +28,7 @@
               required="required"
               oninvalid="this.setCustomValidity('Unesite šifru.')"
               oninput="setCustomValidity('')"
-            >
+            />
             <label class="control-label" for="password">{{'Šifra'}}</label>
             <i class="bar"></i>
           </div>
@@ -112,11 +112,27 @@ export default {
         className: this.className
       });
     });
+
+    bus.$on("AccountExpired", data => {
+      this.toastText = "Vaš korisnički račun je onemogućen.";
+      this.toastIcon = "fa-remove";
+      this.toastPosition = "top-right";
+      this.className = "vuestic-toast-danger";
+
+      this.showToast(this.toastText, {
+        icon: this.toastIcon,
+        position: this.toastPosition,
+        duration: 2500,
+        fullWidth: this.false,
+        className: this.className
+      });
+    });
   },
   beforeDestroy() {
     bus.$off("UserLoginFind");
     bus.$off("UserLoginDB");
     bus.$off("UserLoginPass");
+    bus.$off("AccountExpired");
   },
 
   methods: {

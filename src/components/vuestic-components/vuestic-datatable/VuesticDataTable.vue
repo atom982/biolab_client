@@ -878,7 +878,12 @@ export default {
           this.partials.uzorci = niz[2].target.id;
           this.partials_array = this.partials.uzorci.split(",");
           this.partials.pacijent = niz[2].target.getAttribute("name");
-          this.$refs.staticModalUzorci.open();
+          // console.log(niz[2].target.id)
+
+          if(niz[2].target.id != "unavailable"){
+            this.$refs.staticModalUzorci.open();
+          }
+          
         }
       }
     },

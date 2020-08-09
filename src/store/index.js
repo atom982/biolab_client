@@ -450,6 +450,9 @@ const store = new Vuex.Store({
             if (res.data.message === "Pogrešna šifra.") {
               bus.$emit("UserLoginPass", res.data.message);
             }
+            if (res.data.message === "User Account has Expired.") {
+              bus.$emit("AccountExpired", res.data.message);
+            }
           }
         })
         .catch((error) => console.log(error));
