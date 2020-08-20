@@ -9782,7 +9782,10 @@ End of Microbiology Sample Check |
 
             // Opšti pregled urina (Urobilinogen)
             if (single.kod === "o12" && single.rezultat.trim() === "") {
-              single.rezultat = "16";
+              if (noResult) {
+                  single.rezultat = "16";
+                }
+              
             }
 
             this.analiti.push(single);
