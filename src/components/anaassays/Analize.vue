@@ -656,6 +656,7 @@ export default {
         "urbl",
         "reakt",
         "da",
+        "e04",
         "norm",
         "norma",
         "ured",
