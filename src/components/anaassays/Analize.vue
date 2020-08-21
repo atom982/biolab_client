@@ -665,6 +665,7 @@ export default {
         "morf",
         "titar",
         "tsh",
+        "trag",
         "trg",
         "hol",
         "hdl",
