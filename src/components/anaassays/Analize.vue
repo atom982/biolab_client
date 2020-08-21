@@ -657,6 +657,7 @@ export default {
         "reakt",
         "da",
         "e04",
+        "e05",
         "norm",
         "norma",
         "ured",
