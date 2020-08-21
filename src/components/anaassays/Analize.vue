@@ -655,6 +655,7 @@ export default {
         "nema",
         "urbl",
         "reakt",
+        "da",
         "norm",
         "norma",
         "ured",
