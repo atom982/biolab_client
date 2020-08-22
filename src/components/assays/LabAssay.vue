@@ -280,7 +280,7 @@ export default {
         this.kategorije = [];
 
         res.data.settings[0].sekcije.forEach(element => {
-          if (!element.toLowerCase().includes("mikrobiologija")) {
+          if (!element.toLowerCase().includes("mikrobiologija") || element.toLowerCase().trim() === "mikrobiologija") {
             this.sekcije.push(element);
           }
         });
@@ -292,7 +292,7 @@ export default {
         });
 
         res.data.settings[0].kategorije.forEach(element => {
-          if (!element.toLowerCase().includes("mikrobiologija")) {
+          if (!element.toLowerCase().includes("mikrobiologija") || element.toLowerCase().trim() === "mikrobiologija") {
             this.kategorije.push(element);
           }
         });
@@ -372,7 +372,7 @@ export default {
             this.kategorije = [];
 
             res.data.settings[0].sekcije.forEach(element => {
-              if (element.toLowerCase().includes("mikrobiologija")) {
+              if (element.toLowerCase().includes("mikrobiologija") || element.toLowerCase().trim() === "mikrobiologija") {
                 this.sekcije.push(element);
               }
             });
@@ -384,7 +384,7 @@ export default {
             });
 
             res.data.settings[0].kategorije.forEach(element => {
-              if (element.toLowerCase().includes("mikrobiologija")) {
+              if (element.toLowerCase().includes("mikrobiologija") || element.toLowerCase().trim() === "mikrobiologija") {
                 this.kategorije.push(element);
               }
             });
@@ -409,7 +409,7 @@ export default {
             this.kategorije = [];
 
             res.data.settings[0].sekcije.forEach(element => {
-              if (!element.toLowerCase().includes("mikrobiologija")) {
+              if (!element.toLowerCase().includes("mikrobiologija") || element.toLowerCase().trim() === "mikrobiologija") {
                 this.sekcije.push(element);
               }
             });
@@ -421,7 +421,7 @@ export default {
             });
 
             res.data.settings[0].kategorije.forEach(element => {
-              if (!element.toLowerCase().includes("mikrobiologija")) {
+              if (!element.toLowerCase().includes("mikrobiologija") || element.toLowerCase().trim() === "mikrobiologija") {
                 this.kategorije.push(element);
               }
             });
