@@ -231,11 +231,20 @@
           <span v-if="show && sample.status != 'ODOBREN' && sample.status != 'VERIFICIRAN' && retest">
             <i
               style="font-size: 20px;"
+              class="fa fa-save fa-lg icon-right wizard-back pull-right"
+              id="save"
+              title="Sačuvajte rezultate"
+            ></i>
+          </span>
+
+          <!-- <span v-if="show && sample.status != 'ODOBREN' && sample.status != 'VERIFICIRAN' && retest">
+            <i
+              style="font-size: 20px;"
               class="fa fa-refresh fa-lg icon-right wizard-back pull-right"
               id="retest"
               title="Sačuvajte izmjene"
             ></i>
-          </span>
+          </span> -->
 
         </div>
       </button>
