@@ -18,6 +18,14 @@
                         >
                           <div @click="doSomethingOnClick('Knjiga protokola')">Knjiga protokola</div>
                         </a>
+                        <!-- Radna lista -->
+                        <a
+                          v-if="$store.state.reports.protokol"
+                          href="#"
+                          :class="{'clicked': izbor === 'Radna lista', 'lnk': izbor != 'Radna lista'}"
+                        >
+                          <div @click="doSomethingOnClick('Radna lista')">Radna lista</div>
+                        </a>
                         <!-- Broj urađenih analiza -->
                         <a
                           v-if="$store.state.reports.ppodanu"
@@ -130,6 +138,7 @@
                   disabled
                 />
               </fieldset>
+              
 
               <fieldset v-if="customers.length > 1 && customersLoaded">
                 <div v-for="(element, index) in customers" :key="index">
@@ -417,6 +426,9 @@ export default {
   },
 
   watch: {
+
+    // this.izborText = "Radna lista"
+
     radioModel: function() {
       this.sites.forEach(site => {
         if (site.naziv + " | " + site.adresa == this.radioModel) {
@@ -573,6 +585,133 @@ export default {
             });
 
           break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          case "Radna lista":
+          this.isLoading = true;
+          this.izborText = "Radna lista";
+
+          http
+            .post("/reports/worklists", {
+              timestamp: this.timestamp,
+              range: daterange,
+              token: this.$store.state.token,
+              site: this.$store.state.site,
+              sites: this.sites,
+              izbor: this.site
+            })
+            .then(res => {
+
+              console.log(res.data)
+              if (
+                res.data.success &&
+                res.data.message != "Nema dostupnih podataka."
+              ) {
+                this.report_pdf = true;
+
+                var options = {
+                  width: "100%",
+                  height: "800px"
+                };
+
+                var url =
+                  server + "reports/worklists/" + this.timestamp + ".pdf";
+
+                PDFObject.embed(url, "#pdf-container", options);
+
+                this.isLoading = false;
+              } else {
+                this.isLoading = false;
+
+                this.toastText = "Nema dostupnih podataka!";
+                this.toastIcon = "fa-warning";
+                this.toastPosition = "top-right";
+                this.className = "vuestic-toast-warning";
+
+                this.showToast(this.toastText, {
+                  icon: this.toastIcon,
+                  position: this.toastPosition,
+                  duration: this.toastDuration,
+                  fullWidth: this.isToastFullWidth,
+                  className: this.className
+                });
+                this.$refs.treeView.expand();
+                this.report_pdf = false;
+                this.datepicker.range = null;
+                this.date_picked = false;
+              }
+            });
+
+          break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         case "Po danu":
           this.isLoading = true;
@@ -874,6 +1013,10 @@ export default {
         this.izbor = input;
         // console.log(this.customer.opis)
         this.izborText = "Pošiljatelj | " + this.customer.opis;
+      } else if (input === "Radna lista") {
+        this.po_danu = false;
+        this.izbor = input;
+        this.izborText = "Radna lista";
       } else {
         this.po_danu = false;
         this.izbor = input;
@@ -882,6 +1025,9 @@ export default {
     },
 
     doSomethingOnChangeDateRange(input) {
+
+     
+
       if (input[1] != undefined) {
         this.date_picked = true;
       }
