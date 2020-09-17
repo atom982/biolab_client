@@ -175,6 +175,8 @@
                   </div>
                 </fieldset>
                 <br />
+
+                
                 <button
                   style="text-transform: none; border: 0px; border-radius: 0px;"
                   :disabled="!date_picked"
@@ -184,6 +186,90 @@
                   <span class="fa fa-file-pdf-o"></span>
                   {{ ' PDF Izvještaj'}}&nbsp;&nbsp;
                 </button>
+
+
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div v-if='izbor == "Radna lista"' class="modal-body">
+                
+                <form>
+                  <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                      <fieldset>
+            
+                        <div class="form-group with-icon-left">
+                          <div class="input-group">
+                            <input
+                              id="low-input-icon-left"
+                              title=" "
+                              v-model="low"
+                              name="low-input-icon-left"
+                              required
+                            >
+                            <i class="glyphicon glyphicon-pencil icon-left input-icon"></i>
+                            <label
+                              class="control-label"
+                              for="low-input-icon-left"
+                            >{{'Od'}}</label>
+                            <i class="bar"></i>
+                          </div>
+                        </div>
+                        <div class="form-group with-icon-left">
+                          <div class="input-group">
+                            <input
+                              id="high-input-icon-left"
+                              title=" "
+                              v-model="high"
+                              name="high-input-icon-left"
+                              required
+                            >
+                            <i class="glyphicon glyphicon-pencil icon-left input-icon"></i>
+                            <label
+                              class="control-label"
+                              for="high-input-icon-left"
+                            >{{'Do'}}</label>
+                            <i class="bar"></i>
+                          </div>
+                        </div>
+                      
+                   
+                      
+                       
+                      </fieldset>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
 
                 <button
                   v-show="po_danu"
@@ -404,7 +490,8 @@ export default {
       optionsHorizontalBarChart: {},
       dataHorizontalBarChart: {},
       headerChart: "",
-
+      low: "",
+      high: "",
       isLoading: false,
       fullPage: true,
 
@@ -435,6 +522,16 @@ export default {
           this.site = site;
         }
       });
+    },
+
+    low: function() {
+      console.log("Od: " + this.low)
+      
+    },
+
+    high: function() {
+      console.log("Do: " +this.high)
+       
     },
 
     customerModel: function() {
@@ -509,6 +606,8 @@ export default {
     onCancel() {},
 
     Akcija() {
+
+      
       var daterange = this.datepicker.range;
 
       var range = daterange.split("do");
@@ -625,6 +724,8 @@ export default {
             .post("/reports/worklists", {
               timestamp: this.timestamp,
               range: daterange,
+              low: this.low,
+              high: this.high,
               token: this.$store.state.token,
               site: this.$store.state.site,
               sites: this.sites,
@@ -989,6 +1090,9 @@ export default {
 
     doSomethingOnClick(input) {
       // this.customerModel = this.customers[0].opis;
+
+      this.low = ""
+      this.high = ""
 
       this.datepicker.range = null;
       this.date_picked = false;
