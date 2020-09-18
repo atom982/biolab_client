@@ -1,6 +1,6 @@
 <template>
-  <div class="row dashboard-info-widgets" v-show="$store.state.access != undefined">
-    <div class="col-md-6 col-xl-3">
+  <div class="row dashboard-info-widgets">
+    <!-- <div class="col-md-6 col-xl-3">
       <vuestic-widget class="info-widget brand-info">
         <div class="info-widget-inner">
           <div class="stats">
@@ -12,7 +12,25 @@
               <i class="ion ion-arrow-up-c text-primary stats-icon"></i>
               {{uzoraka_danas}}
             </div>
-            <div class="stats-title">{{'Zaprimljeno uzoraka'}}</div>
+            <div class="stats-title">{{'Ukupnpo uzoraka'}}</div>
+          </div>
+        </div>
+      </vuestic-widget>
+    </div> -->
+
+    <div class="col-md-6 col-xl-3">
+      <vuestic-widget class="danger-widget">
+        <div class="info-widget-inner">
+          <div class="stats">
+            <div v-if="!loadedData" class="stats-number">
+              <i class="ion ion-arrow-up-c text-primary stats-icon"></i>
+              {{'...'}}
+            </div>
+            <div v-if="loadedData" class="stats-number">
+              <i class="ion ion-arrow-up-c text-primary stats-icon"></i>
+              {{uzoraka_danas}}
+            </div>
+            <div class="stats-title">{{'Ukupnpo uzoraka'}}</div>
           </div>
         </div>
       </vuestic-widget>
@@ -30,36 +48,67 @@
               <i class="ion ion-arrow-up-c text-primary stats-icon"></i>
               {{kompletirano_uzoraka}}
             </div>
-            <div class="stats-title">{{'Kompletirano uzoraka'}}</div>
+            <div class="stats-title">{{'Verificirano uzoraka'}}</div>
           </div>
         </div>
       </vuestic-widget>
     </div>
 
+
     <div class="col-md-6 col-xl-3">
-      <vuestic-widget class="info-widget brand-danger">
+      <vuestic-widget class="warning-widget">
         <div class="info-widget-inner">
-          <div class="info-widget-inner has-chart">
-            <div class="stats">
-              <div v-if="!loadedData" class="stats-number">{{'...'}}</div>
-              <div v-if="loadedData" class="stats-number">{{kompletirano_testova}}</div>
-              <div class="stats-title">{{'Kompletirano testova'}}</div>
+          <div class="stats">
+            <div v-if="!loadedData" class="stats-number">
+              <i class="ion ion-arrow-up-c text-primary stats-icon"></i>
+              {{'...'}}
             </div>
-            <div class="chart-container">
-              <vuestic-progress-bar
-                type="circle"
-                ref="circleProgress"
-                :colorName="'white'"
-                :backgroundColorName="'danger'"
-                :startColorName="'danger'"
-              ></vuestic-progress-bar>
+            <div v-if="loadedData" class="stats-number">
+              <i class="ion ion-arrow-up-c text-primary stats-icon"></i>
+              {{uzoraka_danas - kompletirano_uzoraka}}
             </div>
+            <div class="stats-title">{{'Neverificirano uzoraka'}}</div>
           </div>
         </div>
       </vuestic-widget>
     </div>
 
     <div class="col-md-6 col-xl-3">
+      <vuestic-widget class="blue-widget">
+        <div class="info-widget-inner">
+          <div class="stats">
+            <div v-if="!loadedPatients" class="stats-number">
+              <i class="ion ion-arrow-up-c text-primary stats-icon"></i>
+              {{'...'}}
+            </div>
+            <div v-if="loadedPatients" class="stats-number">
+              <i class="ion ion-arrow-up-c text-primary stats-icon"></i>
+              {{pacijenata}}
+            </div>
+            <div class="stats-title">{{'Prijema'}}</div>
+          </div>
+        </div>
+      </vuestic-widget>
+    </div>
+
+  
+
+
+    <!-- <div class="col-md-6 col-xl-3">
+      <vuestic-widget class="info-widget brand-warning">
+        <div class="info-widget-inner">
+          <div class="stats">
+              <div v-if="!loadedData" class="stats-number">{{'...'}}</div>
+              <div v-if="loadedData" class="stats-number">{{uzoraka_danas - kompletirano_uzoraka}}</div>
+              <div class="stats-title">{{'Neverificirano uzoraka'}}</div>
+            </div>
+        </div>
+      </vuestic-widget>
+
+     
+    </div> -->
+
+    <!-- <div class="col-md-6 col-xl-3">
       <vuestic-widget class="info-widget brand-info">
         <div class="info-widget-inner">
           <div class="stats">
@@ -71,7 +120,7 @@
               <i class="ion ion-md-people stats-icon icon-wide" @click.prevent="PatientsData"></i>
               {{pacijenata}}
             </div>
-            <div class="stats-title">{{'Pacijenata'}}</div>
+            <div class="stats-title">{{'Prijema'}}</div>
           </div>
         </div>
       </vuestic-widget>
@@ -85,7 +134,7 @@
           <span>{{'Pregled broja pacijenata'}}</span>
         </div>
       </vuestic-modal-patients-data>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -110,6 +159,9 @@ export default {
   },
 
   mounted() {
+
+    
+
     http
       .get(
         "/dashboard/info" +
@@ -123,13 +175,14 @@ export default {
         if (res.data.json.empty != undefined) {
           this.uzoraka_danas = res.data.json.ukupnoUzoraka;
           this.kompletirano_uzoraka = res.data.json.obradjenUzorak;
-          this.kompletirano_testova = res.data.json.realizovanoTestova;
-          var perCompleted = 0;
-          var perCompleted =
-            res.data.json.realizovanoTestova / res.data.json.ukupnoTestova;
-          this.$refs.circleProgress.$data.value = Math.round(
-            perCompleted * 100
-          );
+          // this.kompletirano_testova = res.data.json.realizovanoTestova;
+          this.kompletirano_testova = "-";
+          var perCompleted = "-";
+          // var perCompleted =
+          //   res.data.json.realizovanoTestova / res.data.json.ukupnoTestova;
+          // this.$refs.circleProgress.$data.value = Math.round(
+          //   perCompleted * 100
+          // );
           this.uslovLoadedData = true;
         }
       })
@@ -149,8 +202,11 @@ export default {
         {}
       )
       .then(res => {
+
+        // console.log(res.data)
         if (res.data.jmbg != undefined) {
-          this.pacijenata = res.data.jmbg.length;
+          // this.pacijenata = res.data.jmbg;
+          this.pacijenata = res.data.jmbg[0];
           this.uslovLoadedPatients = true;
         }
       })
@@ -162,8 +218,10 @@ export default {
   },
   methods: {
     PatientsData() {
-      this.$refs.staticModalPatientsData.open();
+      // this.$refs.staticModalPatientsData.open();
+      // console.log("Patients Dialog Disabled.")
     }
+    
   }
 };
 </script>

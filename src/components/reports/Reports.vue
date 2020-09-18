@@ -525,12 +525,12 @@ export default {
     },
 
     low: function() {
-      console.log("Od: " + this.low)
+      // console.log("Od: " + this.low)
       
     },
 
     high: function() {
-      console.log("Do: " +this.high)
+      // console.log("Do: " +this.high)
        
     },
 
@@ -733,7 +733,7 @@ export default {
             })
             .then(res => {
 
-              console.log(res.data)
+              // console.log(res.data)
               if (
                 res.data.success &&
                 res.data.message != "Nema dostupnih podataka."

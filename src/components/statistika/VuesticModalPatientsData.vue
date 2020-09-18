@@ -1,5 +1,5 @@
 <template>
-  <div class="vuestic-modal" v-show="$store.state.access != undefined">
+  <div class="vuestic-modal">
     <transition name="modal" :duration="duration">
       <div v-show="show" class="modal-container">
         <div class="modal" @click.self="clickMask">
@@ -35,25 +35,6 @@
                   />
                 </slot>
               </div>
-
-              <div class="modal-header" v-if="window.width < 800 && lokacije.length > 1">
-                <vuestic-simple-select
-                  style="margin-top:30px;"
-                  :label="'Izaberite lokaciju'"
-                  v-model="lokacija"
-                  name="lokacija"
-                  title=" "
-                  ref="lokacijaSelect"
-                  v-bind:options="lokacije"
-                ></vuestic-simple-select>
-
-                <i
-                  class="ion ion-md-close close-modal"
-                  v-if="closeIconShown"
-                  @click.prevent="cancel"
-                />
-              </div>
-
               <!--Container-->
               <div id="content" style="min-height: 460px;" class="modal-body">
                 <slot></slot>
@@ -65,21 +46,12 @@
                     type="line"
                   ></line-chart>
                 </div>
-                <div
-                  style="display:flex; flex-direction: row; justify-content: center; align-items: center"
-                  v-if="!loadedChart "
-                >
+                <div  style="display:flex; flex-direction: row; justify-content: center; align-items: center" v-if="!loadedChart ">
                   <div style="float:left;"></div>
-                  <span style="vertical-align:middle; ">
-                    <atom-spinner
-                      style="opacity: 0.25;"
-                      :animation-duration="1000"
-                      :size="300"
-                      :color="'#4ae387'"
-                    />
-                  </span>
+                  <span style="vertical-align:middle; "><atom-spinner :animation-duration="1000" :size="370" :color="'#4ae387'"/></span>
                   <div style="float:right;"></div>
                 </div>
+                
               </div>
               <!--Footer-->
               <div class="modal-footer">
@@ -121,7 +93,7 @@ export default {
 
   components: {
     LineChart,
-    AtomSpinner
+    AtomSpinner,
   },
 
   props: {
@@ -209,9 +181,9 @@ export default {
     if (this.show) {
       document.body.className += " modal-open";
     }
-    this.pripremiPodatkeLineChart(res => {
-      this.LineChartData = res;
-    });
+    // this.pripremiPodatkeLineChart(res => {
+    //   this.LineChartData = res;
+    // });
   },
   beforeDestroy() {
     document.body.className = document.body.className.replace(
@@ -236,9 +208,9 @@ export default {
       }
     },
     lokacija() {
-      this.pripremiPodatkeLineChart(res => {
-        this.LineChartData = res;
-      });
+      // this.pripremiPodatkeLineChart(res => {
+      //   this.LineChartData = res;
+      // });
     }
   },
   methods: {
@@ -353,8 +325,7 @@ export default {
                     label: "Pacijenata",
                     fill: true,
                     backgroundColor: this.hex2rgb(palette.info, 0.5).css,
-                    pointBorderColor: palette.info,
-                    pointBackgroundColor: palette.info,
+                    pointBorderColor: palette.danger,
                     borderColor: palette.transparent,
                     data: res.data.barData.patients
                   }
