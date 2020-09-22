@@ -283,6 +283,23 @@
                     </div>
                   </div>
                 </form>
+
+                 <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          <loading
+            :active.sync="isLoading"
+            :can-cancel="false"
+            :on-cancel="onCancel"
+            color="#4ae387"
+            :is-full-page="fullPage"
+          ></loading>
+        </div>
+        <div class="col-md-6">
+          <button v-if="false" @click.prevent="Test">{{'Loading...'}}</button>
+        </div>
+      </div>
+    </div>
               </div>
 
               <!--Footer-->
@@ -293,14 +310,14 @@
                     v-if="!noButtons"
                     :class="cancelClass"
                     @click="cancel"
-                    :disabled="cancelDisabled"
+                    :disabled="isLoading"
                   >{{ cancelText }}</button>
                   <button
                     type="button"
                     v-if="!noButtons && !postoji && !invalid"
                     :class="okClass"
                     @click="ok"
-                    :disabled="(izbor === 'jmbg' && jmbg.length < 13) || (izbor === 'datr' && dateofb.length < 8) || (izbor === 'god' && godiste.length < 4) || (izbor === 'nodata' && jmbg.length < 13)"
+                    :disabled="isLoading || (izbor === 'jmbg' && jmbg.length < 13) || (izbor === 'datr' && dateofb.length < 8) || (izbor === 'god' && godiste.length < 4) || (izbor === 'nodata' && jmbg.length < 13)"
                   >{{ okText }}</button>
                   <button
                     type="button"
@@ -326,6 +343,9 @@
 import { bus } from "../../main";
 import router from "../../router";
 import { http } from "../../../config/config.js";
+
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "vuestic-modal-patient",
@@ -404,6 +424,9 @@ export default {
       patient_data: "",
       error_msg: "",
 
+      isLoading: false,
+      fullPage: true,
+
       toastText: "",
       toastIcon: "",
       toastPosition: "",
@@ -412,6 +435,10 @@ export default {
       className: ""
     };
   },
+  components: {
+    Loading
+  },
+
   computed: {
     modalClass() {
       return {
@@ -630,6 +657,18 @@ export default {
     }
   },
   methods: {
+
+    Test() {
+      this.isLoading = true;
+
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 2000);
+    },
+    onCancel() {
+      // console.log("User cancelled the loader.");
+    },
+
     listenKeyUp(event) {
       if (event.key === "Escape") {
         this.cancel();
@@ -823,6 +862,15 @@ export default {
     },
 
     Save() {
+
+      // console.log("Saving...")
+
+      /* this.isLoading = true;
+
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 2000); */
+
       if (
         this.ime.trim() === "" ||
         this.prezime.trim() === "" ||
@@ -880,6 +928,9 @@ export default {
             })
             .then(res => {
               if (item) {
+
+                this.isLoading = true;
+
                 http
                   .post("pacijenti/unos/save", {
                     jmbg: jmbgPost,
@@ -896,6 +947,9 @@ export default {
                   })
                   .then(res => {
                     if (res.data.success === false) {
+
+                      this.isLoading = false;
+
                       this.toastText = "Greška prilikom upisa!";
                       this.toastIcon = "fa-remove";
                       this.toastPosition = "top-right";
@@ -909,6 +963,9 @@ export default {
                         className: this.className
                       });
                     } else {
+
+                      this.isLoading = false;
+
                       this.jmbg = "";
                       this.dateofb = "";
                       this.godiste = "";
