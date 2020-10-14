@@ -219,7 +219,10 @@
           </span>
           <!-- Sačuvajte rezultate -->
 
-          <span v-if="show && sample.status != 'ODOBREN' && sample.status != 'VERIFICIRAN' && !retest">
+          
+
+          <!-- <span v-if="show && sample.status != 'ODOBREN' && sample.status != 'VERIFICIRAN' && !retest"> -->
+          <span v-if="show && sample.status != 'ODOBREN' && sample.status != 'VERIFICIRAN'">
             <i
               style="font-size: 20px;"
               class="fa fa-save fa-lg icon-right wizard-back pull-right"
@@ -228,14 +231,14 @@
             ></i>
           </span>
 
-          <span v-if="show && sample.status != 'ODOBREN' && sample.status != 'VERIFICIRAN' && retest">
+          <!-- <span v-if="show && sample.status != 'ODOBREN' && sample.status != 'VERIFICIRAN' && retest">
             <i
               style="font-size: 20px;"
               class="fa fa-save fa-lg icon-right wizard-back pull-right"
               id="save"
               title="Sačuvajte rezultate"
             ></i>
-          </span>
+          </span> -->
 
           <!-- <span v-if="show && sample.status != 'ODOBREN' && sample.status != 'VERIFICIRAN' && retest">
             <i

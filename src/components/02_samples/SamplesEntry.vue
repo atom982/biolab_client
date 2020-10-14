@@ -1,64 +1,73 @@
 <template>
   <div>
     <div class="col-md-12">
+      <!--  -->
       <vuestic-widget class="widget-height" headerText="Prijem">
         <div class="row">
           <div class="col-md-4">
             <vuestic-accordion-patient-info>
-              <vuestic-collapse-patient-info :godiste="starost" :cijena="ukupnaCijena">
-                <span slot="header">{{ patient.ime + ' ' + patient.prezime }}</span>
+              <vuestic-collapse-patient-info
+                :godiste="starost"
+                :cijena="ukupnaCijena"
+              >
+                <span slot="header">{{
+                  patient.ime + " " + patient.prezime
+                }}</span>
                 <div slot="body">
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="collapse-page__content" style="padding: 10px;">
+                      <div class="collapse-page__content" style="padding: 10px">
                         <div v-show="true">
                           <a
-                            style="color: #e34a4a; font-weight: bold;"
+                            style="color: #e34a4a; font-weight: bold"
                             @click.prevent="PIDDetails()"
                             href="#"
-                          >{{'Patient ID | '}}</a>
-                          <span style="font-size: 20px;" v-show="pid != ''">
+                            >{{ "Patient ID | " }}</a
+                          >
+                          <span style="font-size: 20px" v-show="pid != ''">
                             <strong>{{ pid }}</strong>
                           </span>
-                          <span style="font-size: 20px;" v-show="pid === ''">
-                            <strong>{{ Number(all_pids[all_pids.length - 1]) + 1 }}</strong>
+                          <span style="font-size: 20px" v-show="pid === ''">
+                            <strong>{{
+                              Number(all_pids[all_pids.length - 1]) + 1
+                            }}</strong>
                           </span>
                         </div>
-                        <div style="min-height: 8px;"></div>
+                        <div style="min-height: 8px"></div>
                         <div>
-                          {{"Ime: "}}
+                          {{ "Ime: " }}
                           <strong>{{ patient.ime }}</strong>
                         </div>
                         <div>
-                          {{"Prezime: "}}
+                          {{ "Prezime: " }}
                           <strong>{{ patient.prezime }}</strong>
                         </div>
                         <div>
-                          {{"Spol: "}}
+                          {{ "Spol: " }}
                           <strong>{{ patient.spol }}</strong>
                         </div>
                         <div>
-                          {{"JMBG: "}}
+                          {{ "JMBG: " }}
                           <strong>{{ patient.jmbg }}</strong>
                         </div>
                         <div>
-                          {{"Adresa: "}}
+                          {{ "Adresa: " }}
                           <strong>{{ patient.adresa }}</strong>
                         </div>
                         <div>
-                          {{"Telefon: "}}
+                          {{ "Telefon: " }}
                           <strong>{{ patient.telefon }}</strong>
                         </div>
                         <div>
-                          {{"Email: "}}
+                          {{ "Email: " }}
                           <strong>{{ patient.email }}</strong>
                         </div>
                         <div v-show="false">
-                          {{"Duhan: "}}
+                          {{ "Duhan: " }}
                           <strong>{{ patient.duhan }}</strong>
                         </div>
                         <div v-show="false">
-                          {{"Dijabetes: "}}
+                          {{ "Dijabetes: " }}
                           <strong>{{ patient.dijabetes }}</strong>
                         </div>
                       </div>
@@ -66,14 +75,14 @@
                   </div>
                 </div>
               </vuestic-collapse-patient-info>
-              <div style="min-height: 8px;"></div>
-            </vuestic-accordion-patient-info>&nbsp;
-            <a
-              style="color: #f7cc36;"
-              @click.prevent="Details()"
-              href="#"
-            >{{'Unesite više detalja'}}</a>
-            <div style="min-height: 8px;"></div>
+              <div
+                style="min-height: 8px"
+              ></div> </vuestic-accordion-patient-info
+            >&nbsp;
+            <a style="color: #f7cc36" @click.prevent="Details()" href="#">{{
+              "Unesite više detalja"
+            }}</a>
+            <div style="min-height: 8px"></div>
 
             <drugo-stanje
               :show.sync="show"
@@ -81,7 +90,7 @@
               :okText="potvrdi"
               :cancelText="odustani"
             >
-              <div slot="title">{{"VIŠE DETALJA"}}</div>
+              <div slot="title">{{ "VIŠE DETALJA" }}</div>
               <div>
                 <div class="form-group">
                   <div class="col-md-12 info-widget-inner">
@@ -123,14 +132,14 @@
               :okText="potvrdi"
               :cancelText="odustani"
             >
-              <div slot="title">{{"Patient ID"}}</div>
+              <div slot="title">{{ "Patient ID" }}</div>
               <div>
                 <div class="form-group">
                   <div class="col-md-12 info-widget-inner">
                     <div class="col-md-12">
                       <div class="col-md-12">
                         <vuestic-simple-select
-                          style="color: #e34a4a;"
+                          style="color: #e34a4a"
                           v-if="pids.length > 1"
                           class="form-group with-icon-right"
                           label="Redni broj pacijenta"
@@ -163,7 +172,7 @@
             </div>
 
             <div class="col-md-12">
-              <vuestic-simple-select
+              <!-- <vuestic-simple-select
                 v-show="customers.length > 0 && $store.state.customer"
                 v-model="customer"
                 name="customer"
@@ -172,10 +181,34 @@
                 ref="customerSelect"
                 v-bind:options="customers"
                 label="Izaberite klijenta"
+              ></vuestic-simple-select> -->
+              <vuestic-simple-select
+                v-show="narucioci.length"
+                v-model="narucioc"
+                name="lokacija"
+                required
+                title=" "
+                ref="lokacijaSelect"
+                v-bind:options="narucioci"
+                label="Izaberite naručioca uzorka"
+              ></vuestic-simple-select>
+
+              <vuestic-simple-select
+                v-show="posiljaoci.length"
+                v-model="posiljaoc"
+                name="lokacija"
+                required
+                title=" "
+                ref="lokacijaSelect"
+                v-bind:options="posiljaoci"
+                label="Izaberite pošiljaoca pacijenta"
               ></vuestic-simple-select>
             </div>
 
-            <vuestic-accordion-samples-entry v-for="uzorak in uzorciItems" :key="uzorak.tip">
+            <vuestic-accordion-samples-entry
+              v-for="uzorak in uzorciItems"
+              :key="uzorak.tip"
+            >
               <vuestic-collapse-samples-entry
                 :uzorak="uzorak.tip"
                 :komentar="uzorak.komentar"
@@ -185,8 +218,8 @@
                 <span :id="uzorak.tip" slot="header">{{ uzorak.ime }}</span>
                 <div slot="body">
                   <div class="vrow">
-                    <div class="col-md-12" style="padding-top: 0px;">
-                      <div class="collapse-page__content" style="padding: 5px;">
+                    <div class="col-md-12" style="padding-top: 0px">
+                      <div class="collapse-page__content" style="padding: 5px">
                         <div>
                           <vuestic-tag-group
                             :uzorak="uzorak.tip"
@@ -199,7 +232,7 @@
                   </div>
                 </div>
               </vuestic-collapse-samples-entry>
-              <div style="min-height: 8px;"></div>
+              <div style="min-height: 8px"></div>
             </vuestic-accordion-samples-entry>
           </div>
 
@@ -208,7 +241,9 @@
             <div class="vuestic-page-not-found-search">
               <div class="vuestic-page-not-found-search__content">
                 <div class="vuestic-page-not-found-search__wallpaper col-md-12">
-                  <div class="row vuestic-page-not-found-search__message">&nbsp;</div>
+                  <div class="row vuestic-page-not-found-search__message">
+                    &nbsp;
+                  </div>
                 </div>
 
                 <div class="row">
@@ -216,15 +251,25 @@
                   <div class="col-md-6">
                     <div class="vuestic-page-not-found-search__wallpaper">
                       <div class="form-group">
-                        <div class="input-group vuestic-page-not-found-search__input">
-                          <input placeholder="Pretraga" style="color: white" v-model="inputValue" />
+                        <div
+                          class="input-group vuestic-page-not-found-search__input"
+                        >
+                          <input
+                            placeholder="Pretraga"
+                            style="color: white"
+                            v-model="inputValue"
+                          />
                           <i class="bar" :style="'width: ' + 310 + 'px'" />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div
-                    v-if="kategorijeL.length > ($store.state.display.rows * $store.state.display.columns) && inputValue.length < 1"
+                    v-if="
+                      kategorijeL.length >
+                        $store.state.display.rows *
+                          $store.state.display.columns && inputValue.length < 1
+                    "
                     class="col-md-3"
                   >
                     <br />
@@ -252,30 +297,45 @@
                 >
                   <div
                     class="vuestic-page-not-found-search__wrapper"
-                    :style="{'grid-template-columns': colrows}"
+                    :style="{ 'grid-template-columns': colrows }"
                     v-if="page === 1 && inputValue.length < 1"
                   >
                     <ul
                       class="vuestic-page-not-found-search__list"
                       v-for="(category, index) in filterItems"
-                      v-show="index < ($store.state.display.rows * $store.state.display.columns) && category.categoryName != 'Ostalo'"
+                      v-show="
+                        index <
+                          $store.state.display.rows *
+                            $store.state.display.columns &&
+                        category.categoryName != 'Ostalo'
+                      "
                       :key="index"
-                      style="color: #f7cc36;"
+                      style="color: #f7cc36"
                     >
-                      {{ category.categoryName }}
+                      {{
+                        category.categoryName
+                      }}
                       <li
                         class="vuestic-page-not-found-search__list-element"
                         v-for="(item, index) in category.items"
                         v-show="index < $store.state.display.show"
                         :key="index"
                       >
-                        <vuestic-tooltip :options="{content: item.opis, placement: 'right'}">
+                        <vuestic-tooltip
+                          :options="{ content: item.opis, placement: 'right' }"
+                        >
                           <a
-                            @click.prevent="testEvent($event, category, item, item.cijena)"
+                            @click.prevent="
+                              testEvent($event, category, item, item.cijena)
+                            "
                             :id="item.itemName"
-                            :class="{'unchosen-link': !item.izabran, 'plain-link': item.izabran}"
+                            :class="{
+                              'unchosen-link': !item.izabran,
+                              'plain-link': item.izabran,
+                            }"
                             href="#"
-                          >{{item.itemName}}</a>
+                            >{{ item.itemName }}</a
+                          >
                         </vuestic-tooltip>
                       </li>
                     </ul>
@@ -283,30 +343,45 @@
 
                   <div
                     class="vuestic-page-not-found-search__wrapper"
-                    :style="{'grid-template-columns': colrows}"
+                    :style="{ 'grid-template-columns': colrows }"
                     v-if="page === 2 && inputValue.length < 1"
                   >
                     <ul
                       class="vuestic-page-not-found-search__list"
                       v-for="(category, index) in filterItems"
-                      v-show="index > (($store.state.display.rows * $store.state.display.columns) - 1) && category.categoryName != 'Ostalo'"
+                      v-show="
+                        index >
+                          $store.state.display.rows *
+                            $store.state.display.columns -
+                            1 && category.categoryName != 'Ostalo'
+                      "
                       :key="index"
-                      style="color: #f7cc36;"
+                      style="color: #f7cc36"
                     >
-                      {{ category.categoryName }}
+                      {{
+                        category.categoryName
+                      }}
                       <li
                         class="vuestic-page-not-found-search__list-element"
                         v-for="(item, index) in category.items"
                         v-show="index < $store.state.display.show"
                         :key="index"
                       >
-                        <vuestic-tooltip :options="{content: item.opis, placement: 'right'}">
+                        <vuestic-tooltip
+                          :options="{ content: item.opis, placement: 'right' }"
+                        >
                           <a
-                            @click.prevent="testEvent($event, category, item, item.cijena)"
+                            @click.prevent="
+                              testEvent($event, category, item, item.cijena)
+                            "
                             :id="item.itemName"
-                            :class="{'unchosen-link': !item.izabran, 'plain-link': item.izabran}"
+                            :class="{
+                              'unchosen-link': !item.izabran,
+                              'plain-link': item.izabran,
+                            }"
                             href="#"
-                          >{{item.itemName}}</a>
+                            >{{ item.itemName }}</a
+                          >
                         </vuestic-tooltip>
                       </li>
                     </ul>
@@ -314,30 +389,45 @@
 
                   <div
                     class="vuestic-page-not-found-search__wrapper"
-                    :style="{'grid-template-columns': colrows}"
+                    :style="{ 'grid-template-columns': colrows }"
                     v-if="inputValue.length > 0"
                   >
                     <ul
                       class="vuestic-page-not-found-search__list"
                       v-for="(categoryTmp, index) in filterItemsTmp"
-                      v-show="index < ($store.state.display.rows * $store.state.display.columns) && categoryTmp.categoryName != 'Ostalo'"
+                      v-show="
+                        index <
+                          $store.state.display.rows *
+                            $store.state.display.columns &&
+                        categoryTmp.categoryName != 'Ostalo'
+                      "
                       :key="index"
-                      style="color: #f7cc36;"
+                      style="color: #f7cc36"
                     >
-                      {{ categoryTmp.categoryName }}
+                      {{
+                        categoryTmp.categoryName
+                      }}
                       <li
                         class="vuestic-page-not-found-search__list-element"
                         v-for="(item, index) in categoryTmp.items"
                         :key="index"
                         v-show="index < $store.state.display.show"
                       >
-                        <vuestic-tooltip :options="{content: item.opis, placement: 'right'}">
+                        <vuestic-tooltip
+                          :options="{ content: item.opis, placement: 'right' }"
+                        >
                           <a
-                            @click.prevent="testEvent($event, categoryTmp, item, item.cijena)"
+                            @click.prevent="
+                              testEvent($event, categoryTmp, item, item.cijena)
+                            "
                             :id="item.itemName"
-                            :class="{'unchosen-link': !item.izabran, 'plain-link': item.izabran}"
+                            :class="{
+                              'unchosen-link': !item.izabran,
+                              'plain-link': item.izabran,
+                            }"
                             href="#"
-                          >{{item.itemName}}</a>
+                            >{{ item.itemName }}</a
+                          >
                         </vuestic-tooltip>
                       </li>
                     </ul>
@@ -346,21 +436,33 @@
               </div>
             </div>
 
-            <div style="position: sticky; margin-bottom: 10px;" class="row" v-if="loaded">
+            <div
+              style="position: sticky; margin-bottom: 10px"
+              class="row"
+              v-if="loaded"
+            >
               <div class="col-md-5"></div>
-              <div class="col-md-3 pull-left" style="margin-top:25px;">
+              <div class="col-md-3 pull-left" style="margin-top: 25px">
                 <button
                   @click.prevent="Discard()"
                   class="btn btn-warning btn-micro"
-                >{{ 'ODUSTANI' }}</button>
+                >
+                  {{ "ODUSTANI" }}
+                </button>
               </div>
-              <div class="col-md-4 pull-right" style="margin-top:25px;">
+              <div class="col-md-4 pull-right" style="margin-top: 25px">
                 <button
                   v-if="lokacija != ''"
                   @click.once="Save()"
                   class="btn btn-secondary btn-micro"
-                  :disabled="save"
-                >{{ 'SAČUVAJ' }}</button>
+                  :disabled="
+                    (save && narucioc == '' && posiljaoc == '') ||
+                    (!save && narucioc == '' && posiljaoc == '') ||
+                    save
+                  "
+                >
+                  {{ "SAČUVAJ" }}
+                </button>
               </div>
             </div>
           </div>
@@ -373,7 +475,7 @@
         :vrijeme="vrijeme"
         ref="staticModalSamplesEntryCalendar"
       >
-        <div slot="title">{{'Vrijeme uzorkovanja'}}</div>
+        <div slot="title">{{ "Vrijeme uzorkovanja" }}</div>
       </modal-calendar>
 
       <modal-commenting
@@ -383,10 +485,11 @@
         :komentar="komentar"
         ref="staticModalSamplesEntryCommenting"
       >
-        <div slot="title">{{'Unos komentara'}}</div>
+        <div slot="title">{{ "Unos komentara" }}</div>
       </modal-commenting>
     </div>
   </div>
+  <!-- Vlastiti zahtjev -->
 </template>
 
 <script>
@@ -423,7 +526,7 @@ export default {
         "",
         "Prvo tromjesečje",
         "Drugo tromjesečje",
-        "Treće tromjesečje"
+        "Treće tromjesečje",
       ],
       anticoag: "",
       anticoagTmp: "",
@@ -454,7 +557,14 @@ export default {
       initiatedEntry: false,
       oldUzorciList: [],
       save: true,
-      loaded: false
+      loaded: false,
+
+      posiljaoc: "",
+      posiljaoci: [],
+      posiljaoci_raw: [],
+      narucioc: "",
+      narucioci: [],
+      narucioci_raw: [],
     };
   },
 
@@ -463,22 +573,22 @@ export default {
     filterItems() {
       if (this.inputValue.length >= 1) {
         return this.categories
-          .map(category => {
+          .map((category) => {
             return {
               categoryName: category.categoryName,
               bundle: category.bundle,
               items: category.items.filter(
-                item =>
+                (item) =>
                   item.itemName
                     .toUpperCase()
                     .search(this.inputValue.toUpperCase()) !== -1 ||
                   item.opis
                     .toUpperCase()
                     .search(this.inputValue.toUpperCase()) !== -1
-              )
+              ),
             };
           })
-          .filter(category => category.items.length >= 1);
+          .filter((category) => category.items.length >= 1);
       } else {
         return this.categories;
       }
@@ -486,45 +596,46 @@ export default {
     filterItemsTmp() {
       if (this.inputValue.length >= 1) {
         return this.categoriesTmp
-          .map(category => {
+          .map((category) => {
             return {
               categoryName: category.categoryName,
               bundle: category.bundle,
               items: category.items.filter(
-                item =>
+                (item) =>
                   item.itemName
                     .toUpperCase()
                     .search(this.inputValue.toUpperCase()) !== -1 ||
                   item.opis
                     .toUpperCase()
                     .search(this.inputValue.toUpperCase()) !== -1
-              )
+              ),
             };
           })
-          .filter(category => category.items.length >= 1);
+          .filter((category) => category.items.length >= 1);
       } else {
         return this.categoriesTmp;
       }
     },
-    uzorciItems: function() {
+    uzorciItems: function () {
       return this.uzorciList.filter(
-        i => i.testoviTag.length && this.uzorciListLoaded && this.initiatedEntry
+        (i) =>
+          i.testoviTag.length && this.uzorciListLoaded && this.initiatedEntry
       );
-    }
+    },
   },
 
   watch: {
-    ukupnaCijena: function() {
+    ukupnaCijena: function () {
       // console.warn("Price: " + this.ukupnaCijena);
     },
     uzorciList: {
-      handler: function(after, before) {
+      handler: function (after, before) {
         if (this.uzorciListLoaded && this.initiatedEntry) {
           // console.log("Watching: uzorciList");
           var vm = this;
 
-          let changed = after.filter(function(p, idx) {
-            return Object.keys(p).some(function(prop) {
+          let changed = after.filter(function (p, idx) {
+            return Object.keys(p).some(function (prop) {
               return p[prop] !== vm.$data.oldUzorciList[idx][prop];
             });
           });
@@ -532,7 +643,7 @@ export default {
           vm.setValue();
 
           var condition = false;
-          this.uzorciList.forEach(element => {
+          this.uzorciList.forEach((element) => {
             if (element.testovi.length) {
               condition = true;
             }
@@ -547,8 +658,20 @@ export default {
           }
         }
       },
-      deep: true
-    }
+      deep: true,
+    },
+
+    posiljaoc: function () {
+      if (this.posiljaoc != "") {
+        this.narucioc = "";
+      }
+    },
+
+    narucioc: function () {
+      if (this.narucioc != "") {
+        this.posiljaoc = "";
+      }
+    },
   },
 
   beforeRouteLeave(to, from, next) {
@@ -559,13 +682,55 @@ export default {
   beforeCreate() {
     http
       .get(
+        "partneri/all/get?token=" +
+          this.$store.state.token +
+          "&site=" +
+          this.$store.state.site,
+        {}
+      )
+      .then((res) => {
+        this.partneri = [];
+
+        this.posiljaoci.push("Lični zahtjev");
+
+        res.data.partneri.forEach((element) => {
+          this.partneri.push(element);
+
+          if (element.postavke.posiljaoc) {
+            this.posiljaoci.push(element.naziv);
+            this.posiljaoci_raw.push(element);
+          }
+
+          if (element.postavke.narucioc) {
+            this.narucioci.push(element.naziv);
+            this.narucioci_raw.push(element);
+          }
+        });
+
+       /*  this.posiljaoci.sort(function (a, b) {
+          return a.localeCompare(b, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          });
+        });
+
+        this.narucioci.sort(function (a, b) {
+          return a.localeCompare(b, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          });
+        }); */
+      });
+
+    http
+      .get(
         "postavke/list/def/uzorak?token=" +
           this.$store.state.token +
           "&site=" +
           this.$store.state.site,
         {}
       )
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           if (res.data.uzorci.length) {
             this.uzorciListLoaded = true;
@@ -575,7 +740,7 @@ export default {
             var uzorci = [];
             this.uzorciList = [];
 
-            res.data.uzorci.forEach(element => {
+            res.data.uzorci.forEach((element) => {
               (sample.ime = element.ime),
                 (sample.code = element.code),
                 (sample.tip = element.tip),
@@ -609,11 +774,11 @@ export default {
                   this.$store.state.site,
                 {}
               )
-              .then(res => {
+              .then((res) => {
                 var str = "";
                 var tmp = "";
 
-                this.uzorciList.forEach(element => {
+                this.uzorciList.forEach((element) => {
                   element.patient = res.data.pacijent;
                   this.patient = res.data.pacijent;
 
@@ -635,7 +800,7 @@ export default {
                   }
                 });
               })
-              .then(res => {
+              .then((res) => {
                 this.spol = this.patient.spol;
                 http
                   .get(
@@ -647,7 +812,7 @@ export default {
                       this.patient._id,
                     {}
                   )
-                  .then(res => {
+                  .then((res) => {
                     this.pids = res.data.pids;
                     this.all_pids = res.data.all_pids;
                     this.complete = res.data.complete;
@@ -671,11 +836,11 @@ export default {
                   this.$store.state.site,
                 {}
               )
-              .then(res => {
+              .then((res) => {
                 var str = "";
                 var tmp = "";
 
-                this.uzorciList.forEach(element => {
+                this.uzorciList.forEach((element) => {
                   element.patient = res.data.pacijent;
                   this.patient = res.data.pacijent;
 
@@ -697,7 +862,7 @@ export default {
                   }
                 });
               })
-              .then(res => {
+              .then((res) => {
                 this.spol = this.patient.spol;
                 http
                   .get(
@@ -709,7 +874,7 @@ export default {
                       this.patient._id,
                     {}
                   )
-                  .then(res => {
+                  .then((res) => {
                     this.pids = res.data.pids;
                     this.all_pids = res.data.all_pids;
                     this.complete = res.data.complete;
@@ -747,7 +912,7 @@ export default {
     bus.$on("removeTest", (data, uzorak) => {
       // console.log(data)
       if (!data.bundle) {
-        this.uzorciList.forEach(element => {
+        this.uzorciList.forEach((element) => {
           if (element.tip === uzorak) {
             for (var i = 0; i < element.testovi.length; i++) {
               if (element.testovi[i].itemName === data.name) {
@@ -809,8 +974,8 @@ export default {
           }
         });
 
-        this.categories.forEach(element => {
-          element.items.forEach(item => {
+        this.categories.forEach((element) => {
+          element.items.forEach((item) => {
             if (item.itemName === data.name) {
               this.ukupnaCijena = this.ukupnaCijena - Number(item.cijena);
               item.izabran = false;
@@ -818,15 +983,15 @@ export default {
           });
         });
 
-        this.categoriesTmp.forEach(element => {
-          element.items.forEach(item => {
+        this.categoriesTmp.forEach((element) => {
+          element.items.forEach((item) => {
             if (item.itemName === data.name) {
               item.izabran = false;
             }
           });
         });
       } else {
-        this.uzorciList.forEach(element => {
+        this.uzorciList.forEach((element) => {
           if (element.tip === uzorak) {
             for (var i = 0; i < element.testovi.length; i++) {
               if (element.testovi[i].itemName === data.name) {
@@ -890,10 +1055,10 @@ export default {
 
         var uslov = true;
 
-        this.categories.forEach(element => {
-          element.items.forEach(item => {
+        this.categories.forEach((element) => {
+          element.items.forEach((item) => {
             if (element.bundle) {
-              item.testovi.forEach(test => {
+              item.testovi.forEach((test) => {
                 if (test.itemName === data.name) {
                   if (uslov) {
                     this.ukupnaCijena = this.ukupnaCijena - Number(test.cijena);
@@ -908,10 +1073,10 @@ export default {
           });
         });
 
-        this.categoriesTmp.forEach(element => {
-          element.items.forEach(item => {
+        this.categoriesTmp.forEach((element) => {
+          element.items.forEach((item) => {
             if (element.bundle) {
-              item.testovi.forEach(test => {
+              item.testovi.forEach((test) => {
                 if (test.itemName === data.name) {
                   if (uslov) {
                     uslov = false;
@@ -925,16 +1090,16 @@ export default {
           });
         });
 
-        this.categories.forEach(cat => {
-          cat.items.forEach(it => {
+        this.categories.forEach((cat) => {
+          cat.items.forEach((it) => {
             if (it.itemName === data.name) {
               it.izabran = false;
             }
           });
         });
 
-        this.categoriesTmp.forEach(cat => {
-          cat.items.forEach(it => {
+        this.categoriesTmp.forEach((cat) => {
+          cat.items.forEach((it) => {
             if (it.itemName === data.name) {
               it.izabran = false;
             }
@@ -943,20 +1108,20 @@ export default {
       }
     });
 
-    bus.$on("SamplesEntryRemove", data => {
-      this.uzorciList.forEach(element => {
+    bus.$on("SamplesEntryRemove", (data) => {
+      this.uzorciList.forEach((element) => {
         if (element.tip === data) {
-          element.testovi.forEach(tst => {
-            this.categories.forEach(ctgelement => {
-              ctgelement.items.forEach(item => {
+          element.testovi.forEach((tst) => {
+            this.categories.forEach((ctgelement) => {
+              ctgelement.items.forEach((item) => {
                 if (item.itemName === tst.itemName) {
                   this.ukupnaCijena = this.ukupnaCijena - Number(tst.cijena);
                 }
               });
             });
 
-            this.categoriesTmp.forEach(ctgelement => {
-              ctgelement.items.forEach(item => {
+            this.categoriesTmp.forEach((ctgelement) => {
+              ctgelement.items.forEach((item) => {
                 if (item.itemName === tst.itemName) {
                 }
               });
@@ -970,14 +1135,14 @@ export default {
         }
       });
 
-      this.categories.forEach(element => {
-        element.items.forEach(item => {
+      this.categories.forEach((element) => {
+        element.items.forEach((item) => {
           if (item.uzorak === data) {
             item.izabran = false;
           }
 
           if (item.testovi != undefined) {
-            item.testovi.forEach(test => {
+            item.testovi.forEach((test) => {
               if (test.uzorak === data) {
                 item.izabran = false;
                 test.izabran = false;
@@ -987,14 +1152,14 @@ export default {
         });
       });
 
-      this.categoriesTmp.forEach(element => {
-        element.items.forEach(item => {
+      this.categoriesTmp.forEach((element) => {
+        element.items.forEach((item) => {
           if (item.uzorak === data) {
             item.izabran = false;
           }
 
           if (item.testovi != undefined) {
-            item.testovi.forEach(test => {
+            item.testovi.forEach((test) => {
               if (test.uzorak === data) {
                 item.izabran = false;
                 test.izabran = false;
@@ -1012,7 +1177,7 @@ export default {
     });
 
     bus.$on("setComment", (data, comment) => {
-      this.uzorciList.forEach(element => {
+      this.uzorciList.forEach((element) => {
         if (element.tip === data) {
           element.komentar = comment;
         }
@@ -1027,30 +1192,30 @@ export default {
     });
 
     bus.$on("setCalendar", (data, time) => {
-      this.uzorciList.forEach(element => {
+      this.uzorciList.forEach((element) => {
         if (element.tip === data) {
           element.time = time;
         }
       });
     });
 
-    bus.$on("SamplesEntryUrgent", data => {
-      this.uzorciList.forEach(element => {
+    bus.$on("SamplesEntryUrgent", (data) => {
+      this.uzorciList.forEach((element) => {
         if (element.tip === data) {
           element.hitno = true;
         }
       });
     });
 
-    bus.$on("SamplesEntryRemoveUrgent", data => {
-      this.uzorciList.forEach(element => {
+    bus.$on("SamplesEntryRemoveUrgent", (data) => {
+      this.uzorciList.forEach((element) => {
         if (element.tip === data) {
           element.hitno = false;
         }
       });
     });
 
-    bus.$on("headerKlik", data => {
+    bus.$on("headerKlik", (data) => {
       document.getElementById(data).click();
       setTimeout(() => {
         document.getElementById(data).click();
@@ -1061,9 +1226,9 @@ export default {
 
     http
       .post("/postavke/sajtovi/" + this.$store.state.site, {
-        token: this.$store.state.token
+        token: this.$store.state.token,
       })
-      .then(res => {
+      .then((res) => {
         this.siteCode = res.data.sajt.sifra;
         // console.log("Site: " + this.siteCode);
       });
@@ -1078,7 +1243,7 @@ export default {
           this.$store.state.site,
         {}
       )
-      .then(res => {
+      .then((res) => {
         if (res.data.customers.length) {
           this.klijenti = res.data.customers;
           this.klijent = null;
@@ -1086,7 +1251,7 @@ export default {
           this.customers = [];
           this.customer = "";
 
-          res.data.customers.forEach(element => {
+          res.data.customers.forEach((element) => {
             this.customers.push(element.opis);
           });
         } else {
@@ -1107,11 +1272,11 @@ export default {
           this.$store.state.site,
         {}
       )
-      .then(res => {
+      .then((res) => {
         if (res.data.lokacije.length != 0) {
           this.locations = res.data.lokacije;
           this.lokacije = [];
-          res.data.lokacije.forEach(element => {
+          res.data.lokacije.forEach((element) => {
             this.lokacije.push(element.lokacija);
             this.lokacijeInit.push(element);
           });
@@ -1125,9 +1290,9 @@ export default {
     http
       .post("/labassays", {
         site: this.$store.state.site,
-        token: this.$store.state.token
+        token: this.$store.state.token,
       })
-      .then(res => {
+      .then((res) => {
         var i = 0;
         var kategorije = [];
 
@@ -1135,7 +1300,7 @@ export default {
 
         var LabAssays = [];
 
-        res.data.testovi.forEach(element => {
+        res.data.testovi.forEach((element) => {
           /* switch (element.sites.length) {
             case 1:
               console.log(element.naziv);
@@ -1158,23 +1323,23 @@ export default {
           }
         });
 
-        LabAssays = LabAssays.sort(function(a, b) {
+        LabAssays = LabAssays.sort(function (a, b) {
           return (
             a.entryorder.localeCompare(b.entryorder, undefined, {
               numeric: true,
-              sensitivity: "base"
+              sensitivity: "base",
             }) ||
             a.naziv.localeCompare(b.naziv, undefined, {
               numeric: true,
-              sensitivity: "base"
+              sensitivity: "base",
             })
           );
         });
 
-        LabAssays.forEach(element => {
+        LabAssays.forEach((element) => {
           if (
             !kategorije.filter(
-              kategorija =>
+              (kategorija) =>
                 kategorija === element.kategorija.split("|")[0].trim()
             ).length > 0
           ) {
@@ -1182,10 +1347,10 @@ export default {
           }
         });
 
-        LabAssays.forEach(element => {
+        LabAssays.forEach((element) => {
           if (
             !kategorijeTmp.filter(
-              kategorija =>
+              (kategorija) =>
                 kategorija === element.kategorija.split("|")[0].trim()
             ).length > 0
           ) {
@@ -1195,14 +1360,22 @@ export default {
 
         var temporaryCategory = {};
         var temporaryCategoryTmp = {};
+        var tKlasa = "primary";
+        var Klasa = "primary";
 
-        kategorije.forEach(kategorija => {
+        kategorije.forEach((kategorija) => {
           temporaryCategory = {};
           temporaryCategory.categoryName = kategorija;
           temporaryCategory.bundle = false;
           temporaryCategory.items = [];
 
-          LabAssays.forEach(element => {
+          LabAssays.forEach((element) => {
+            if (element.manual) {
+              Klasa = "pale";
+            } else {
+              Klasa = "primary";
+            }
+
             if (element.kategorija.split("|")[0].trim() === kategorija) {
               if (kategorija === "Specifične") {
                 temporaryCategory.bundle = true;
@@ -1230,7 +1403,7 @@ export default {
                       cijena: element.price,
                       code: element.code,
                       izabran: false,
-                      testovi: element.bundledTests
+                      testovi: element.bundledTests,
                     });
                   }
                 }
@@ -1245,7 +1418,7 @@ export default {
                   cijena: element.price,
                   code: element.code,
                   izabran: false,
-                  testovi: element.bundledTests
+                  testovi: element.bundledTests,
                 });
               } else {
                 if (
@@ -1266,7 +1439,7 @@ export default {
                     code: element.code,
                     uzorak: element.tip,
                     izabran: false,
-                    klasa: "primary"
+                    klasa: Klasa,
                   });
                 } else {
                   temporaryCategory.items.push({
@@ -1278,7 +1451,7 @@ export default {
                     code: element.code,
                     uzorak: element.tip,
                     izabran: false,
-                    klasa: "primary"
+                    klasa: Klasa,
                   });
                 }
               }
@@ -1287,13 +1460,19 @@ export default {
           this.categories.push(temporaryCategory);
         });
 
-        kategorijeTmp.forEach(kategorija => {
+        kategorijeTmp.forEach((kategorija) => {
           temporaryCategoryTmp = {};
           temporaryCategoryTmp.categoryName = kategorija;
           temporaryCategoryTmp.bundle = false;
           temporaryCategoryTmp.items = [];
 
-          LabAssays.forEach(element => {
+          LabAssays.forEach((element) => {
+            if (element.manual) {
+              tKlasa = "pale";
+            } else {
+              tKlasa = "primary";
+            }
+
             if (element.kategorija.split("|")[0].trim() === kategorija) {
               if (kategorija === "Specifične") {
                 temporaryCategoryTmp.bundle = true;
@@ -1321,7 +1500,7 @@ export default {
                       cijena: element.price,
                       code: element.code,
                       izabran: false,
-                      testovi: element.bundledTests
+                      testovi: element.bundledTests,
                     });
                   }
                 }
@@ -1336,7 +1515,7 @@ export default {
                   cijena: element.price,
                   code: element.code,
                   izabran: false,
-                  testovi: element.bundledTests
+                  testovi: element.bundledTests,
                 });
               } else {
                 if (temporaryCategoryTmp.items.length === 100) {
@@ -1354,7 +1533,7 @@ export default {
                     code: element.code,
                     uzorak: element.tip,
                     izabran: false,
-                    klasa: "primary"
+                    klasa: tKlasa,
                   });
                 } else {
                   temporaryCategoryTmp.items.push({
@@ -1366,7 +1545,7 @@ export default {
                     code: element.code,
                     uzorak: element.tip,
                     izabran: false,
-                    klasa: "primary"
+                    klasa: tKlasa,
                   });
                 }
               }
@@ -1375,54 +1554,54 @@ export default {
           this.categoriesTmp.push(temporaryCategoryTmp);
         });
       })
-      .then(res => {
+      .then((res) => {
         this.loaded = true;
 
-        this.categories.forEach(element => {
+        this.categories.forEach((element) => {
           this.kategorijeL.push(element.categoryName);
         });
 
         this.uniqueArray = [...new Set(this.kategorijeL)];
 
-        this.categories = this.categories.sort(function(a, b) {
+        this.categories = this.categories.sort(function (a, b) {
           return a.categoryName.localeCompare(b.categoryName, undefined, {
             numeric: true,
-            sensitivity: "base"
+            sensitivity: "base",
           });
         });
 
-        this.categoriesTmp = this.categoriesTmp.sort(function(a, b) {
+        this.categoriesTmp = this.categoriesTmp.sort(function (a, b) {
           return a.categoryName.localeCompare(b.categoryName, undefined, {
             numeric: true,
-            sensitivity: "base"
+            sensitivity: "base",
           });
         });
 
-        this.categories.forEach(element => {
-          element.items = element.items.sort(function(a, b) {
+        this.categories.forEach((element) => {
+          element.items = element.items.sort(function (a, b) {
             return (
               a.entryorder.localeCompare(b.entryorder, undefined, {
                 numeric: true,
-                sensitivity: "base"
+                sensitivity: "base",
               }) ||
               a.itemName.localeCompare(b.itemName, undefined, {
                 numeric: true,
-                sensitivity: "base"
+                sensitivity: "base",
               })
             );
           });
         });
 
-        this.categoriesTmp.forEach(element => {
-          element.items = element.items.sort(function(a, b) {
+        this.categoriesTmp.forEach((element) => {
+          element.items = element.items.sort(function (a, b) {
             return (
               a.entryorder.localeCompare(b.entryorder, undefined, {
                 numeric: true,
-                sensitivity: "base"
+                sensitivity: "base",
               }) ||
               a.itemName.localeCompare(b.itemName, undefined, {
                 numeric: true,
-                sensitivity: "base"
+                sensitivity: "base",
               })
             );
           });
@@ -1476,8 +1655,8 @@ export default {
           var test = {};
           var tag = {};
 
-          this.uzorciList.forEach(element => {
-            item.testovi.forEach(analiza => {
+          this.uzorciList.forEach((element) => {
+            item.testovi.forEach((analiza) => {
               test = {};
               tag = {};
               if (element.tip === analiza.uzorak) {
@@ -1501,7 +1680,7 @@ export default {
                 // console.log(analiza.code);
 
                 if (
-                  !element.testovi.filter(el => el.itemName === test.itemName)
+                  !element.testovi.filter((el) => el.itemName === test.itemName)
                     .length > 0
                 ) {
                   element.testovi.push(test);
@@ -1533,16 +1712,16 @@ export default {
 
                   this.ukupnaCijena = this.ukupnaCijena + Number(test.cijena);
 
-                  this.categories.forEach(cat => {
-                    cat.items.forEach(it => {
+                  this.categories.forEach((cat) => {
+                    cat.items.forEach((it) => {
                       if (it.itemName === analiza.itemName) {
                         it.izabran = true;
                       }
                     });
                   });
 
-                  this.categoriesTmp.forEach(catTmp => {
-                    catTmp.items.forEach(itTmp => {
+                  this.categoriesTmp.forEach((catTmp) => {
+                    catTmp.items.forEach((itTmp) => {
                       if (itTmp.itemName === analiza.itemName) {
                         itTmp.izabran = true;
                       }
@@ -1558,7 +1737,7 @@ export default {
         default:
           var test = {};
           var tag = {};
-          this.uzorciList.forEach(element => {
+          this.uzorciList.forEach((element) => {
             test = {};
             tag = {};
             if (element.tip === item.uzorak) {
@@ -1579,7 +1758,7 @@ export default {
               // console.log(item.code);
 
               if (
-                !element.testovi.filter(el => el.itemName === test.itemName)
+                !element.testovi.filter((el) => el.itemName === test.itemName)
                   .length > 0
               ) {
                 element.testovi.push(test);
@@ -1613,16 +1792,16 @@ export default {
             }
           });
 
-          this.categories.forEach(cat => {
-            cat.items.forEach(it => {
+          this.categories.forEach((cat) => {
+            cat.items.forEach((it) => {
               if (it.itemName === item.itemName) {
                 it.izabran = true;
               }
             });
           });
 
-          this.categoriesTmp.forEach(catTmp => {
-            catTmp.items.forEach(itTmp => {
+          this.categoriesTmp.forEach((catTmp) => {
+            catTmp.items.forEach((itTmp) => {
               if (itTmp.itemName === item.itemName) {
                 itTmp.izabran = true;
               }
@@ -1662,17 +1841,17 @@ export default {
       var lokacijaID = "";
       this.timestamp = new Date().getTime().toString();
 
-      this.uzorciList = this.uzorciList.filter(function(uzorak) {
+      this.uzorciList = this.uzorciList.filter(function (uzorak) {
         return uzorak.testovi.length;
       });
 
-      this.lokacijeInit.forEach(element => {
+      this.lokacijeInit.forEach((element) => {
         if (element.lokacija === this.lokacija) {
           lokacijaID = element._id;
         }
       });
 
-      this.klijenti.forEach(element => {
+      this.klijenti.forEach((element) => {
         if (element.opis === this.customer) {
           this.klijent = element;
         }
@@ -1686,8 +1865,35 @@ export default {
         this.anticoag = "NE";
       }
 
-      console.log("Klijent:");
-      console.log(this.klijent);
+      // console.log("Klijent:");
+      // console.log(this.klijent);
+
+      var posiljaocPost = null;
+      var naruciocPost = null;
+
+      if (this.posiljaoc == "Lični zahtjev" || this.posiljaoc == "") {
+        posiljaocPost = null;
+      }
+
+      if (this.narucioc == "") {
+        naruciocPost = null;
+      }
+
+      if (this.posiljaoc != "Lični zahtjev" && this.posiljaoc != "") {
+        this.posiljaoci_raw.forEach((posiljaoc) => {
+          if (this.posiljaoc == posiljaoc.naziv) {
+            posiljaocPost = posiljaoc._id;
+          }
+        });
+      }
+
+      if (this.narucioc != "") {
+        this.narucioci_raw.forEach((narucioc) => {
+          if (this.narucioc == narucioc.naziv) {
+            naruciocPost = narucioc._id;
+          }
+        });
+      }
 
       http
         .post("/sacuvaj/uzorke", {
@@ -1700,28 +1906,30 @@ export default {
           klijent: this.klijent,
           drstanje: this.drstanje,
           anticoag: this.anticoag,
+          narucioc: naruciocPost,
+          posiljaoc: posiljaocPost,
           pid: this.pid,
-          complete: this.complete
+          complete: this.complete,
         })
-        .then(res => {
+        .then((res) => {
           var datum = "";
           var temp = [];
           var response = {};
           var samplesList = [];
 
           if (this.$store.state.access.level < 1) {
-            res.data.data.forEach(element => {
+            res.data.data.forEach((element) => {
               console.log(element);
             });
           }
 
           response = res.data.data[0];
 
-          res.data.data.forEach(element => {
+          res.data.data.forEach((element) => {
             samplesList.push(element.sid);
           });
 
-          res.data.data.forEach(element => {
+          res.data.data.forEach((element) => {
             temp = element.datum.split("-");
             datum =
               temp[2].substring(0, 2) +
@@ -1756,8 +1964,8 @@ export default {
     setValue() {
       this.$data.oldUzorciList = _.cloneDeep(this.$data.uzorciList);
       // console.log(this.oldUzorciList);
-    }
-  }
+    },
+  },
 };
 </script>
 

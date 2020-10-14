@@ -127,8 +127,21 @@ import VuesticWidgetControl from "src/components/kontrole/pregled/components/Vue
 
 // End of Obrada Kontrolnih uzoraka
 
+// Partneri - Pošiljaoc, Naručioc i Izvršioc
+
+import VuesticModalPartneriDelete from "src/components/partneri/VuesticModalPartneriDelete";
+import VuesticModalPartneriEdit from "src/components/partneri/VuesticModalPartneriEdit";
+import VuesticModalPartneriInfo from "src/components/partneri/VuesticModalPartneriInfo";
+
+// End of Partneri - Pošiljaoc, Naručioc i Izvršioc
+
 const VuesticComponentsPlugin = {
   install(Vue, options) {
+
+    Vue.component(VuesticModalPartneriDelete.name, VuesticModalPartneriDelete);
+    Vue.component(VuesticModalPartneriEdit.name, VuesticModalPartneriEdit);
+    Vue.component(VuesticModalPartneriInfo.name, VuesticModalPartneriInfo);
+
     Vue.component(ControlDeleteModal.name, ControlDeleteModal);
     Vue.component(ControlEditModal.name, ControlEditModal);
     Vue.component(ControlReferences.name, ControlReferences);

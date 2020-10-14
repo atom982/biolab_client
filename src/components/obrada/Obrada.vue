@@ -8332,7 +8332,7 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
     },
 
     GetSingleSample(data) {
-      // "_id" : ObjectId("5f1877edb34ecd0c70fb0adc"), AnaAssays (Starost)
+      // "_id" : ObjectId("5f6ca517e4d760238841bba3"), db.getCollection('LabAssays').find({"naziv" : "Starost"})
 
       this.testovi = [];
       this.rezultati = [];
@@ -8416,7 +8416,7 @@ End of Microbiology Get Bakterije, Antibiograme i Antibiotike |
                 test.sekcija = rezultat.anaassay.sekcija;
 
                 if (
-                  rezultat.anaassay._id === "5f1877edb34ecd0c70fb0adc" &&
+                  rezultat.anaassay.test === "5f6ca517e4d760238841bba3" &&
                   rezultat.rezultat_f.trim() == ""
                 ) {
                   console.log("Starost pacijenta: " + this.starost);
@@ -9871,13 +9871,13 @@ End of Microbiology Sample Check |
             });
 
             if (this.email_changed) {
-              http
-                .post("pacijenti/detalji/update/" + this.pacijent, {
-                  email: email.trim(),
-                  token: this.$store.state.token,
-                  site: this.$store.state.site,
-                })
-                .then((res) => {});
+              // http
+              //   .post("pacijenti/detalji/update/" + this.pacijent, {
+              //     email: email.trim(),
+              //     token: this.$store.state.token,
+              //     site: this.$store.state.site,
+              //   })
+              //   .then((res) => {});
             }
           } else {
             this.toastText = "Greška prilikom slanja nalaza!";

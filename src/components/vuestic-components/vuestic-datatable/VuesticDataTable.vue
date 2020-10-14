@@ -797,6 +797,80 @@ export default {
           router.push("/obrada/predracun/" + niz[2].target.id);
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (niz[1].name === "partneri") {
+
+          if(niz[0].posiljaoc != null){
+            console.log("Pošiljaoc:")
+            console.log(niz[0].posiljaoc)
+
+            niz[0].uzorci.forEach(element => {
+              console.log(element)
+              
+            });
+
+          }else if(niz[0].narucioc != null){
+            console.log("Naručioc:")
+            console.log(niz[0].narucioc)
+            niz[0].uzorci.forEach(element => {
+              console.log(element)
+              
+            });
+
+
+          }else{
+
+          }
+          
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
         if (niz[1].name === "obrada") {
           router.push(
             "/obrada/rezultati/" +

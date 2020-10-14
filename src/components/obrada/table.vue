@@ -108,4 +108,17 @@ export default {
 .minHeight {
   min-height: 350px;
 }
+
+.icon-bar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.icon-bar a:hover {
+  color: #4ae387;
+}
+
+i:hover {
+  color: #4ae387 !important;
+}
 </style>

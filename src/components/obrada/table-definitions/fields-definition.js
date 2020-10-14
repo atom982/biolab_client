@@ -1,6 +1,11 @@
 export default {
   tableFields: [
     {
+      name: "partneri",
+      title: "",
+      width: "3%"
+    },
+    {
       name: "obrada",
       title: "detalji",
       width: "13%"
@@ -24,17 +29,17 @@ export default {
     {
       name: "jmbg",
       title: "jmbg",
-      width: "11%"
+      width: "10%"
     },
     {
       name: "barcodes",
       title: "barcodes",
-      width: "17%"
+      width: "19%"
     },
     {
       name: "racun",
       title: "račun",
-      width: "13%"
+      width: "12%"
     },
     {
       name: "datum",
@@ -44,7 +49,7 @@ export default {
     {
       name: "time",
       title: "vrijeme",
-      width: "9%"
+      width: "6%"
     }
   ],
   sortFunctions: {

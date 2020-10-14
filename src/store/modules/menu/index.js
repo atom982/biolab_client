@@ -9,6 +9,10 @@ import kontrole from "./kontrole";
 import inventar from "./inventar";
 import thermometer from "./loger";
 import mikrobiologija from "./mikrobiologija";
+
+// Partneri - Pošiljaoc, Naručioc i Izvršioc
+import partneri from "./partneri";
+
 import postavke from "./postavke";
 import integracija from "./integracija";
 import excel from "./excel";
@@ -27,6 +31,10 @@ const state = {
     inventar,
     thermometer,
     mikrobiologija,
+
+    // Partneri - Pošiljaoc, Naručioc i Izvršioc
+    partneri,
+
     postavke,
     integracija,
     excel,
