@@ -1,7 +1,13 @@
 <template>
   <div class="login">
     <div v-if="true">
-      <h2>{{'Dobrodošli!'}}</h2>
+      <img :src="wellcome" style="width: auto" />
+      <br />
+    </div>
+
+    <div v-if="true">
+      <!-- <h2>{{'Dobrodošli!'}}</h2> -->
+      <br />
       <form @submit.prevent="onSubmit" name="login">
         <div class="form-group">
           <div class="input-group">
@@ -55,6 +61,7 @@ export default {
       locale: "ba",
       email: "",
       password: "",
+      wellcome: "/static/Wellcome.jpg",
       // Toasts
       toastText: "",
       toastIcon: "",
