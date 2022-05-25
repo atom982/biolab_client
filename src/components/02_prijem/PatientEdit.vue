@@ -39,12 +39,19 @@
                                 v-model="patient.jmbg"
                                 name="jmbp-input-icon-left"
                                 required
-                              >
-                              <i class="glyphicon glyphicon-pencil icon-left input-icon"></i>
+                              />
+                              <i
+                                class="
+                                  glyphicon glyphicon-pencil
+                                  icon-left
+                                  input-icon
+                                "
+                              ></i>
                               <label
                                 class="control-label"
                                 for="jmbp-input-icon-left"
-                              >{{'DD MM GGG RR BBB K'}}</label>
+                                >{{ "DD MM GGG RR BBB K" }}</label
+                              >
                               <i class="bar"></i>
                             </div>
                           </div>
@@ -57,12 +64,19 @@
                               v-model="patient.ime"
                               name="imp-input-icon-left"
                               required
-                            >
-                            <i class="glyphicon glyphicon-pencil icon-left input-icon"></i>
+                            />
+                            <i
+                              class="
+                                glyphicon glyphicon-pencil
+                                icon-left
+                                input-icon
+                              "
+                            ></i>
                             <label
                               class="control-label"
                               for="imp-input-icon-left"
-                            >{{'Unesite ime pacijenta'}}</label>
+                              >{{ "Unesite ime pacijenta" }}</label
+                            >
                             <i class="bar"></i>
                           </div>
                         </div>
@@ -74,15 +88,77 @@
                               v-model="patient.prezime"
                               name="prp-input-icon-left"
                               required
-                            >
-                            <i class="glyphicon glyphicon-pencil icon-left input-icon"></i>
+                            />
+                            <i
+                              class="
+                                glyphicon glyphicon-pencil
+                                icon-left
+                                input-icon
+                              "
+                            ></i>
                             <label
                               class="control-label"
                               for="prp-input-icon-left"
-                            >{{'Unesite prezime pacijenta'}}</label>
+                              >{{ "Unesite prezime pacijenta" }}</label
+                            >
                             <i class="bar"></i>
                           </div>
                         </div>
+
+                        <div class="form-group with-icon-left">
+                          <div class="input-group">
+                            <input
+                              onpaste="return false;"
+                              autocomplete="off"
+                              id="roditelj-input-icon-left"
+                              title=" "
+                              v-model="patient.roditelj"
+                              name="roditelj-input-icon-left"
+                              required
+                            />
+                            <i
+                              class="
+                                glyphicon glyphicon-pencil
+                                icon-left
+                                input-icon
+                              "
+                            ></i>
+                            <label
+                              class="control-label"
+                              for="roditelj-input-icon-left"
+                              >{{ "Unesite ime jednog roditelja" }}</label
+                            >
+                            <i class="bar"></i>
+                          </div>
+                        </div>
+
+                        <div class="form-group with-icon-left">
+                          <div class="input-group">
+                            <input
+                              id="passport-input-icon-left"
+                              title=" "
+                              v-model="patient.passport"
+                              name="passport-input-icon-left"
+                              required
+                            />
+                            <i
+                              class="
+                                glyphicon glyphicon-pencil
+                                icon-left
+                                input-icon
+                              "
+                            ></i>
+                            <label
+                              class="control-label"
+                              for="passport-input-icon-left"
+                              >{{
+                                "Unesite broj identifikacijskog dokumenta"
+                              }}</label
+                            >
+                            <i class="bar"></i>
+                          </div>
+                        </div>
+
                         <vuestic-simple-select
                           :label="'Izaberite spol pacijenta'"
                           v-model="patient.spol"
@@ -109,12 +185,19 @@
                               v-model="patient.telefon"
                               name="tlp-input-icon-left"
                               required
-                            >
-                            <i class="glyphicon glyphicon-pencil icon-left input-icon"></i>
+                            />
+                            <i
+                              class="
+                                glyphicon glyphicon-pencil
+                                icon-left
+                                input-icon
+                              "
+                            ></i>
                             <label
                               class="control-label"
                               for="tlp-input-icon-left"
-                            >{{'Unesite kontakt telefon'}}</label>
+                              >{{ "Unesite kontakt telefon" }}</label
+                            >
                             <i class="bar"></i>
                           </div>
                         </div>
@@ -126,12 +209,19 @@
                               v-model="patient.email"
                               name="emp-input-icon-left"
                               required
-                            >
-                            <i class="glyphicon glyphicon-pencil icon-left input-icon"></i>
+                            />
+                            <i
+                              class="
+                                glyphicon glyphicon-pencil
+                                icon-left
+                                input-icon
+                              "
+                            ></i>
                             <label
                               class="control-label"
                               for="emp-input-icon-left"
-                            >{{'Unesite Email adresu'}}</label>
+                              >{{ "Unesite Email adresu" }}</label
+                            >
                             <i class="bar"></i>
                           </div>
                         </div>
@@ -150,14 +240,18 @@
                     :class="cancelClass"
                     @click="cancel"
                     :disabled="cancelDisabled"
-                  >{{ cancelText }}</button>
+                  >
+                    {{ cancelText }}
+                  </button>
                   <button
                     type="button"
                     v-if="!noButtons"
                     :class="okClass"
                     @click="ok"
                     :disabled="!validateJMBG(patient.jmbg)"
-                  >{{ okText }}</button>
+                  >
+                    {{ okText }}
+                  </button>
                 </slot>
               </div>
             </div>
@@ -179,56 +273,56 @@ export default {
   props: {
     transition: {
       type: String,
-      default: "modal"
+      default: "modal",
     },
     small: {
       type: Boolean,
-      default: false
+      default: false,
     },
     large: {
       type: Boolean,
-      default: false
+      default: false,
     },
     force: {
       type: Boolean,
-      default: true
+      default: true,
     },
     okText: {
       type: String,
-      default: "CONFIRM"
+      default: "CONFIRM",
     },
     cancelText: {
       type: String,
-      default: "CANCEL"
+      default: "CANCEL",
     },
     okClass: {
       type: String,
-      default: "btn btn-primary btn-sm"
+      default: "btn btn-primary btn-sm",
     },
     cancelClass: {
       type: String,
-      default: "btn btn-warning btn-sm"
+      default: "btn btn-warning btn-sm",
     },
     closeIconShown: {
       type: Boolean,
-      default: false
+      default: false,
     },
     okDisabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     cancelDisabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     noButtons: {
       type: Boolean,
-      default: false
+      default: false,
     },
     patient: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   data() {
     return {
@@ -249,16 +343,16 @@ export default {
       toastPosition: "",
       toastDuration: 2500,
       isToastFullWidth: false,
-      className: ""
+      className: "",
     };
   },
   computed: {
     modalClass() {
       return {
         "modal-lg": this.large,
-        "modal-sm": this.small
+        "modal-sm": this.small,
       };
-    }
+    },
   },
   created() {
     if (this.show) {
@@ -268,18 +362,20 @@ export default {
   mounted() {
     http
       .post("/postavke/sajtovi/" + this.$store.state.site, {
-        token: this.$store.state.token
+        token: this.$store.state.token,
       })
-      .then(res => {
+      .then((res) => {
         if (res.data.sajt.mjesta != undefined) {
-          res.data.sajt.mjesta.forEach(element => {
+          res.data.sajt.mjesta.forEach((element) => {
             this.cities.push(element);
           });
         }
       })
-      .then(res => {
-        this.cities.sort(function(a, b) {
-          return a.toLowerCase() == b.toLowerCase() ? 0 : +(a.toLowerCase() > b.toLowerCase()) || -1;
+      .then((res) => {
+        this.cities.sort(function (a, b) {
+          return a.toLowerCase() == b.toLowerCase()
+            ? 0
+            : +(a.toLowerCase() > b.toLowerCase()) || -1;
         });
       });
   },
@@ -290,7 +386,38 @@ export default {
     );
   },
   watch: {
-    show: function(value) {
+
+            "patient.jmbg": function () {
+      console.log(this.patient.jmbg);
+      if (this.patient.jmbg.length < 12) {
+        this.patient.spol = "";
+      }
+
+      if (this.patient.jmbg.length < 13) {
+      }
+
+      if (this.patient.jmbg.length === 13 && !this.patient.jmbg.includes("P")) {
+        // 000-499 – muški
+        // 500-999 – ženski
+
+        var bbb = this.patient.jmbg.substring(9, 12);
+
+        if (bbb < 500) {
+          this.patient.spol = "MUŠKI";
+        } else {
+          this.patient.spol = "ŽENSKI";
+        }
+      } else if (
+        this.patient.jmbg.length === 14 &&
+        this.patient.jmbg.charAt(0) === "0"
+      ) {
+        this.patient.jmbg = this.patient.jmbg.replace(/^0/, "");
+        // console.log("Lična karta ili vozačka dozvola")
+      } else if (this.patient.jmbg.length > 13) {
+        this.patient.jmbg = this.patient.jmbg.slice(0, 13);
+      }
+    },
+    show: function (value) {
       if (value) {
         document.body.className += " modal-open";
       } else {
@@ -301,7 +428,7 @@ export default {
           );
         }, this.duration);
       }
-    }
+    },
   },
   methods: {
     listenKeyUp(event) {
@@ -338,7 +465,6 @@ export default {
       );
     },
     Save() {
-
       this.jmbg = this.patient.jmbg;
       this.ime = this.patient.ime;
       this.prezime = this.patient.prezime;
@@ -347,7 +473,11 @@ export default {
       this.telefon = this.patient.telefon;
       this.email = this.patient.email;
 
-      if (this.ime.trim() === "" || this.prezime.trim() === "" || this.spol.trim() === "") {
+      if (
+        this.ime.trim() === "" ||
+        this.prezime.trim() === "" ||
+        this.spol.trim() === ""
+      ) {
         this.toastText = "Unesite obavezna polja.";
         this.toastIcon = "fa-warning";
         this.toastPosition = "top-right";
@@ -358,20 +488,19 @@ export default {
           position: this.toastPosition,
           duration: this.toastDuration,
           fullWidth: this.isToastFullWidth,
-          className: this.className
+          className: this.className,
         });
       } else {
         if (this.validateJMBG(this.jmbg)) {
-
           var item = true;
 
-          http.post("pacijenti/unos/find", {
+          http
+            .post("pacijenti/unos/find", {
               jmbg: this.jmbg,
               token: this.$store.state.token,
-              site: this.$store.state.site
-            })            
-            .then(res => {
-
+              site: this.$store.state.site,
+            })
+            .then((res) => {
               if (this.adresa.trim() === "") {
                 this.adresa = "NEPOZNATO";
               }
@@ -389,28 +518,30 @@ export default {
                     jmbg: this.jmbg.trim(),
                     ime: this.ime.toUpperCase().trim(),
                     prezime: this.prezime.toUpperCase().trim(),
+                    roditelj: this.patient.roditelj.toUpperCase().trim(),
                     spol: this.spol.toUpperCase().trim(),
                     adresa: this.adresa.trim(),
                     duhan: "NEPOZNATO",
                     dijabetes: "NEPOZNATO",
                     telefon: this.telefon.trim(),
+                    passport: this.patient.passport.trim(),
                     email: this.email.trim(),
                     token: this.$store.state.token,
-                    site: this.$store.state.site
+                    site: this.$store.state.site,
                   })
-                  .then(res => {
-                    if (res.data.success) {                     
+                  .then((res) => {
+                    if (res.data.success) {
                       bus.$emit("Set", this.patient);
                       this.show = false;
                       window.removeEventListener("keyup", this.listenKeyUp);
-                    }                   
+                    }
                   });
               }
             });
-        } 
+        }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

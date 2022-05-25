@@ -179,6 +179,62 @@
                             <i class="bar"></i>
                           </div>
                         </div>
+
+                                    <div
+                          v-if="!postoji && !invalid"
+                          class="form-group with-icon-left"
+                        >
+                          <div class="input-group">
+                            <input
+                              onpaste="return false;"
+                              autocomplete="off"
+                              id="roditelj-input-icon-left"
+                              title=" "
+                              v-model="roditelj"
+                              name="roditelj-input-icon-left"
+                              :required="true"
+                            />
+                            <i
+                              class="
+                                glyphicon glyphicon-pencil
+                                icon-left
+                                input-icon
+                              "
+                            ></i>
+                            <label
+                              class="control-label"
+                              for="roditelj-input-icon-left"
+                              >{{ "Unesite ime jednog roditelja" }}</label
+                            >
+                            <i class="bar"></i>
+                          </div>
+                        </div>
+
+                        <div
+                          v-if="!postoji && !invalid"
+                          class="form-group with-icon-left"
+                        >
+                          <div class="input-group">
+                            <input
+                              id="passport-input-icon-left"
+                              title=" "
+                              v-model="passport"
+                              name="passport-input-icon-left"
+                              required
+                            />
+                            <i
+                              class="glyphicon glyphicon-pencil icon-left input-icon"
+                            ></i>
+
+                            <label
+                              class="control-label"
+                              for="passport-input-icon-left"
+                              >{{ "Unesite broj identifikacijskog dokumenta" }}</label
+                            >
+                            <i class="bar"></i>
+                          </div>
+                        </div>
+
                         <vuestic-simple-select
                           v-if="!postoji && !invalid"
                           :label="'Izaberite spol pacijenta'"
@@ -411,6 +467,9 @@ export default {
 
       ime: "",
       prezime: "",
+
+      roditelj: "",
+      passport: "",
       spol: "",
       spolovi: ["MUŠKI", "ŽENSKI"],
       chosenAdress: "",
@@ -562,13 +621,25 @@ export default {
       }
     },
     jmbg: function() {
+
+      if (this.izbor === "jmbg") {
+        if (this.jmbg.length < 12) {
+          this.spol = "";
+        }
+      }
+      
       if (this.jmbg.length < 13) {
         this.postoji = false;
         this.invalid = false;
         this.error_msg = "";
         this.patient_id = "";
         this.patient_data = "";
-      } else if (this.jmbg.length === 13) {
+      } 
+      
+      
+      
+      else if (this.jmbg.length === 13) {
+
         if (this.izbor === "jmbg" && !this.validateDate(this.jmbg)) {
           this.invalid = true;
           this.error_msg = "Matični broj nije validan.";
@@ -599,6 +670,23 @@ export default {
                   this.postoji = false;
                   this.patient_id = "";
                   this.patient_data = "";
+
+                  if (this.izbor === "jmbg") {
+                    // BBB je kombinacija oznake spola i rednog broja za osobe rođene istog datuma:
+
+                    // 000-499 – muški
+                    // 500-999 – ženski
+
+                    var bbb = this.jmbg.substring(9, 12);
+
+                    if (this.validateDate(this.jmbg)) {
+                      if (bbb < 500) {
+                        this.spol = "MUŠKI";
+                      } else {
+                        this.spol = "ŽENSKI";
+                      }
+                    }
+                  }
                 }
               });
           } else {
@@ -607,7 +695,20 @@ export default {
             // this.error_msg = "Datum rođenja nije validan.";
           }
         }
-      } else if (this.jmbg.length > 13) {
+      } 
+      
+      else if (this.jmbg.length === 14 && this.jmbg.charAt(0) === "0") {
+        this.postoji = false;
+        this.invalid = false;
+        this.error_msg = "";
+        this.patient_id = "";
+        this.patient_data = "";
+        this.jmbg = this.jmbg.replace(/^0/, "");
+        // console.log("Lična karta ili vozačka dozvola")
+      } 
+      
+      else if (this.jmbg.length > 13) {
+   
         this.jmbg = this.jmbg.slice(0, 13);
       }
     },
@@ -933,15 +1034,18 @@ export default {
 
                 http
                   .post("pacijenti/unos/save", {
+
                     jmbg: jmbgPost,
                     ime: this.ime.toUpperCase().trim(),
                     prezime: this.prezime.toUpperCase().trim(),
-                    spol: this.spol,
-                    duhan: "NEPOZNATO",
-                    dijabetes: "NEPOZNATO",
-                    adresa: this.chosenAdress,
-                    telefon: this.telefon,
-                    email: this.email,
+                    roditelj: this.roditelj.toUpperCase().trim(),
+                    spol: this.spol.trim(),
+                    duhan: "Nema podataka",
+                    dijabetes: "Nema podataka",
+                    adresa: this.chosenAdress.trim(),
+                    telefon: this.telefon.trim(),
+                    email: this.email.trim(),
+                    passport: this.passport.trim(),
                     token: this.$store.state.token,
                     site: this.$store.state.site
                   })
@@ -972,7 +1076,9 @@ export default {
                       this.ime = "";
                       this.prezime = "";
                       this.spol = "";
+                      this.roditelj = "";
                       this.chosenAdress = "";
+                      this.passport = "";
                       this.telefon = "";
                       this.email = "";
                       this.postoji = false;
