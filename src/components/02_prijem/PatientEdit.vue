@@ -168,7 +168,29 @@
                           ref="spolSelect"
                           v-bind:options="spolovi"
                         ></vuestic-simple-select>
-                        <vuestic-simple-select
+
+                        <div class="form-group with-icon-left">
+                          <div class="input-group">
+                            <input
+                            
+                              id="adresa-input-icon-left"
+                              title=" "
+                              v-model="patient.adresa"
+                              name="adresa-input-icon-left"
+                              required
+                            >
+                            <i class="glyphicon glyphicon-pencil icon-left input-icon"></i>
+                            <label
+                            
+                              class="control-label"
+                              for="adresa-input-icon-left"
+                            >{{'Adresa stanovanja'}}</label>
+                            <i class="bar"></i>
+                          </div>
+                           </div>
+
+
+                     <!--    <vuestic-simple-select
                           label="Mjesto stanovanja"
                           v-model="patient.adresa"
                           name="adresa"
@@ -176,7 +198,9 @@
                           title=" "
                           ref="adresaSelect"
                           v-bind:options="cities"
-                        ></vuestic-simple-select>
+                        ></vuestic-simple-select> -->
+
+
                         <div class="form-group with-icon-left">
                           <div class="input-group">
                             <input
