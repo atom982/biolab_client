@@ -246,7 +246,7 @@
                           v-bind:options="spolovi"
                         ></vuestic-simple-select>
 
-                        <div class="form-group with-icon-left">
+                        <div v-if="!postoji && !invalid" class="form-group with-icon-left">
                           <div class="input-group">
                             <input
                             
