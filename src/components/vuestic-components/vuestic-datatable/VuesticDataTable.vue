@@ -239,20 +239,46 @@
         {{ "Pacijent: " }}
         <span style="color: #4ae387;">{{ partials.pacijent }}</span>
       </div>
-      <div>
+
+      <div v-if="partials_array.length > 0">
         <vuestic-accordion-obrada>
-          <vuestic-collapse-uzorak
+          <vuestic-collapse-uzorak 
             v-for="element in partials_array"
             :key="element"
             :sample="element"
+            :color="'primary'"
           >
             <span slot="header">{{ element }}</span>
             <div slot="body">
               <div class="va-row"></div>
             </div>
           </vuestic-collapse-uzorak>
+
         </vuestic-accordion-obrada>
       </div>
+
+      <hr v-if="partials_array_disabled.length > 0 && partials_array.length > 0">
+
+
+      <div v-if="partials_array_disabled.length > 0">
+        <vuestic-accordion-obrada>
+
+          <vuestic-collapse-uzorak
+            v-for="element in partials_array_disabled"
+            :key="element"
+            :sample="element"
+            :color="'pale'"
+          >
+            <span slot="header">{{ element }}</span>
+            <div slot="body">
+              <div class="va-row"></div>
+            </div>
+
+          </vuestic-collapse-uzorak>
+
+        </vuestic-accordion-obrada>
+      </div>
+
     </vuestic-modal-uzorci>
   </div>
 </template>
@@ -358,6 +384,7 @@ export default {
       nouzorci: [],
       partials: {},
       partials_array: [],
+      partials_array_disabled: [],
       date_range: {
         min: "",
         max: "",
@@ -787,10 +814,30 @@ export default {
             });
         }
         if (niz[1].name === "nalazipregled") {
-          router.push("/nalazi/pregled/" + niz[2].target.id);
+
+          // console.log(niz)
+
+          if(niz[0].nalazipregled.includes("ERROR")){
+
+          }else{
+            router.push("/nalazi/pregled/" + niz[2].target.id);
+
+          }
+
+          
         }
+
+
         if (niz[1].name === "outbox") {
-          router.push("/nalazi/outbox/" + niz[2].target.id);
+
+          if(niz[0].outbox.includes("ERROR")){
+
+          }else{
+            router.push("/nalazi/outbox/" + niz[2].target.id);
+
+          }
+     
+          
         }
 
         if (niz[1].name === "racun") {
@@ -947,14 +994,34 @@ export default {
         }
 
         if (niz[1].name === "partials") {
+
+          console.log( niz[2].target.id)
+          console.log(niz[2].target.title)
+          
           this.partials = {};
           this.partials_array = [];
-          this.partials.uzorci = niz[2].target.id;
-          this.partials_array = this.partials.uzorci.split(",");
+          this.partials_array_disabled = [];
+
+          if(niz[2].target.id.trim() != ""){
+            this.partials.uzorci = niz[2].target.id;
+            this.partials_array = this.partials.uzorci.split(",");
+          }
+
+          if(niz[2].target.title.trim() != ""){
+            this.partials.uzorci_disabled = niz[2].target.title;
+            this.partials_array_disabled = this.partials.uzorci_disabled.split(",");
+          }
+          
+          
+          
           this.partials.pacijent = niz[2].target.getAttribute("name");
           // console.log(niz[2].target.id)
 
           if(niz[2].target.id != "unavailable"){
+
+            console.log(this.partials_array)
+            console.log(this.partials_array_disabled)
+
             this.$refs.staticModalUzorci.open();
           }
           

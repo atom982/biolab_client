@@ -1,19 +1,25 @@
 export default {
   tableFields: [
     {
-      name: "outbox",
-      title: "pregled",
-      width: "15%"
+      name: "delivered",
+      title: "",
+      width: "4%"
     },
     {
-      name: "to",
+      name: "outbox",
+      title: "pregled",
+      width: "14%"
+    },
+    {
+      name: "adresa",
+      sortField: "adresa",
       title: "adresa",
       width: "20%"
     },
     {
       name: "ime",
       sortField: "ime",
-      width: "15%"
+      width: "14%"
     },
     {
       name: "prezime",
@@ -24,12 +30,12 @@ export default {
       name: "jmbg",
       title: "jmbg",
       sortField: "jmbg",
-      width: "15%"
+      width: "14%"
     },
     {
       name: "izmjena",
       title: "poslano",
-      width: "15%"
+      width: "14%"
     }
   ],
 

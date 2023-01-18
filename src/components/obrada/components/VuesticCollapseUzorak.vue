@@ -9,7 +9,8 @@
         <slot name="header"/>
       </template>
 
-      <button v-else :class="{'vuestic-collapse__header__button btn btn-primary' : true}">
+      <button v-else :class="{'vuestic-collapse__header__button btn btn-primary' : color == 'primary', 'vuestic-collapse__header__button btn btn-secondary-danger' : color === 'pale'}">
+      
         <slot name="header"/>
       </button>
     </div>
@@ -33,6 +34,10 @@ export default {
     sample: {
       type: String,
       default: ""
+    }, 
+    color: {
+      type: String,
+      default: "primary"
     },    
     noHeader: Boolean
   },
@@ -73,8 +78,16 @@ export default {
     emitHeader(event) {
       var data = {};
       data.sample = this.sample;
-      data.pdf = 'samples/' + this.sample + '.pdf';      
-      bus.$emit("UzorakFromCollapse", data);
+      data.pdf = 'samples/' + this.sample + '.pdf';   
+      
+      if(this.color == "primary"){
+
+        bus.$emit("UzorakFromCollapse", data);
+
+      }else{
+        console.warn("Dokument nije dostupan.")
+      }
+      
     },
     onHeaderClick() {
       // this.toggle();
