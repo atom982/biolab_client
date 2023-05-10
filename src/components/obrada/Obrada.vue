@@ -75,6 +75,46 @@
         :forward_disabled="forward_disabled"
         :backward_disabled="backward_disabled"
       >
+
+
+      <div class="ui-grid row">
+          <div class="col-md-12">
+            <vuestic-widget
+              style="color: #e34a4a"
+              headerText="Informacije o pacijentu"
+            >
+              <div class="row">
+                <div class="col">
+                  <div>
+                    &nbsp;
+                    <span style="color: #000000"
+                      >{{ "Datum rođenja: " }}
+                      <strong style="color: #e34a4a">
+                        {{ datumRodjenja }}</strong
+                      ></span
+                    >
+                    <br />
+                    <span style="color: #000000"
+                      >&nbsp;&nbsp;{{ "Ime jednog roditelja: " }}
+                      <strong style="color: #e34a4a">
+                        {{ imeRoditelja }}</strong
+                      ></span
+                    >
+                    <br />
+                    <span style="color: #000000"
+                      >&nbsp;&nbsp;{{ "Adresa stanovanja: " }}
+                      <strong style="color: #e34a4a">
+                        {{ adresaStanovanja }}</strong
+                      ></span
+                    >
+                  </div>
+                </div>
+              </div>
+            </vuestic-widget>
+          </div>
+          <div style="min-height: 10px"></div>
+        </div>
+
         <vuestic-accordion-obrada>
           <vuestic-collapse-obrada
             v-for="uzorak in uzorci"
@@ -3192,6 +3232,10 @@ End of Microbiology Data |
       /* -- */
 
       // Patient evaluation, Multi
+
+      datumRodjenja: "",
+      imeRoditelja: "",
+      adresaStanovanja: "",
 
       save_retest: false,
       multiparam_izbor: "",
@@ -7904,6 +7948,40 @@ End of Microbiology Provjera |
             res.data.results[0].patient.ime +
             " " +
             res.data.results[0].patient.prezime;
+
+            var datRodjenja =
+            res.data.results[0].patient.jmbg.substring(0, 2) +
+            "." +
+            res.data.results[0].patient.jmbg.substring(2, 4) +
+            ".";
+
+          var godiste2 = res.data.results[0].patient.jmbg.substring(4, 7);
+
+          switch (godiste2[0]) {
+            case "9":
+              godiste2 = "1" + godiste2;
+              break;
+            case "0":
+              godiste2 = "2" + godiste2;
+              break;
+
+            default:
+              break;
+          }
+
+          if (datRodjenja.includes("01.01") && godiste2 == "1920") {
+            this.datumRodjenja = "Nema podataka";
+          } else if (!datRodjenja.includes("00.00")) {
+            this.datumRodjenja = datRodjenja + godiste2;
+          } else {
+            this.datumRodjenja = godiste2;
+          }
+
+          this.adresaStanovanja = res.data.results[0].patient.adresa;
+
+          this.imeRoditelja = res.data.results[0].patient.roditelj;
+
+
           this.lokacija = res.data.lokacija;
           this.klijent = res.data.results[0].customer;
           console.log(this.klijent);
