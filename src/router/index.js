@@ -120,6 +120,16 @@ function generateRoutesFromMenu(menu = [], routes = []) {
     }
   };
 
+  var pretraga = {
+    path: "/pretraga",
+    component: lazyLoading("pretraga/Pretraga"),
+    props: true,
+    meta: {
+      title: "pretraga",
+      requiredAuth: true
+    }
+  };
+
   for (let i = 0, l = menu.length; i < l; i++) {
     let item = menu[i];
     if (item.path) {
@@ -140,6 +150,7 @@ function generateRoutesFromMenu(menu = [], routes = []) {
   routes.push(outbox);
   routes.push(evaluation);
   routes.push(loger);
+  routes.push(pretraga);
   return routes;
 }
 

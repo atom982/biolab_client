@@ -1,6 +1,7 @@
 import * as types from "../../mutation-types";
 import statistika from "./statistika";
 import prijem from "./prijem";
+import pretraga from "./pretraga";
 import obrada from "./obrada";
 import nalazi from "./nalazi";
 import reports from "./reports";
@@ -23,6 +24,7 @@ const state = {
   items: [
     statistika,
     prijem,
+    pretraga,
     obrada,
     nalazi,
     reports,
